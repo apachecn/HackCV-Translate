@@ -14,8 +14,10 @@ HackCV致力于收集、分享最新的机器学习、人工智能和编程技�
 | ------------------------------------------------- | ---------------------------------------- | ---- |
 | [2017/09/25 第1期](https://hackcv.com/daily/p/1/) | [@wnma](https://github.com/wnma3mz)      |      |
 | [2017/10/04 第2期](https://hackcv.com/daily/p/2/) | [@doordiey](https://github.com/doordiey) |      |
-| [2017/10/05 第3期](https://hackcv.com/daily/p/3/) |                                          |      |
-
+| [2017/10/05 第3期](https://hackcv.com/daily/p/3/) | [@Arron206](https://github.com/Arron206) |      |
+| [2017/10/06 第4期](https://hackcv.com/daily/p/4/) | [@mllove](https://github.com/mllove)     |      |
+| [2017/10/07 第5期](https://hackcv.com/daily/p/5/) |                                          |      |
+| [2017/10/08 第6期](https://hackcv.com/daily/p/6/) |                                          |      |
 ## 校准or加入
 
 欢迎提交pr

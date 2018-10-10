@@ -95,121 +95,127 @@ Ray Kurzweil做了很多非常准确的[预测](https://en.wikipedia.org/wiki/Pr
 
 估计大脑计算复杂性的一种常用方法是假设大脑中的所有信息处理都可以由神经元发出脉冲（动作电位）和每个神经元突触大小（主要是受体数量）的组合来表示。 因此，可以将神经元数量及其突触的估计值相乘，并将所有数据相加。 然后将其乘以平均神经元的发射速度，即每秒约200个动作电位。 这个模型是Ray Kurzweil用来创建他的估计的模型。 虽然几十年前这种模型表现还可以，但从目前的观点来看，它并不适合对大脑进行建模，因为它遗漏了许多重要的神经信息处理，而这些信息处理远不止是激活神经元那么简单。
 
-A model which approximates the behavior of neurons more accurately is the extended linear-nonlinear-Poisson cascade model (LNP). The extended LNP model is [currently viewed as an accurate model of how neurons process information](http://www.sciencedirect.com/science/article/pii/S0959438814000130). However, the extended LNP model still leaves out some fine details, which are deemed unimportant to model large scale brain function. Indeed adding these fine details to the model will add almost no additional computational complexity, but makes the model more complex to understand — thus including these details in simulations would violate the scientific method which seeks to find the simplest models for a given theory. However, this extended model is actually very similar to deep learning and thus I will include these details here.
+但是，这个扩展模型实际上与深度学习非常相似，因此我将在这里包含这些细节。
+扩展的线性-非线性-泊松级联模型(LNP)可以更准确地模拟神经元的行为。扩展的LNP模型目前被看作是[神经元处理信息的精确模型](http://www.sciencedirect.com/science/article/pii/S0959438814000130)。然而，扩展的LNP模型仍然有一些细节问题，这些细节对于模拟大规模脑功能并不重要。实际上，将这些细节加入到模型中几乎不会增加额外的计算复杂度，但会使模型更复杂、难以理解。因此在模拟中包含这些细节会违反为定论找到最简单模型的科学方法。 然而，这个扩展模型实际上与深度学习非常相似，这些细节将包含在本文中。
 
-There are other good models that are also suitable for this. The primary reason why I chose the LNP model is that it is very close to deep learning. This makes this model perfect to compare the architecture of a neuron to the architecture of a convolutional net. I will do this in the next section and at the same time I will derive an estimate for the complexity of the brain.
+还有其他好的模型也适用于此。我选择LNP模型的主要原因是它跟深度学习非常类似。我将在下一部分用这个模型比较神经元的结构与卷积网络的结构，同时我将得出对大脑复杂性的估计。
 
-## Part II: The brain vs. deep learning — a comparative analysis
+## 第二部分：大脑与深度学习 - 对比分析
 
-Now I will explain step by step how the brain processes information. I will mention the steps of information processing which are well understood and which are supported by reliable evidence. On top of these steps, there are many intermediary steps at the biological level (proteins and genes) which are still poorly understood but known to be very important for information processing. I will not go into depth into these biological processes but provide a short outline, which might help the knowledge hungry readers to delve into these depths themselves. We now begin this journey from the neurotransmitters released from a firing neuron and walk along all its processes until we reach the point where the next neuron releases its neurotransmitters, so that we return to where we started.
+现在我将逐步解释大脑是如何处理信息的。我将说明信息处理的步骤，这些步骤是很容易理解的，并且有可靠的证据支持。在这些步骤之上，在生物学层面（蛋白质和基因）有许多中间步骤，这些步骤仍未被充分理解，但已知对信息处理非常重要。我不会深入研究这些生物过程，而是提供一个简短的大纲，这可能会帮助渴望知识的读者自己深入研究。我们现在开始旅程，从一个发射神经元释放的神经递质，沿着它的所有过程走，直到到达下一个神经元释放它的神经递质的位置，这样我们就回到开始的地方。
 
-The next section introduces a couple of new terms which are necessary to follow the rest of the blog post, so read it carefully if you are not familiar with basic neurobiology.
+下一节将介绍几个新术语，这些新术语是博客的其余部分所必需的，所以如果你不熟悉基本的神经生物学，请仔细阅读。
 
-[![neuron_anatomy](https://i2.wp.com/timdettmers.com/wp-content/uploads/2015/07/neuron_anatomy1.jpg?zoom=1.25&resize=680%2C390)](https://i2.wp.com/timdettmers.com/wp-content/uploads/2015/07/neuron_anatomy1.jpg)Image sources: [1](https://commons.wikimedia.org/wiki/File:Neuron_Hand-tuned.svg),[2](https://commons.wikimedia.org/wiki/File:SynapseSchematic_lines.svg),[3](http://faculty.ivytech.edu/~shopper6/ANPweb/gallery/Week_011-2.html),[4](http://faculty.ivytech.edu/~shopper6/ANPweb/gallery/Week_011-2.html)
+[![neuron_anatomy](https://i2.wp.com/timdettmers.com/wp-content/uploads/2015/07/neuron_anatomy1.jpg?zoom=1.25&resize=680%2C390)](https://i2.wp.com/timdettmers.com/wp-content/uploads/2015/07/neuron_anatomy1.jpg)图片来源: [1](https://commons.wikimedia.org/wiki/File:Neuron_Hand-tuned.svg),[2](https://commons.wikimedia.org/wiki/File:SynapseSchematic_lines.svg),[3](http://faculty.ivytech.edu/~shopper6/ANPweb/gallery/Week_011-2.html),[4](http://faculty.ivytech.edu/~shopper6/ANPweb/gallery/Week_011-2.html)
 
-Neurons use the axon — a tube like structure— to transmit their electric signals over long stretches in the brain. When a neuron fires, it fires an action potential — an electrical signal— down its axon which branches into a tree of small endings, called axon terminals. On the ending of each of these axon terminals sit some proteins which convert this electrical message back into a chemical one: Small balls — called synaptic vesicles — filled with a couple of neurotransmitters each are released into an area outside of the neuron, called synaptic cleft. This area separates the axon terminal from the beginning of the next neuron (a synapse) and allows the neurotransmitter to move freely to pursue different tasks.
+神经元利用轴突——一种管状结构——在大脑中长时间传输电信号。当一个神经元放电时，它会释放一个动作电位——沿着它的轴突分叉成一个小结尾的树，称为轴突末端。在每个轴突末端的每一个末端都有一些蛋白质将电子信息转化为化学信息:小球体——突触小泡——充满了一些神经递质，每个被释放到神经元外的区域，称为突触间隙。该区域将轴突末端与下一个神经元（突触）的开始分开，并允许神经递质自由移动以完成不同的任务。
 
-The synapses are most commonly located at a structure which looks very much like the roots of a tree or plant; this is the dendritic tree composed of dendrites which branch into larger arms (this represents the connections between neurons in a neural network), which finally reach the core of the cell, which is called soma. These dendrites hold almost all synapses which connect one neuron to the next and thus form the principal connections. A synapse may hold hundreds of receptors to which neurotransmitter can bind themselves.
+突触通常位于一个看起来非常像树或植物的根的结构上，这是由树枝组成的树枝状树，树枝分枝成更大的臂（这代表神经网络中神经元之间的连接），最终到达细胞的核心，称为体细胞。这些树突几乎包含将一个神经元连接到下一个神经元的所有突触，从而形成主要连接。突触可以容纳数百种神经递质可以自身结合的受体。
 
-You can imagine this compound of axon terminal and synapses at a dendrite as the (dense) input layer (of an image if you will) into a convolutional net. Each neuron may have less than 5 dendrites or as many as a few hundred thousand. Later we will see that the function of the dendritic tree is similar to the combination of a convolutional layer followed by max-pooling in a convolutional network.
+您可以将这种轴突末端和突触的化合物想象成（卷积）输入层（图片）进入卷积网络。每个神经元可拥有少于5个树突或多达数十万个。之后我们将看到树突树的功能类似于卷积层的组合，随后是卷积网络中的池化层。
 
-Going back to the biological process, the synaptic vesicles merge with the surface of the axon terminal and turn themselves inside-out spilling their neurotransmitters into the synaptic cleft. There the neurotransmitters drift in a vibrating motion due to the temperature in the environment, until they (1) find a fitting lock (receptor protein) which fits their key (the neurotransmitter), (2) the neurotransmitters encounter a protein which disintegrates them, or (3) the neurotransmitters encounter a protein which pulls them back into the axon (reuptake) where they are reused. Antidepressants mostly work by (3) preventing, or (4) enhancing the reuptake of the neurotransmitter serotonin; (3) preventing reuptake will yield changes in information processing after some days or weeks, while (4) enhancing reuptake leads to changes within seconds or minutes. So neurotransmitter reuptake mechanisms are integral for minute to minute information processing. Reuptake is ignored in the LNP model.
+回到生物学过程，突触囊泡与轴突末端的表面融合，并从内到外将它们的神经递质溢出到突触间隙中。在那里，神经递质由于环境温度而振动发生漂移，直到它们（1）找到适合其键（神经递质）的合适的锁（受体蛋白），（2）神经递质遇到分解它们的蛋白质，或（3）神经递质遇到一种蛋白质，这种蛋白质将它们拉回轴突（再吸收），在那里它们被重复使用。抗抑郁药主要通过（3）预防或（4）促进神经递质5-羟色胺的再吸收的作用; （3）防止再吸收会在几天或几周后产生信息处理的变化，而（4）促进再吸收会导致在几秒或几分钟内发生变化。因此神经递质再吸收机制对于每分钟的信息处理是不可或缺的。在LNP模型中忽略了重新吸收的过程。
 
-However, the combination of the amount of neurotransmitters released, the number of synapses for a given neurotransmitter, and how many neurotransmitters actually make it into a fitting protein on the synapse can be thought of as the weight parameter in a densely (fully) connected layer of a neural network, or in other words, the total input to a neuron is the sum of all axon-terminal-neurotransmitter-synapse interactions. Mathematically, we can model this as the dot product between two matrices (A dot B; [amount of neurotransmitters of all inputs] dot [amount of fitting proteins on all synapses]).
+然而，神经递质释放的数量，给定神经递质的突触数量，以及实际上神经递质进入突触上拟合蛋白质的数量可以被认为是（全）连接层中的权重参数，以上都是神经网络中的一部分。换句话说，神经元的总输入是所有轴突 - 末端 - 神经递质 - 突触相互作用的总和。在数学上，我们可以将其等效为两个矩阵的点积（A点乘B; [所有输入的神经递质的数量]点乘[所有突触上拟合蛋白质的量]）。
 
-After a neurotransmitter has locked onto a fitting protein on a synapse, it can do a lot of different things: Most commonly, neurotransmitters will just (1) open up channels, to let charged particles flow (through diffusion) into the dendrites, but it can also cause a rarer effect with huge consequences: The neurotransmitter (2) binds to a G-protein which then produces a protein signaling cascade which, (2a) activates (upregulates) a gene which is then used to produce a new protein which is integrated into either the surface of the neuron, its dendrites, and/or its synapses; which (2b) alerts existing proteins to do a certain function at a specific site (create or remove more synapses, unblock some entrances, attach new proteins to the surface of the synapse). This is ignored in the NLP model.
+在神经递质锁定到突触上的拟合蛋白后，它可以做很多不同的事：一般情况下，神经递质（1）打开通道，让带电粒子流入（通过扩散）进入树突，但它也会产生罕见的效果：神经递质（2）结合蛋白，然后产生蛋白质信号级联，（2a）激活（上调）一个基因，然后用于产生一种新的蛋白质。整合到神经元的表面，其树突和/或其突触中;（2b）通知现有蛋白质在特定位点发挥某种功能（产生或移除更多突触，开启一些入口，将新蛋白质附着到突触表面）。这是在NLP模型中被忽略的。
 
-Once the channels are open, negatively or positively charged particles enter into the dendritic spine. A dendritic spine is a small mushroom-like structure on to which the synapse is attached. These dendritic spines can store electric potential and have their own dynamics of information processing. This is ignored in the NLP model.
+一旦通道打开，带负电或带正电的粒子进入树突棘。树突棘是一种小的蘑菇状结构，突触附着在上面。这些树突棘可以存储电势并具有自己的动态信息处理。这是在NLP模型中被忽略的。
 
-[![dendritic_spine](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spine.jpg?zoom=1.25&resize=471%2C335)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spine.jpg)Dendritic spines have their own internals information processing dynamics which is largely determined by its shape and size. Image source: [1](https://en.wikipedia.org/wiki/File:Spline_types_3D.png),[2](https://en.wikipedia.org/wiki/File:Dendritic_spines.jpg)
+[![dendritic_spine](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spine.jpg?zoom=1.25&resize=471%2C335)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spine.jpg)树突棘具有其自身的内部信息处理动力学，其主要由其形状和大小决定。 图片来源: [1](https://en.wikipedia.org/wiki/File:Spline_types_3D.png),[2](https://en.wikipedia.org/wiki/File:Dendritic_spines.jpg)
 
-The charge of the particles that may enter the dendritic spine are either negatively or positively charged — some neurotransmitters only open channels for negative particles, others only for positive ones. There are also channels which let positively charged particles leave the neuron, thus increasing the negativity of the electric potential (a neuron “fires” if it becomes too positive). The size and shape of the mushroom-like dendritic spine corresponds to its behavior. This is ignored in the NLP model.
+进入树突棘的粒子带负电荷或带正电荷——打开通道的神经递质仅为负粒子，而剩下的为正粒子。还存在使带正电的粒子离开神经元的通道，从而增加电势的负面性（如果神经元变得过于阳性则会被“激发”）。蘑菇状树突棘的大小和形状与其行为相对应。这是在NLP模型中被忽略的。
 
-Once particles entered the spine, there are many things they can affect. Most commonly, they will (1) just travel along the dendrites to the cell body in the neuron and then, if the cell gets too positively charged (depolarization) they induce an action potential (the neuron “fires”). But other actions are also common:  The charged particles accumulate in the dendritic spine directly and (2) open up voltage-gated channels which may polarize the cell further (this is an example of the dendritic spine information processing mentioned above). Another very important process are (3) dendritic spikes.
+一旦粒子进入脊柱，他们可以影响许多事。一般情况下，他们将（1）沿树突移动到神经元中的细胞体，然后，如果细胞过度带电（去极化），它们会诱发动作电位（神经元“发射”）。但是其他动作也很常见：带电粒子积聚在树突棘，并且（2）打开电压门控通道，这可以进一步使细胞极化（这是上面提到的树突脊柱信息处理的一个例子）。另一个非常重要的过程是（3）树突状尖峰。
 
-### Dendritic spikes
+### 树突状尖峰
 
-Dendritic spikes are a phenomenon which has been known to exist for some years, but only in 2013 the techniques were advanced enough to collect the data to show that these spikes were important for information processing. To measure dendritic spikes, you have to attach some very tiny clamps onto dendrites with the help of a computer which moves the clamp with great precision. To have some sort of idea where your clamp is, you need a special microscope to observe the clamp as you progress onto a dendrite. Even then you mostly attach the clamp in a rather blind matter because at such tiny scale every movement made is a rather giant leap. Only a few teams in the world have the equipment and skill to attach such clamps onto dendrites.
+树突状尖峰是一种已知存在多年的现象，但仅在2013年，这些技术已经足够先进，可以收集数据来显示这些尖峰对于信息处理来说非常重要。要测量树突峰值，必须在计算机的帮助下将一些非常小的夹子（clamps）连接到树突上，该计算机可以非常精确地移动夹具。为了了解夹具的位置，您需要一个特殊的显微镜来观察夹具，即便进入树枝状晶体时，夹子仍然需要长时间固定在一个相当盲目的物体（blind matter）上，因为在如此微小的范围内，世界上只有少数团队拥有将这种夹具连接到树突上的设备和技能。
 
-However, the direct data gathered by those few teams was enough to establish dendritic spikes as important information processing events. Due to the introduction of dendritic spikes into computational models of neurons, the complexity of a single neuron has become very similar to a convolutional net with two convolutional layers. As we see later the LNP model also uses non-linearities very similar to a rectified linear function, and also makes use of a spike generator which is very similar to dropout – so a neuron is very much like an entire convolutional net. But more about that later and back to dendritic spikes and what exactly they are.
+但是，这些团队收集的直接数据足以将树突状尖峰作为重要的信息处理活动。由于将树突状尖峰引入神经元的计算模型中，单个神经元的复杂性变得非常类似于具有两个卷积层的卷积网络。正如我们后面将看到的，LNP模型也使用十分类似于非线性修正线性函数的功能，并且还使用与dropout非常相似的尖峰发生器（spike generator） - 因此神经元非常像整个卷积网络。但关于这一点的更多内容，需要回到讨论树突状尖峰及其究竟是什么。
 
-Dendritic spikes occur when a critical level of depolarization is reached in a dendrite. The depolarization discharges as an electric potential along the walls of the dendrite and may trigger voltage-gated channels along its way through the dendritic tree and eventually, if strong enough, the electric potential reaches the core of the neuron where it may trigger a true action potential. If the dendritic spike fails to trigger an action potential, the opened voltage-gated channels in neighboring dendrites may do exactly that a split second later. Due to channels opened from the dendritic spike more charged particles enter the neuron, which then may either trigger (common) or stifle (rare) a full action potential at the neurons cell body (soma).
+当在树突中达到临界水平的去极化时，发生树突状尖峰。去极化放电作为一个电势沿着树突的墙壁去触发电压门控通道，如果电势足够强，那么电势就会达到神经元的核心，触发真正的动作点位。如果树突状尖峰未能触发动作电位，则在一瞬间内，相邻树突打开电压门控通道。由于从树突打开的通道，更多带电粒子进入神经元，然后可以触发（常见）或抑制（罕见）神经元细胞体（体细胞）的完整动作电位。
 
-[![dendritic_spikes](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spikes.png?zoom=1.25&resize=677%2C263)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spikes.png)A shows a computer model of a neuron that does not model dendritic spikes; B models simple dynamics of dendritic spikes; C models more complex dynamics of dendritic spikes which takes into account the one dimensional diffusion of particles (which is similar to a convolution operation). Take note that these images are only snapshots in a particular moment of time. A big thanks to [Berd Kuhn](https://groups.oist.jp/onu). Image copyright © 2014 Anwar, Roome, Nedelescu, Chen, Kuhn and De Schutter as published in *Frontiers in Cellular Neuroscience (Anwar et al. 2014)*
+[![树突状尖峰](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spikes.png?zoom=1.25&resize=677%2C263)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/dendritic_spikes.png)
+A显示了不模拟树突状尖峰的神经元的计算机模型; B模拟树枝状尖峰的简单动态; C模拟树枝状尖峰的更复杂的动力学，其考虑了颗粒的一维扩散（类似于卷积操作）。请注意，这些图像只是特定时刻的快照。非常感谢[Berd Kuhn](https://groups.oist.jp/onu). 图片版权所有© 2014 Anwar, Roome, Nedelescu, Chen, Kuhn和De Schutter发表于*细胞神经科学前沿 （Anwar等人，2014）*
 
-This process is very similar to max-pooling, where a single large activation “overwrites” other neighboring values. However, after a dendritic spike, neighboring values are not overwritten like during max-pooling used in deep learning, but the opening of voltage-gated channels greatly amplifies the signals in all neighboring branches within the dendritic tree. Thus a dendritic spike may heighten the electrochemical levels in neighboring dendrites to a level which is more similar to the maximum input — this effect is close to max-pooling.
+此过程与max-pooling非常相似，将单个大型激活“覆盖”其他相邻值。然而，在树突峰值之后，相邻值不会像在深度学习中使用的最大池化中那样被覆盖，但是电压门控通道的打开极大地放大了树突内所有相邻分支中的信号。因此，树枝状尖峰可以将相邻树突中的电化学水平提高到更接近最大输入的水平 - 该效果接近max-pooling。
 
-Indeed it was shown that dendritic spikes in the visual system serve the same purpose as max pooling in convolutional nets for object recognition: In deep learning, max-pooling is used to achieve (limited) rotation, translation, and scale invariance (meaning that our algorithm can detect an object in an image where the object is rotated, moved, or shrunk/enlarged by a few pixels). One can think of this process as setting all surrounding pixels to the same large activation and make each activation share the weight to the next layer (in software the values are discarded for computational efficiency — this is mathematically equivalent). Similarly, it was shown that dendritic spikes in the visual system are sensitive to the orientation of an object. So dendritic spikes do not only have computational similarity, but also similarities in function.
+实际上，已经证明视觉系统中的树突尖峰与用于物体识别的卷积网络中的max-pooling具有相同的目的：在深度学习中，最大池化用于实现（有限的）旋转，平移和尺度不变性（意味着我们的算法可以检测图像中的目标，其中目标被旋转，移动或缩小/放大几个像素）。可以将此过程视为将所有周围像素设置为相同的激活并使每个激活共享下一层的权重（在软件中，为了计算效率而舍去值 - 这在数学上是等效的）。类似地，已经表明视觉系统中的树突尖峰对物体的方向敏感。因此树突状峰值不仅具有计算相似性，而且还具有与之（方向敏感）相似的功能。
 
-The analogy does not end here. During neural back-propagation — that is when the action potential travels from the cell body back into the dendritic tree — the signal cannot backpropagate into the dendritic branch where the dendritic spike originated because these are “deactivated” due to the recent electrical activity. Thus a clear learning signal is sent to inactivated branches. At first this may seem like the exact opposite from the backpropagation used for max-pooling, where everything but the max-pooling activation is backpropagated. However, the absence of a backpropagation signal in a dendrite is a rare event and represents a learning signal on its own. Thus, dendrites which produce dendritic spikes have special learning signals just like activated units in max-pooling.
+这个类比并没有结束。在神经网络反向传播期间——也就是当动作电位从细胞体传播回到树突时——信号不能反向传播到树突分支的源头，这是因为最近的电活动而被“停用”。因此，清晰（clear）的学习信号被发送到未激活的分支。一开始，这可能看起来与最大池的反向传播完全相反，除了最大池激活之外的所有内容都是反向传播的。然而，树突中没有反向传播信号是罕见的，并且树突本身代表学习信号。因此，产生树突状尖峰的树突具有特殊的学习信号，就像最大池中的激活单元一样。
 
-To better understand what dendritic spikes are and what they look like, I very much want to encourage you to watch [this video](http://www.hhmi.org/research/how-do-neurons-compute-output-their-inputs) (for which I do not have the copyright). The video shows how two dendritic spikes lead to an action potential.
+为了更好地了解树枝状尖峰是什么以及它们看起来像什么，我非常希望你观看[这个视频](http://www.hhmi.org/research/how-do-neurons-compute-output-their-inputs) (我没有版权). 该视频显示了两个树突状尖峰如何导致动作电位。
 
-This combination of dendritic spikes and action potentials and the structure of the dendritic tree has been found to be critical for learning and memory in the hippocampus, the main brain region responsible for forming new memories and writing them to our “hard drive” at night.
+树突和动作电位的结合以及树突树状结构被发现对海马体的学习和记忆至关重要，海马体是负责形成新记忆并在晚上将它们写入我们的“硬盘”的主要大脑区域。
 
-Dendritic spikes are one of the main drivers of computational complexity which have been left out from past models of the complexity of the brain. Also, these new findings show that neural back-propagation does not have to be neuron-to-neuron in order to learn complex functions; a single neuron already implements a convolutional net and thus has enough computational complexity to model complex phenomena. As such, there is little need for learning rules that span multiple neurons — a single neuron can produce the same outputs we create with our convolutional nets today.
+树突峰值是计算复杂性的主要因素之一，这些因素是从大脑复杂性的过去模型中遗漏下来的。此外，这些新发现表明神经反向传播不一定是神经元到神经元来学习复杂的功能; 单个神经元已经实现了卷积网络，因此具有足够的计算复杂性来模拟复杂现象。因此，几乎不需要跨越多个神经元的学习规则——单个神经元也可以产生我们用卷积网络生成的相同输出。
 
-But these findings about dendritic spikes are not the only advance made in our understanding of the information processing steps during this stage of the neural information processing pathway. Genetic manipulation and targeted protein synthesis are sources that increase computational complexity by orders of magnitude, and only recently we made advances which reveal the true extend of biological information processing.
+但是这些发现树突峰值并不是唯一的进步在我们理解信息的处理步骤在这个阶段的神经信息处理途径
+但是这些关于树突状尖峰的发现并不是我们理解信息处理步骤的这个阶段所取得的唯一进展。基因操作和蛋白质合成是将计算复杂性提高数量级的来源，直到最近取得了进展，揭示了生物信息处理的真正扩展。
 
-### Protein signaling cascades
+### 蛋白质信号级联
 
-As I said in the introduction of this part, I will not cover the parts of biological information processing extensively, but I want to give you enough information so that you can start learning more from here.
+正如我在本部分的介绍中所说，我不会广泛涉及生物信息处理的各个部分，但我想给你足够的信息，以便你可以从这里开始学习到更多。
 
-One thing one has to understand is that a cell looks much different from how it is displayed in text books. Cells crawl with proteins: There are about 10 billion proteins in any given human cell and these proteins are not idle: They combine with other proteins, work on a task, or jitter around to find new tasks to work on.
+必须要理解的一点是，细胞与教科书中的显示方式有很大不同。细胞爬行蛋白质：在任何给定的人类细胞中都有大约100亿个蛋白质，这些蛋白质并非空闲：它们与其他蛋白质结合，处理任务或移动以寻找新的任务。
 
-All the functions described above are the work of proteins. For example the key-and-lock mechanism and the channels that play the gatekeeper for the charged particles that leave and enter the neuron are all proteins. The proteins I mean in this paragraph are not these common proteins, but proteins with special biological functions.
+上述所有功能都是蛋白质的。例如，锁定和锁定机制以及为离开和进入神经元的带电粒子起到看门人的通道作用都是蛋白质。我在本部分中所指的蛋白质不是这些常见蛋白质，而是具有特殊生物功能的蛋白质。
 
-As an example the abundant neurotransmitter glutamate may bind to a NDMA receptor which then opens up its channels for many different kinds of charged particles and after being opened, the channel only closes when the neuron fires. The strength of synapses is highly dependent on this process, where the synapse is adjusted according to the location of the NDMA receptor and the timing of signals which are backpropagated to the synapses. We know this process is critical to learning in the brain, but it is only a small piece in a large puzzle.
+作为一个例子，丰富的神经递质谷氨酸可以与NDMA受体结合，然后NDMA受体为许多不同种类的带电粒子打开通道，并且在打开后，在神经元激发时，通道关闭。突触的强度十分依赖于该过程，其中突触根据NDMA受体的位置和反向传播到突触的信号并定时进行调整。我们知道这个过程对于大脑学习至关重要，但它只是大型工程中的一小部分。
 
-The charged particles which may enter the neuron may additionally induce protein signaling cascades own their own. For example the cascade below shows how an activated NMDA receptor (green) lets charged calcium CA2+ inside which triggers a cascade which eventually leads to AMPAR receptors (violet) being trafficked and installed on the synapse.
+可以进入神经元的带电粒子可以另外诱导蛋白质信号级联拥有它们自己的。例如，下面的级联显示了活化的NMDA受体（绿色）如何使带电的钙CA2 +在其内部触发级联，最终导致AMPAR受体（紫色）被搬运并安装在突触上。
 
-[![RegulationOfAMPARTrafficking](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/regulationofampartrafficking.jpg?zoom=1.25&resize=680%2C531)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/regulationofampartrafficking.jpg)Image source: [1](https://commons.wikimedia.org/wiki/File:RegulationOfAMPARTrafficking.jpg)
+[![观察AMPAR搬运](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/regulationofampartrafficking.jpg?zoom=1.25&resize=680%2C531)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/regulationofampartrafficking.jpg)图片来源: [1](https://commons.wikimedia.org/wiki/File:RegulationOfAMPARTrafficking.jpg)
 
-It was shown again and again that these special proteins have a great influence on the information processing in neurons, but it is difficult to pick out a specific type of protein from this seemingly chaotic soup of 10 billion proteins and study its precise function. Findings are often complex with a chain of reactions involving many different proteins until a desired end-product or end-function is reached. Often the start and end functions are known but not the exact path which led from one to the other. Sophisticated technology helped greatly to study proteins in detail, and as technology gets better and better we will further our understanding of biological information processing in neurons.
+一次又一次地证明，这些特殊的蛋白质对神经元的信息处理有很大的影响，但很难从这个看似混乱的100亿蛋白质的群体中挑选出特定类型的蛋白质，并研究其准确的功能。研究结果通常很复杂，涉及许多不同蛋白质的反应链，直到达到所需的最终产品或最终功能。开始和结束功能通常是已知的，但不是从一个到另一个的确切路径。先进的技术有助于详细研究蛋白质，随着技术越来越好，我们将进一步了解神经元中的生物信息处理过程。
 
-### Genetic manipulation
+### 基因操作
 
-The complexity of biological information processing does not end with protein signaling cascades, the 10 billion proteins are not a random soup of workers that do their tasks, but these workers are designed in specific quantities to serve specific functions that are relevant at the moment. All this is controlled by a tight feedback loop involving helper proteins, DNA, and messenger RNA (mRNA).
+生物信息处理的复杂性并不以蛋白质信号级联结束，100亿个蛋白质并不是完成其任务的工人的随机群体，但这些工人具有特定的数量，以满足目前相关的特定功能。所有这些都是由包含辅助蛋白，DNA和信使RNA（mRNA）的紧密反馈环控制的。
 
-If we use programming metaphors to describe this whole process, then the DNA represents the whole github website with all its public packages, and messenger RNA is a big library which features many other smaller libraries with different functions (something like the C++ boost library).
-
-It all begins with a programming problem you want to solve (a biological problem is detected). You use google and stackoverflow to find recommendations for libraries which you can use to solve the problem and soon you find a post that suggests that you use library X to solve problem Y (problem Y is detected on a local level in a cell with known solution of protein X; the protein that detected this defect then cascades into a chain of protein signals which leads to the upregulation of the gene G which can produce protein X; here upregulation is a “Hey! Produce more of this, please!” signal to the nucleus of the cell where the DNA lies). You download the library and compile it (the gene G is copied (transcribed) as a short string of mRNA from the very long string of DNA). You then do configure the install (the mRNA leaves the core) with the respective configuration (the mRNA is translated into a protein, the protein may be adjusted by other proteins after this), and install the library in a global “/lib” directory (the protein folds itself into its correct form after which it is fully functional). After you have installed the library, you import the needed part of the library to your program (the folded protein travels (randomly) to the site where it is needed) and you use certain functions of this library to solve your problem (the protein does some kind of work to solve the problem).
-
-Additional to this, neurons may also dynamically alter their genome, that is they can dynamically change their github repository to add or remove libraries.
-
-To understand this process further, you may want to watch the following video, which shows how HIV produces its proteins and how the virus can change the host DNA to suit its needs. The process described in this video animation is very similar to what is going on in neurons. To make it more similar to the process in neurons, imagine that HIV is a neurotransmitter and that everything contained in the HIV cell is in the neuron in the first place. What you have then is an accurate representation of how neurons make use of theirs genes and proteins:
+如果我们使用编程来比喻描述整个过程，那么DNA代表整个github网站及其所有公共包，而信使RNA是一个大型库，其中包含许多其其它具有不同功能的小型库（类似于C ++ boost库）。
 
 
 
-You may ask, isn’t it so that every cell in your body has (almost) the same DNA in order to be able to replicate itself? Generally, this is true for most cells, but not true for most neurons. Neurons will typically have a genome that is different from the original genome that you were assigned to at birth. Neurons may have additional or fewer chromosomes and have sequences of information removed or added from certain chromosomes.
 
-It was shown, that this behavior is important for information processing and if gone awry, this may contribute to brain disorders like depression or Alzheimer’s disease. Recently it was also shown, that neurons change their genome on a daily basis to improve information processing demands.
+这一切都始于想要解决的编程问题（检测到生物问题）。您可以使用谷歌和stackoverflow来找到可以用解决问题的库的建议，很快你会发现建议你使用库X来解决问题Y（在一个地方发现到了问题Y，根据已有的解决方案找到了蛋白质X细胞，蛋白质检测到这个缺陷然后级联成蛋白质信号的链，这导致该基因将可产生蛋白质X上调;这里的上调是一个“嘿！请生产更多吧！”信号到蛋白质X的细胞核所在的DNA）。你下载该库并进行编译（复制基因G（转录）短串mRNA构造一长串mRNA的DNA）。然后你用相应的配置进行配置安装（mRNA离开核心，mRNA转化为蛋白质，蛋白质可以在此之后通过其他蛋白质调整），并将库安装在全局“/lib”目录中（蛋白质折叠成正确的形状，之后它可以完全发挥作用）。安装完库后，将库中所需的部分导入您的程序（折叠的蛋白质（随机）移动到需要的位置）并使用该库的某些功能来解决您的问题（蛋白质的工作来解决这个问题）。
 
-So when you sit at your desk for five days, and then on the weekend decide to go on a hike, it makes good sense that the brain adapts its neurons for this new task, because entirely different information processing is needed after this change of environment.
+除此之外，神经元还可以动态地改变它们的基因组，也就是说它们可以动态地改变它们的github仓库来添加或删除库。
 
-Equally, in an evolutionary sense, it would be beneficial to have different “modes” for hunting/gathering and social activity within the village — and it seems that this function might be for something like this. In general, the biological information processing apparatus is extremely efficient in responding to slower information processing demands that range from minutes to hours.
+为了进一步了解这一过程，您可能需要观看以下视频，其中显示了HIV如何产生蛋白质以及病毒如何改变宿主DNA以满足其需要。此视频动画中描述的过程与神经元中发生的过程非常相似。为了使其与神经元中的过程更加相似，可以想象HIV是一种神经递质，并且HIV细胞中包含的所有物质首先都存在于神经元中。您所拥有的是准确表示神经元如何利用他们的基因和蛋白质：
 
-With respect to deep learning, an equivalent function would be to alter the function of a trained convolutional net in significant but rule-based ways; for example to apply a transformation to all parameters when changing from one to another task (recognition of street numbers -> transform parameters -> recognition of pedestrians).
+[https://youtu.be/RO8MP3wMvqg](https://youtu.be/RO8MP3wMvqg)
 
-Nothing of this biological information processing is modeled by the LNP model.
+您可能会问，是不是因为您体内的每个细胞都具有（几乎）相同的DNA以便能够自我复制？一般来说，大多数细胞都是这样，但大多数神经元不是这样。神经元通常具有与您在出生时分配的原始基因组不同的基因组。神经元可以具有额外或更少的染色体，并且从某些染色体中移除或添加信息序列。
 
-Looking back at all this, it seems rather strange that so many researchers think they that they can replicate the brain’s behavior by concentrating on the electrochemical properties and inter-neuron interactions only. Imagine that every unit in a convolutional network has its own github, from which it *learns* to dynamically download, compile and use the best libraries to solve a certain task. From all this you can see that a single neuron is probably more complex than an entire convolutional net, but we continue from here in our focus on electrochemical processes and see where it leads us.
+结果表明，这种行为对于信息处理非常重要，如果出现问题，这可能会导致抑郁症或阿尔茨海默病等脑部疾病。最近还显示，神经元每天改变其基因组以改善信息处理需求。
 
-### Back to the LNP model
+因此，当你前五天坐在办公桌，然后在周末决定开始徒步旅行时，大脑会根据这项新任务调整其神经元，这是很有意义的，因为在环境变化后需要完全不同的信息处理。
 
-After all this above, there is only one more relevant step in information processing for our model. Once a critical level of depolarization is reached, a neuron will most often fire, but not always. There are mechanisms that prevent a neuron from firing. For example shortly after a neuron fired, its electric potential is too positive to produce a fully-fledged action potential, and thus it cannot fire again. This blockage may be present even when a sufficient electric potential is reached, because this blockade is a biological function and not a physical switch.
+同样，从进化的角度来看，在村庄内进行狩猎/采集和社交活动有不同的“模式”，这些是有益的——似乎这个功能适合这样的事。通常，生物信息处理设备在响应从几分钟到几小时的较慢信息处理需求方面非常有效。
 
-In the LNP model, this blockage of an action potential is modeled as an inhomogeneous Poisson process which has a Poisson distribution. A Poisson process with a Poisson distribution as a model means that the neuron has a very high probability to fire the first or second time it reached its threshold potential, but it may also be (with a exponentially decreasing probability) that a neuron may not fire for many more times.
+关于深度学习，一个等效的功能是以重要也是基于规则的方式改变训练有素的卷积网络的功能; 例如，当从一个任务更改为另一个任务时，将变换应用于所有参数（识别街道数量->变换参数->识别行人）。
 
-[![Poisson](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/poisson.png?zoom=1.25&resize=652%2C347)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/poisson.png)A Poisson(0.5) distribution with a randomly drawn sample. Here 0,1,2,3 represents the waiting time until the neuron fires, thus 0 means it fires without delay, while 2 means it will not fire for two cycles even if it could fire physically.
+这种生物信息处理的任何内容都不是由LNP模型建立的。
 
-There are exceptions to this rule, where neurons disable this mechanism and fire continuously at the rates which are governed by the physics alone — but these are special events which I will ignore at this point. Generally, this whole process is very similar to dropout used in deep learning which uses a uniform distribution instead of a Poisson distribution; thus this process can be viewed as some kind of regularization method that the brain uses instead of dropout.
+回顾这一切，似乎很奇怪，许多研究人员认为他们只能通过专注于电化学特性和神经元间相互作用来复制大脑的行为。想象一下，卷积网络中的每个单元都有自己的github，从中*学习*并动态下载，编译和使用最好的库来解决某个任务。从这一切你可以看出，单个神经元可能比整个卷积网络更复杂，但我们继续从这里开始关注电化学过程，看看它在哪里引导我们。
 
-In the next step, if the neuron fires, it releases an action potential. The action potential has very little difference in its amplitude, meaning the electric potential generated by the neuron almost always has the same magnitude, and thus is a reliable signal. As this signal travels down the axon it gets weaker and weaker. When it flows into the branches of the axon terminal, its final strength will be dependent on the shape and length of these branches; so each axon terminal will receive a different amount of electrical potential. This spatial information, together with the temporal information due to the spiking pattern of action potentials, is then translated into electrochemical information (it was shown that they are translated into spikes of neurotransmitters themselves that last about 2ms). To adjust the output signal, the axon terminal can move, grow or shrink (spatial), or it may alter its protein makeup which is responsible for releasing the synaptic vesicles (temporal).
+### 回到LNP模型
 
-Now we are back at the beginning: Neurotransmitters are released from the axon terminal (which can be modeled as a dense matrix multiplication) and the steps repeat themselves.
+在介绍完上面的这些之后，我们模型的信息处理只有一个相关的步骤。一旦达到临界水平的去极化，神经元通常会发射。但并非总是如此，也存在着阻止神经元发射的机制。例如，在神经元发射后不久，其电势太强而不能产生完全成熟的动作电位，因此它不能再次发射。即使在达到足够的电势时也可能存在这种阻塞，因为这种阻塞是生物功能而不是物理开关。
 
-### Learning and memory in the brain
+在LNP模型中，动作电位的这种阻塞是建模为具有泊松分布的非均匀泊松过程。以泊松分布为模型的泊松过程意味着神经元在第一次或第二次达到其阈值电位时具有非常高的发射概率，但也可能（以指数递减的概率）神经元可能不会发射多次。
+
+[![泊松](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/poisson.png?zoom=1.25&resize=652%2C347)](https://i0.wp.com/timdettmers.com/wp-content/uploads/2015/07/poisson.png)具有随机抽取样本的泊松（0.5）分布。这里0,1,2,3表示神经元发射前的等待时间，因此0表示它会毫无延迟地发射，而2表示即使它可以物理发射也不会发射两个周期。
+
+这个规则有例外，其中神经元禁用这种机制并以仅由物理学控制的速率连续发射——但这些是我将在此时忽略的特殊事件。通常，这整个过程与深度学习中使用的丢弃（dropout）非常相似，它使用均匀分布而不是泊松分布; 因此，这个过程可以看作是大脑使用的某种正则化方法而不是丢弃。
+
+在下一步中，如果神经元发射，它会释放动作电位。动作电位的幅度差别很小，这意味着神经元产生的电位几乎总是具有相同的幅度，因此是可靠的信号。当这个信号沿着轴突传播时，它变得越来越弱。当它流入轴突末端的分支时，其最终强度将取决于这些分支的形状和长度; 因此每个轴突末端将接收不同量的电位。该空间信息与由于动作电位的尖峰模式引起的时间信息一起被转换成电化学信息（显示它们被转化为神经递质自身的峰值，持续约2ms）。调整输出信号,轴突末端可以移动,增加或减少(空间),或者它可能改变其蛋白质组成负责释放突触囊泡(时间)。
+
+现在我们回到开始：神经递质从轴突末端释放（可以建模为稠密矩阵乘法）并且重复此步骤。
+
+### 在大脑中的学习和记忆
 
 Now that we went through the whole process back to back, let us put all this into context to see how the brain uses all this in concert.
 
