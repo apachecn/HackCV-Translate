@@ -50,7 +50,7 @@ Apple给我们提供了很好的工具，使我们能够方便的将任意模型
 
 - 让我们引用一些必要的库
 
-```
+```python
 # Import necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -66,7 +66,7 @@ from keras.layers.core import Flatten, Dense, Activation, Reshape
 
 - 定义 Tiny YOLO v1.0模型
 
-```
+```python
 def yolo(shape):
     model = Sequential()
     model.add(Conv2D(16,(3,3),strides=(1,1),input_shape=shape,padding='same'))
@@ -103,7 +103,7 @@ def yolo(shape):
 
 - 现在让我们写一个有用的方法把我们下载的“yolo-tiny.weights”文件中的权重加载到模型中。
 
-```
+```python
 # Helper function to load weights from weights-file into YOLO model
 def load_weights(model,yolo_weight_file):
     data = np.fromfile(yolo_weight_file,np.float32)
@@ -123,7 +123,7 @@ def load_weights(model,yolo_weight_file):
 
 - 我们使用的预先训练好的权重是以Theano作为图像尺寸处理的后端。所以，我们必须要将Theano设置为后端，然后再把权重值加载到模型中。
 
-```
+```python
 # Load the initial model
 keras.backend.set_image_dim_ordering('th')
 shape = (3,448,448)
@@ -144,7 +144,7 @@ load_weights(model,'./yolo-tiny.weights')
 
 让我们先定义模型的第一部分和第三部分。
 
-```
+```python
 # YOLO Part 1
 def yoloP1(shape):
     model = Sequential()
@@ -186,7 +186,7 @@ def yoloP3():
 
 - 让我们用将TensorFlow为后端的Keras初始化三个网络。他们分别使：YOLO 第一部（model_p1）,YOLO 第三部分（model_p3）以及YOLO Full(model_full)。同时为了测试这几个网络是否正常运行，我们同时定义第一和第三部分模型用Theano作为后端。
 
-```
+```python
 # Let us get Theano backend edition of Yolo Parts 1 and 3
 model_p1_th = yoloP1(shape)
 model_p3_th = yoloP3()
@@ -200,7 +200,7 @@ model_full = yolo(shape)
 
 - 在前面我们已经提到了以Theano和TensorFlow为后端的卷积层的图片尺寸不同。所以让我们写一个程序将Theano ‘model’的权重转化为TensorFlow的“model_full”。
 
-```
+```python
 # Transfer weights from Theano model to TensorFlow model_full
 for th_layer,tf_layer in zip(model.layers,model_full.layers):
     if th_layer.__class__.__name__ == 'Convolution2D':
@@ -213,7 +213,7 @@ for th_layer,tf_layer in zip(model.layers,model_full.layers):
 
 - 在进行下个阶段前，让我们简单的测试一下是否Theano的'model'和TensorFlow的“model_full”的结果是否一致。为了达到这样的目的，我们读取一张图片，处理它，然后将它放入模型中并预测它的输出结果。
 
-```
+```python
 # Read an image and pre-process it
 im = cv2.imread('test1.jpg')
 plt.imshow(im[:,:,::-1])
@@ -235,7 +235,7 @@ print 'Difference between two outputs:\nSum of Difference =', np.sum(output_th-o
 - 通过运行上面的代码，我发现对于同一张图片，theano和tensorflow的输出结果有很大的不同。如果输出结果一致的话，“Sum of Difference”和“2-norm of difference”应该等于0。
 - 既然直接转换没有用，那么让我们转向模型部件的设计。首先，让我们从Tiny YOLO 的第一部分开始。
 
-```
+```python
 # Theano
 model_p1_th.layers[0].set_weights(model.layers[0].get_weights())
 model_p1_th.layers[3].set_weights(model.layers[3].get_weights())
@@ -272,7 +272,7 @@ print 'Difference between two outputs:\nSum of Difference =', np.sum(output_thT-
 
 - 通过运行上面的代码，我们可以发现两个的输出完全匹配。也就是说我们成功的完成了我们模型第一部分的设计！现在让我们去设计模型的第三部分。通过仔细的观察model_p3和model_p3_th的情况，我们容易发现这两种模型是类似的。因此，对于给定的输入，两个模型都会给我们相同的固定输出。但是这些模型的输入是什么呢？理想情况下的输入应该是来自Yolo的第二部分，但是Yolo的第二部分只是一个给任意多维的输入它的输出结果都是一个一维矢量。假设我们已经序列化了model_p1_th的输出，那么model_p3和model_p3_th会给我们相似的结果。
 
-```
+```python
 # Theano
 model_p3_th.layers[0].set_weights(model.layers[25].get_weights())
 model_p3_th.layers[1].set_weights(model.layers[26].get_weights())
@@ -298,7 +298,7 @@ print 'Difference between two outputs:\nSum of Difference =', np.sum(output_th-o
 - 在运行上面的代码时我们可以观察到model_p3和model_p3_th给了我们一样的结果。
 - YOLO的第二部分在哪里？耐心些，我们现在就要设计它了。在设计YOLO第二部分前，让我们讨论一下维度。我已经提过了YOLO的第二部分只是一个简单的平坦化的层。是什么使这变得困难？如果你还记得的话，整个网络都是以Theano为后端设计的，只有这些权重值需要我们的模型以Tensorflow为后端。为了更好的理解flatten层的操作，我写了一些代码让你去理解。通过运行下列代码你会找到我们的model_full给出的结果比model给出的结果奇怪的原因。
 
-```
+```python
 # Let us build a simple 3(width) x 3(height) x 3(depth) matrix and assume it as an output from Part 1
 A = np.reshape(np.asarray([i for i in range(1,10)]),(3,3))
 B = A + 10
@@ -319,4 +319,110 @@ print '\n\nActual input for model_p3 =\n', part1_output_tf.flatten()
 - 现在我们了解了flatten层的应用不像我们预想的那么容易。下面有一些方法关于我们应该如何实现平坦化层。
   - **想法1**—获取第一部分的输出作为MLMultArray，并在IOS应用程序的CPU上应用自定义的平坦化操作。操作的消耗太大了！
   - **想法2**—使用Keras设置一个以 Permute 层加上Flatten层的模型并将它转化为CoreML模型。如果可以做到就设计成一个单一的模型。
-  - **想法3**—
+  - **想法3**—了解coremltools的神经网络构建需要提供些什么并试着在flatten层中应用它们。虽然有足够多的文档讲解我们如何实现一个flatten层，但是现在的文档没有提到如何把三个模型结合成一个单独的。对于图片的每一帧都会从GPU调用到CPU三次然后有从CPU传到GPU，这不是一个十分有效率的实现。
+- 我观察Apple的CoreML后，发现一个有趣的事情，他的输出的MLMultiArray的维度。虽然CoreML只支持Keras以TensorFlow为后端，但是输出的图片维度是支持以Theano为后端的。这意味着YOLO第一部分输出的MLMultiArray的维度是1024×7×7而不是7×7×1024.这个发现我们可以在设计Permute层的第二部分时用到。
+
+```python
+# Keras equivalent of YOLO Part 2
+def yoloP2():
+    model = Sequential()
+    model.add(Permute((2,3,1),input_shape=(7,7,1024)))
+    model.add(Flatten())
+    return model
+
+model_p2 = yoloP2()
+```
+
+- 这部分完成后我们就把3个部分结合成一个完整的网络。那么，让我们重写一下Tiny YOLO v1.0网络。
+
+```python
+def yoloP1P2P3(shape):
+    model = Sequential()
+    model.add(Convolution2D(16, 3, 3,input_shape=shape,border_mode='same',subsample=(1,1)))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Convolution2D(32,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(MaxPooling2D(pool_size=(2, 2),border_mode='valid'))
+    model.add(Convolution2D(64,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(MaxPooling2D(pool_size=(2, 2),border_mode='valid'))
+    model.add(Convolution2D(128,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(MaxPooling2D(pool_size=(2, 2),border_mode='valid'))
+    model.add(Convolution2D(256,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(MaxPooling2D(pool_size=(2, 2),border_mode='valid'))
+    model.add(Convolution2D(512,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(MaxPooling2D(pool_size=(2, 2),border_mode='valid'))
+    model.add(Convolution2D(1024,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(Convolution2D(1024,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(Convolution2D(1024,3,3 ,border_mode='same'))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(Permute((2,3,1)))
+    model.add(Flatten())
+    model.add(Dense(256))
+    model.add(Dense(4096))
+    model.add(LeakyReLU(alpha=0.1))
+    model.add(Dense(1470))
+    return model
+
+model_p1p2p3 = yoloP1P2P3(shape)
+
+# TensorFlow
+model_p1p2p3.layers[0].set_weights(model_full.layers[0].get_weights())
+model_p1p2p3.layers[3].set_weights(model_full.layers[3].get_weights())
+model_p1p2p3.layers[6].set_weights(model_full.layers[6].get_weights())
+model_p1p2p3.layers[9].set_weights(model_full.layers[9].get_weights())
+model_p1p2p3.layers[12].set_weights(model_full.layers[12].get_weights())
+model_p1p2p3.layers[15].set_weights(model_full.layers[15].get_weights())
+model_p1p2p3.layers[18].set_weights(model_full.layers[18].get_weights())
+model_p1p2p3.layers[20].set_weights(model_full.layers[20].get_weights())
+model_p1p2p3.layers[22].set_weights(model_full.layers[22].get_weights())
+model_p1p2p3.layers[26].set_weights(model_full.layers[25].get_weights())
+model_p1p2p3.layers[27].set_weights(model_full.layers[26].get_weights())
+model_p1p2p3.layers[29].set_weights(model_full.layers[28].get_weights())
+```
+
+- 我们回忆一下我们列的三个需要完成的任务（预处理，处理，后处理），会发现将模型从Keras转化为CoreML的处理是属于处理部分的。那么我们如何进行预处理呢？图片的预处理包括将图片的帧从相机中提取出来，处理图片尺寸，将图片格式改为CVPixelBuffer格式、将图片像素的强度值由0-255变为-1到1并将结果输入到模型中。其中图片像素的强度值可以直接在CoreML中进行转换。所以，让我们将转化过程加入进去。
+
+```python
+scale = 2/255.
+coreml_model_p1p2p3 = coremltools.converters.keras.convert(model_p1p2p3,
+                                                       input_names = 'image',
+                                                       output_names = 'output',
+                                                       image_input_names = 'image',
+                                                       image_scale = scale,
+                                                       red_bias = -1.0,
+                                                       green_bias = -1.0,
+                                                       blue_bias = -1.0)
+
+coreml_model_p1p2p3.author = 'Sri Raghu Malireddi'
+coreml_model_p1p2p3.license = 'MIT'
+coreml_model_p1p2p3.short_description = 'Yolo - Object Detection'
+coreml_model_p1p2p3.input_description['image'] = 'Images from camera in CVPixelBuffer'
+coreml_model_p1p2p3.output_description['output'] = 'Output to compute boxes during Post-processing'
+coreml_model_p1p2p3.save('TinyYOLOv1.mlmodel')
+```
+
+- 通过这一步，我们的Tiny YOLO v1模型已经构建好了。这个模型在iphone7上平均帧率为17.8。这个网络的输出尺寸为1470。我在
+
+# [Source Code](https://github.com/r4ghu/iOS-CoreML-Yolo) & Results:
+
+这个项目的所有的源代码可以放在了这个[github链接](https://github.com/r4ghu/iOS-CoreML-Yolo)。关于转换模型、准备环境、每一步的教程，需要的文件
+
+都在这里。我同时提供IOS的app给你，如果你像在你的iphone上测试的化。这是相关结果：
+
+![](https://sriraghublog.files.wordpress.com/2017/07/img_20170710_171359.jpg)
+
+如果没有下面这些人的事先工作，这个app是不能完成的：
+
+1. <https://github.com/xslittlegrass/CarND-Vehicle-Detection>
+2. <https://github.com/cvjena/darknet>
+3. <https://pjreddie.com/darknet/yolo/>
+4. <http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Redmon_You_Only_Look_CVPR_2016_paper.pdf>
+
+虽然app以可靠的速度给出了正确的结果，但是app在它的性能上仍然有进步的空间。如果你对于这个项目有任何相关的建议，请随意的说出你的想法。🙂
