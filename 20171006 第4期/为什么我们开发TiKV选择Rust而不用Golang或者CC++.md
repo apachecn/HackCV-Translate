@@ -1,6 +1,6 @@
 # 为什么我们开发TiKV选择Rust而不用Golang或者C/C++?
 
-原文：[Why did we choose Rust over Golang or C/C++ to develop TiKV?](https://pingcap.github.io/blog/2017/09/26/whyrust/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
+原文链接：[Why did we choose Rust over Golang or C/C++ to develop TiKV?](https://pingcap.github.io/blog/2017/09/26/whyrust/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 ## 什么是Rust
 
