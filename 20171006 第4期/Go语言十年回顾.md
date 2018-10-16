@@ -1,6 +1,6 @@
 ### Go语言十年回顾
 
-原文：[Go: Ten years and climbing](https://commandcenter.blogspot.jp/2017/09/go-ten-years-and-climbing.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
+原文链接：[Go: Ten years and climbing](https://commandcenter.blogspot.jp/2017/09/go-ten-years-and-climbing.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 [September 21, 2017](https://commandcenter.blogspot.com/2017/09/go-ten-years-and-climbing.html)
 

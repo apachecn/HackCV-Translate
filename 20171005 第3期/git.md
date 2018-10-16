@@ -1,5 +1,7 @@
 ## git git git git git
 
+原文链接：[git git git git git](http://caiustheory.com/git-git-git-git-git/)
+
   你是否曾在你的终端不小心进入太多的git，想找到一个有效的解决方法？我经常写了一个git然后离开一会，再回来写时又输入完整的git status 想查看它的状态。这会导致一个可爱的（烦人的）错误：
 
 ```
