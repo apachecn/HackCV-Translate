@@ -1,0 +1,5 @@
+| 标题                                                         | 简介 |
+| ------------------------------------------------------------ | ---- |
+| [Benefits of Intel® Optimized Caffe* in comparison with BVLC Caffe*](https://software.intel.com/en-us/articles/comparison-between-intel-optimized-caffe-and-vanilla-caffe-by-intel-vtune-amplifier?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [NEW OPTIMIZATIONS IMPROVE DEEP LEARNING FRAMEWORKS FOR CPUS](https://www.nextplatform.com/2017/10/13/new-optimizations-improve-deep-learning-frameworks-cpus/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [Why SQL is beating NoSQL, and what this means for the future of data](Why SQL is beating NoSQL, and what this means for the future of data) |      |
