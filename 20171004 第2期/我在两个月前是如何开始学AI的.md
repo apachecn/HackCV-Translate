@@ -1,5 +1,7 @@
 # 我在两个月前是如何开始学习AI的
 
+原文链接：[How I started with learning AI in the last 2 months](https://hackernoon.com/how-i-started-with-learning-ai-in-the-last-2-months-251d19b23597?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
+
 所有人这段日子都十分的忙碌。我们的个人生活和职业生涯都是如此。除此之外，冉工智能之类的东西开始兴起，你了解到你的技能在接下来的两年即将过时。
 
 当我关笔我的启动Zead,我猛然清醒。这就像错过一些非常重要的东西。

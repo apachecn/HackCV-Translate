@@ -1,98 +1,82 @@
-# Is AI Riding a One-Trick Pony?
+# AI是否一招鲜吃遍天？
 
 原文链接：[Is AI Riding a One-Trick Pony?](https://www.technologyreview.com/s/608911/is-ai-riding-a-one-trick-pony/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-**Just about every AI advance you’ve heard of depends on a breakthrough that’s three decades old. Keeping up the pace of progress will require confronting AI’s serious limitations.**
+**几乎所有AI的进步都取决于三十年前的突破，而现在想要跟上项目的前进步伐需要突破AI的限制。**
 
-I’m standing in what is soon to be the center of the world, or is perhaps just a very large room on the seventh floor of a gleaming tower in downtown Toronto. Showing me around is Jordan Jacobs, who cofounded this place: the nascent Vector Institute, which opens its doors this fall and which is aiming to become the global epicenter of artificial intelligence.
+我站在了即将成为世界中心的地方，不过也可能只是多伦多中心塔楼的7层的一个闪闪发亮的房间。 Jordan Jacobs带我参观了这附近，他是这个地方的创办者之一：新的矢量研究所，今年秋天开始正式营业，它的目标是成为全球人工智能的的中心。
 
-We’re in Toronto because Geoffrey Hinton is in Toronto, and Geoffrey Hinton is the father of “deep learning,” the technique behind the current excitement about AI. “In 30 years we’re going to look back and say Geoff is Einstein—of AI, deep learning, the thing that we’re calling AI,” Jacobs says. Of the researchers at the top of the field of deep learning, Hinton has more citations than the next three combined. His students and postdocs have gone on to run the AI labs at Apple, Facebook, and OpenAI; Hinton himself is a lead scientist on the Google Brain AI team. In fact, nearly every achievement in the last decade of AI—in translation, speech recognition, image recognition, and game playing—traces in some way back to Hinton’s work.
+我们将位置定在多伦多是因为“深度学习”之父 Geoffrey Hinton在多伦多。深度学习是当前AI火爆的技术。Jacobs说：“30年后，我们再回顾过去，说 Geoff是AI届的Einstein，深度学习，我们称之为AI的东西。”在深度学习研究顶尖的领域中，Hinton的引文比接下来的三篇文章加在一起还多。他的学生和博士后在OpenAI、Facebook、Apple的AI实验室工作。而他本人则是 Google Brain AI 团队的首席科学家。事实上，在过去的十年中，人工智能在翻译、语音识别、图像识别和应用于游戏方面的成就几乎都可以追溯到Hinton的工作。
 
-The Vector Institute, this monument to the ascent of ­Hinton’s ideas, is a research center where companies from around the U.S. and Canada—like Google, and Uber, and Nvidia—will sponsor efforts to commercialize AI technologies. Money has poured in faster than Jacobs could ask for it; two of his cofounders surveyed companies in the Toronto area, and the demand for AI experts ended up being 10 times what Canada produces every year. Vector is in a sense ground zero for the now-worldwide attempt to mobilize around deep learning: to cash in on the technique, to teach it, to refine and apply it. Data centers are being built, towers are being filled with startups, a whole generation of students is going into the field.
+ 矢量研究所是Hinton思想兴起的纪念碑，是一个研究中心，来自美国和加拿大各地的公司，如谷歌、尤伯和恩维迪亚，将资金投入以促进人工智能技术商业化。资金涌入的速度比 Jacobs要求的要快；他的两位共同创始人调查了多伦多地区的公司，发现该地区对人工智能专家的需求是加拿大每年人工智能专家人数的10倍。从某种意义上说，矢量对于现在全世界围绕深度学习的努力者来说是零起点：兑现技术，教授技术，改进和应用技术。数据中心正在建设，塔楼内充满了创业公司，整整一代学生都进入了这个领域。
 
-The impression you get standing on the Vector floor, bare and echoey and about to be filled, is that you’re at the beginning of something. But the peculiar thing about deep learning is just how old its key ideas are. Hinton’s breakthrough paper, with colleagues David Rumelhart and Ronald Williams, was published in 1986. The paper elaborated on a technique called backpropagation, or backprop for short. Backprop, in the words of Jon Cohen, a computational psychologist at Princeton, is “what all of deep learning is based on—literally everything.”
+你站在向量工作室光秃秃的地板上，四周很安静，你的心里只有一个感觉，你正在做某些事情的开始。但是深度学习的独特之处在于它的关键思想的大小。Hinton与同事David Rumelhart 和 Ronald Williams的突破性论文在1986年发布了。论文中阐述了一种叫做反向传播的技术，简称为反向支撑技术。用普林斯顿大学计算心理学家Jon Cohen反向支撑技术是“所有深度学习的基础—几乎一切”。
 
-When you boil it down, AI today is deep learning, and deep learning is backprop—which is amazing, considering that backprop is more than 30 years old. It’s worth understanding how that happened—how a technique could lie in wait for so long and then cause such an explosion—because once you understand the story of backprop, you’ll start to understand the current moment in AI, and in particular the fact that maybe we’re not actually at the beginning of a revolution. Maybe we’re at the end of one.
+也就是说，今天的人工之讷讷感是深度学习，深度学习是基础—而基础已经有了30多年的历史，这真是不可思议。所以这是值得去了解的，去了解到底发现了什么—使得一个技术可以持续使用那么长时间然后突然变强—因为一旦你了解了深度学习的故事，你就会明白人工智能的当前局势，你就会发现其特别之处在于我们可能已经不在革命的开始，而在革命的结束。
 
-### Vindication
+### 辩护
 
-The walk from the Vector Institute to Hinton’s office at Google, where he spends most of his time (he is now an emeritus professor at the University of Toronto), is a kind of living advertisement for the city, at least in the summertime. You can understand why Hinton, who is originally from the U.K., moved here in the 1980s after working at Carnegie Mellon University in Pittsburgh.
+从矢量研究所走到Hintor在谷歌的工作室，Hintor的大部分时间都是在工作室里度过的（他现在室多伦多大学的名誉教授）。至少在夏天，是这个城市的一个活广告。你可以理解为什么Hinton，一个原籍英国的人，在匹兹堡的卡内基梅隆大学工作后，在1980年代搬到这里。
 
-When you step outside, even downtown near the financial district, you feel as though you’ve actually gone into nature. It’s the smell, I think: wet loam in the air. Toronto was built on top of forested ravines, and it’s said to be “a city within a park”; as it’s been urbanized, the local government has set strict restrictions to maintain the tree canopy. As you’re flying in, the outer parts of the city look almost cartoonishly lush.
+当你走出去的时候，即使实在金融区附近的市中心，你也会觉得自己身处于大自然。你会闻到一个气味，我想是空气中湿润的土壤的气息。多伦多建在森林覆盖的峡谷之上，据说是"花园城市"；由于它已经城市化，当地政府已经制定了严格的限制赖保护树木。当你坐飞机来这座城市时，你会发现这座城市外部看起来就像童话场景一样郁郁葱葱。
 
-Maybe we’re not actually at the beginning of a revolution.
+也许我们并不在一场革命的开始。
 
-Toronto is the fourth-largest city in North America (after Mexico City, New York, and L.A.), and its most diverse: more than half the population was born outside Canada. You can see that walking around. The crowd in the tech corridor looks less San Francisco—young white guys in hoodies—and more international. There’s free health care and good public schools, the people are friendly, and the political order is relatively left-­leaning and stable; and this stuff draws people like Hinton, who says he left the U.S. because of the Iran-Contra affair. It’s one of the first things we talk about when I go to meet him, just before lunch.
+多伦多的北美的第四大城市（仅次于墨西哥、纽约、洛杉矶），这里十分的多元化：有一半以上的人口出生于加拿大以外。你看看周围走动的人群。技术走廊里的人群不像旧金山—年轻人的白人穿着国际化的衣服。这里有免费的医疗保障、很好的公立学校、人们十分友好、政治秩序相对落后和稳定。这些东西吸引了像Hinton这样的人，他们说他离开了美国是因为伊朗的逆反。这是我们在午饭前和他见面时谈论的第一件事。
 
-“Most people at CMU thought it was perfectly reasonable for the U.S. to invade Nicaragua,” he says. “They somehow thought they owned it.” He tells me that he had a big breakthrough recently on a project: “getting a very good junior engineer who’s working with me,” a woman named Sara Sabour. Sabour is Iranian, and she was refused a visa to work in the United States. Google’s Toronto office scooped her up.
+”CMU的大多数人认为美国入侵Nicaragua是完全合理的“，他说。“他们认为Nicaragua就应该是属于他们的。”他告诉我他最近在一个项目上取得了重大突破：“得到了一位与我一起工作的优秀工程师。”一位名叫 Sara Sabour的女士。Sabour是伊朗人，她在美国的工作签证被拒绝了。谷歌的多伦多工作室吸引了她。
 
-Hinton, who is 69 years old, has the kind, lean, English-looking face of the Big Friendly Giant, with a thin mouth, big ears, and a proud nose. He was born in Wimbledon, England, and sounds, when he talks, like the narrator of a children’s book about science: curious, engaging, eager to explain things. He’s funny, and a bit of a showman. He stands the whole time we talk, because, as it turns out, sitting is too painful. “I sat down in June of 2005 and it was a mistake,” he tells me, letting the bizarre line land before explaining that a disc in his back gives him trouble. It means he can’t fly, and earlier that day he’d had to bring a contraption that looked like a surfboard to the dentist’s office so he could lie on it while having a cracked tooth root examined.
+69岁的Hinton长得和蔼、消瘦、典型得英国人面容。嘴巴薄、耳朵大、鼻子高挺。他出生在英格兰的Wimbledon，声音听起来像一本儿童科学书的讲述者：好奇、迷人、渴望解释事物。他十分有趣，有点喜欢表演。他在我们的整个谈话过程中一直站着，因为事实证明，对他来说，坐着太痛苦了。“2005年6月，我坐了下来，然后结果弄错了。”他告诉我，在将他背后的圆盘解释清楚前让奇怪的线先落地给他带来了麻烦。这意味着他不能飞，那天的早些时候他不得不把一个看起来像冲浪板的装置带到牙医办公室，这样他就可以躺在上面检查牙根裂痕。
 
-In the 1980s Hinton was, as he is now, an expert on neural networks, a much-simplified model of the network of neurons and synapses in our brains. However, at that time it had been firmly decided that neural networks were a dead end in AI research. Although the earliest neural net, the Perceptron, which began to be developed in the 1950s, had been hailed as a first step toward human-level machine intelligence, a 1969 book by MIT’s ­Marvin Minsky and Seymour Papert, called *Perceptrons*, proved mathematically that such networks could perform only the most basic functions. These networks had just two layers of neurons, an input layer and an output layer. Nets with more layers between the input and output neurons could in theory solve a great variety of problems, but nobody knew how to train them, and so in practice they were useless. Except for a few holdouts like Hinton, *Perceptrons* caused most people to give up on neural nets entirely.
+20世纪80年代， Hinton和现在一样，是神经网络专家，就是我们大脑神经元和突触网络的简化模型。然而，在那时，人们已经坚定地认为神经网络是AI研究的死角。尽管最早的神经网络，始于上世纪50年代的Perceptron，被誉为人类迈向机器智能的第一步，麻省理工的MarvinMinsky和SymourPapert在1969年出版的一本书，叫做Perceptrons，从数学上证明了这种网络可以运行、只有最基本的功能。这些网络只有两层神经元，一个输入层和一个输出层。在输入和输出神经元之间理论上具有更多层的网络可以解决各种各样的问题，但是没有人知道如何训练它们，因此在实践中它们是无用的。除了一些像Hinton这样的僵持者之外，Perceptrons导致大多数人完全放弃神经网络。
 
-Hinton’s breakthrough, in 1986, was to show that backpropagation could train a deep neural net, meaning one with more than two or three layers. But it took another 26 years before increasing computational power made good on the discovery. [A 2012 paper](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf) by Hinton and [two of his Toronto students](https://www.technologyreview.com/lists/innovators-under-35/2015/visionary/ilya-sutskever/) showed that deep neural nets, trained using backpropagation, beat state-of-the-art systems in image recognition. “Deep learning” took off. To the outside world, AI seemed to wake up overnight. For Hinton, it was a payoff long overdue.
+在1986年，Hinton取得了突破，他展示了反向传播可以训练深度神经网络，就是一个具有两到三层以上的神经网络。但这一直到了26年后，计算能力才得到了提升。Hinton和[他的学生](https://www.technologyreview.com/lists/innovators-under-35/2015/visionary/ilya-sutskever/)在2012年的[论文](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)中提出了使用反向传播技术训练的深度神经网络在图像识别方面打败了最先进的系统。“深度学习实现了质的飞跃“。对外界来说，AI似乎一夜直接火爆了。但对于Hinton来说，这是他付出了很多以后的回报。
 
-### Reality distortion field
+### 现实扭曲力场
 
-A neural net is usually drawn like a club sandwich, with layers stacked one atop the other. The layers contain artificial neurons, which are dumb little computational units that get excited—the way a real neuron gets excited—and pass that excitement on to the other neurons they’re connected to. A neuron’s excitement is represented by a number, like 0.13 or 32.39, that says just how excited it is. And there’s another crucial number, on each of the connections between two neurons, that determines how much excitement should get passed from one to the other. That number is meant to model the strength of the synapses between neurons in the brain. When the number is higher, it means the connection is stronger, so more of the one’s excitement flows to the other.
+一个神经网络通常就像一个三明治一样构成，一层叠着一层。这些层就有人工神经元，他们是计算单元，他们兴奋—就像真正的神经元一样—将兴奋传递给他们相连接的其他神经元。可以用数字表示一个神经元的兴奋。比如0.13，32.39。数字说明的兴奋的程度。在每两个相连接的神经元中还有另一个关键的数字，它决定了兴奋应该传导多少给另一个。这个数字是为了模拟大脑中神经元之间突触的强度。这个数字越高，意味着连接越强，就会传递更大的兴奋程度。
 
+Hinton、David Rumelhart和Ronald Williams关于“错误传播”的开创性著作。
 
+深度神经网络最成功的应用之一就是图像识别，比如HBO在硅谷的那个可以判断图片中是否有热狗这样的项目。这样的项目真的存在，这是10年前不可能做到的。要让他们开始工作，第一步是获取一张图片。简单点说，它是一个有着100个像素宽和100个像素高的小黑白图片。你将图片放入神经网并用过设置输入层神经元的兴奋程度，使它等于每个像素的亮度。这就是三明治的底层：10000个神经元（100×100），代表图像中每个像素的亮度。
 
+然后把这一大层神经元连接到另一大层神经元上，比如说几千个，然后这些又连接到几千个神经元的另一层，这样持续好多层。最后，在三明治的最上层，也就是输出层，你只有两个神经元，一个代表“热狗”，另一个代表“不是热狗”。现在的想法是教会神经网络如果图片中有热狗那么就只激发第一个神经元，如果图片中没有热狗就只激发第二个神经元。反向传播技术—Hinton已经建立了他的职业生涯—正是这样做的方法
 
+虽然这个神经网络在处理大数据时的效果很好，但是它的后台支持非常简单。这就是为什么大数据在AI中那么重要—为什么Facebook和Google对它那么渴求，以及为什么矢量研究所决定与加拿大最大的四家医院发展成为数据伙伴关系。
 
+这种情况下，数据采集数百万张图片，一些有热狗、一些没有；并将有热狗的进行标注。当你第一次创建你的神经网络时，神经之间的连接应该时任意权重的—随机数字表示每个连接要传递多谁刺激，就像大脑的突触还没有进化的状态。反向传播就是要改变这些权重，使他们正常工作。这样的结果是当你将有热狗的图片输入到神经网络中的输入层，输出层的“热狗”神经元就变得兴奋。
 
+假设你的第一张训练照片是一张钢琴的图片。你把图片的像素强度的100x100为10000的数字，每一个都是神经元网络的底层。由于兴奋传播的网络根据相邻层神经元之间的连接强度，它最终会在最后一层，有两个神经元，说图片中是否有热狗。因为输入的图片是一架钢琴，最理想的是“热狗”神经元应该输出0就可以了，而不是“热狗”神经元应该输出一个高一些的数。但是让我们说，这种结果并不奏效。假设网络对这个图片的识别是错误的。反向传播是对于一个给定的训练例子程序，更改网络中的每一个连接的强度，修复错误的过程。
 
+它的工作方式是，从最后两个神经元开始，找出它们的错误程度：兴奋值理论上应该是多少，它们实际上是多少？完成后，您将查看通向这些神经元的每个连接（下一层中的连接），并找出它们对错误的贡献。你一直这样做，直到你已经走到了第一组连接，在网络的最底层。此时，您知道每个单独的连接对总体错误贡献了多少，在最后一步中，你尽可能减少总体错误的去更改每个权重。这种技术称为“反向传播”，因为从输出开始，您正在通过网络“向后（或向下）传播”错误。
 
+令人难以置信的是，当你使用数百万或数十亿张图像进行此操作后，网络开始非常擅长于判断图像中是否包含热狗。更值得注意的是，这些图像识别网络的各个层开始能够以与我们自己的视觉系统相同的方式“看到”图像。也就是说，第一层可能最终检测出边缘，也就是说，它的神经元在有边缘时兴奋，而在没有边缘时不兴奋；该层上面的一层可能能够检测出边缘集合，比如角落；该层上面的一层可能开始看到形状；再上一层，它可能会开始寻找像“open bun ”或“closed bun”之类的东西，在这个意义上，神经元对任何一种情况都有反应。换言之，网络将自己组织成层次结构，而不必经过明确的编程。
 
+当你将问题进行一些小改变时，人工智能不会崩溃。
 
+这是每个人都着迷的东西。这不仅意味着神经网络很好的分类热狗或别的东西的图片：它们似乎能够表达想法。通过文字，你可以更清楚地看到这一点。你可以把维基百科数十亿字长的文本，输入一个简单的神经网络，训练它，对于每一个单词，一个大的数字列表，对应于一个层中每个神经元的兴奋。如果你把这些数字看成是一个复杂空间中的坐标，那么你所做的就是在这个空间中的某个地方找到一个点。现在，训练你的网络，这样一来，在维基百科页面上出现彼此接近的词语就会得到相似的坐标，而且，天哪，有些疯狂的事情发生了：具有相似含义的词语开始在空间中彼此接近地出现。也就是说，“nsan”和“unhinged”将具有彼此接近的坐标，“three”和“seven”等等。更重要的是，所谓的向量算法使得可以从矢量“法国”中减去“巴黎”的矢量，添加“意大利”的矢量，最后在“罗马”附近，没有任何人明确地告诉网络罗马是意大利的，巴黎是属于法国的。
 
-
-
-
-
-A diagram from seminal work on “error propagation” by Hinton, David Rumelhart, and Ronald Williams.
-
-One of the most successful applications of deep neural nets is in image recognition—as in the memorable scene in HBO’s *Silicon Valley* where the team builds a program that can tell whether there’s a hot dog in a picture. Programs like that actually exist, and they wouldn’t have been possible a decade ago. To get them to work, the first step is to get a picture. Let’s say, for simplicity, it’s a small black-and-white image that’s 100 pixels wide and 100 pixels tall. You feed this image to your neural net by setting the excitement of each simulated neuron in the input layer so that it’s equal to the brightness of each pixel. That’s the bottom layer of the club sandwich: 10,000 neurons (100x100) representing the brightness of every pixel in the image.
-
-You then connect this big layer of neurons to another big layer of neurons above it, say a few thousand, and these in turn to another layer of another few thousand neurons, and so on for a few layers. Finally, in the topmost layer of the sandwich, the output layer, you have just two neurons—one representing “hot dog” and the other representing “not hot dog.” The idea is to teach the neural net to excite only the first of those neurons if there’s a hot dog in the picture, and only the second if there isn’t. Backpropagation—the technique that Hinton has built his career upon—is the method for doing this.
-
-Backprop is remarkably simple, though it works best with huge amounts of data. That’s why big data is so important in AI—why Facebook and Google are so hungry for it, and why the Vector Institute decided to set up shop down the street from four of Canada’s largest hospitals and develop data partnerships with them.
-
-In this case, the data takes the form of millions of pictures, some with hot dogs and some without; the trick is that these pictures are labeled as to which have hot dogs. When you first create your neural net, the connections between neurons might have random weights—random numbers that say how much excitement to pass along each connection. It’s as if the synapses of the brain haven’t been tuned yet. The goal of backprop is to change those weights so that they make the network work: so that when you pass in an image of a hot dog to the lowest layer, the topmost layer’s “hot dog” neuron ends up getting excited.
-
-Suppose you take your first training image, and it’s a picture of a piano. You convert the pixel intensities of the 100x100 picture into 10,000 numbers, one for each neuron in the bottom layer of the network. As the excitement spreads up the network according to the connection strengths between neurons in adjacent layers, it’ll eventually end up in that last layer, the one with the two neurons that say whether there’s a hot dog in the picture. Since the picture is of a piano, ideally the “hot dog” neuron should have a zero on it, while the “not hot dog” neuron should have a high number. But let’s say it doesn’t work out that way. Let’s say the network is wrong about this picture. Backprop is a procedure for rejiggering the strength of every connection in the network so as to fix the error for a given training example.
-
-The way it works is that you start with the last two neurons, and figure out just how wrong they were: how much of a difference is there between what the excitement numbers should have been and what they actually were? When that’s done, you take a look at each of the connections leading into those neurons—the ones in the next lower layer—and figure out their contribution to the error. You keep doing this until you’ve gone all the way to the first set of connections, at the very bottom of the network. At that point you know how much each individual connection contributed to the overall error, and in a final step, you change each of the weights in the direction that best reduces the error overall. The technique is called “backpropagation” because you are “propagating” errors back (or down) through the network, starting from the output.
-
-The incredible thing is that when you do this with millions or billions of images, the network starts to get pretty good at saying whether an image has a hot dog in it. And what’s even more remarkable is that the individual layers of these image-recognition nets start being able to “see” images in sort of the same way our own visual system does. That is, the first layer might end up detecting edges, in the sense that its neurons get excited when there are edges and don’t get excited when there aren’t; the layer above that one might be able to detect sets of edges, like corners; the layer above that one might start to see shapes; and the layer above that one might start finding stuff like “open bun” or “closed bun,” in the sense of having neurons that respond to either case. The net organizes itself, in other words, into hierarchical layers without ever having been explicitly programmed that way.
-
-A real intelligence doesn’t break when you slightly change the problem.
-
-This is the thing that has everybody enthralled. It’s not just that neural nets are good at classifying pictures of hot dogs or whatever: they seem able to build representations of ideas. With text you can see this even more clearly. You can feed the text of Wikipedia, many billions of words long, into a simple neural net, training it to spit out, for each word, a big list of numbers that correspond to the excitement of each neuron in a layer. If you think of each of these numbers as a coordinate in a complex space, then essentially what you’re doing is finding a point, known in this context as a vector, for each word somewhere in that space. Now, train your network in such a way that words appearing near one another on Wikipedia pages end up with similar coordinates, and voilà, something crazy happens: words that have similar meanings start showing up near one another in the space. That is, “insane” and “unhinged” will have coordinates close to each other, as will “three” and “seven,” and so on. What’s more, so-called vector arithmetic makes it possible to, say, subtract the vector for “France” from the vector for “Paris,” add the vector for “Italy,” and end up in the neighborhood of “Rome.” It works without anyone telling the network explicitly that Rome is to Italy as Paris is to France.
-
-“It’s amazing,” Hinton says. “It’s shocking.” Neural nets can be thought of as trying to take things—images, words, recordings of someone talking, medical data—and put them into what mathematicians call a high-dimensional vector space, where the closeness or distance of the things reflects some important feature of the actual world. Hinton believes this is what the brain itself does. “If you want to know what a thought is,” he says, “I can express it for you in a string of words. I can say ‘John thought, “Whoops.”’ But if you ask, ‘What is the thought? What does it mean for John to have that thought?’ It’s not that inside his head there’s an opening quote, and a ‘Whoops,’ and a closing quote, or even a cleaned-up version of that. Inside his head there’s some big pattern of neural activity.” Big patterns of neural activity, if you’re a mathematician, can be captured in a vector space, with each neuron’s activity corresponding to a number, and each number to a coordinate of a really big vector. In Hinton’s view, that’s what thought is: a dance of vectors.
+“这太神奇了，”Hinton说。“这太令人震惊了。”神经网络可以被认为是试图把所有事物——图像、文字、某人谈话的记录、医学数据——放入数学家所说的高维向量空间，在那里事物的距离或接近度反映了他真实的世界一些中重要的特征。Hinton相信这就是大脑本身所做的。“如果你想知道一个想法是什么，”他说，“我可以用一串词语来表达它。我可以说：“约翰想，”哎哟，“但是如果你问，‘什么是思想？”约翰有这样的想法意味着什么？他头脑里并没有开头引语，也没有“哎哟”和结尾引语，甚至还有一个清理过的版本。在他的脑袋里有一些神经活动的大模式。“如果你是个数学家，那么大的神经活动模式可以在向量空间中捕捉到，每个神经元的活动都对应一个数字，每个数字对应一个真正大向量的坐标。在Hinton看来，思想就是一种矢量的舞蹈。
 
 ![img](https://cdn.technologyreview.com/i/images/geoff-3342-cmyk-final-web_0.jpg?sw=600&cx=0&cy=0&cw=864&ch=1296)
 
-It is no coincidence that Toronto’s flagship AI institution was named for this fact. Hinton was the one who came up with the name Vector Institute.
+多伦多的AI顶尖机构以矢量命名事实绝非巧合。Hinton就是那个名字矢量研究所的创始人。
 
-There’s a sort of reality distortion field that Hinton creates, an air of certainty and enthusiasm, that gives you the feeling there’s nothing that vectors can’t do. After all, look at what they’ve been able to produce already: cars that drive themselves, computers that detect cancer, machines that instantly translate spoken language. And look at this charming British scientist talking about gradient descent in high-dimensional spaces!
+Hinton创造了一种现实扭曲场，一种确定性和热情的氛围，让你感觉到没有矢量不能做的事情。毕竟，看看他们已经能够生产什么：自动驾驶汽车，检测癌症的计算机，能够即时翻译口语的机器。看看这位迷人的英国科学家谈论高维空间中的梯度下降的样子！
 
-It’s only when you leave the room that you remember: these “deep learning” systems are still pretty dumb, in spite of how smart they sometimes seem. A computer that sees a picture of a pile of doughnuts piled up on a table and captions it, automatically, as “a pile of doughnuts piled on a table” seems to understand the world; but when that same program sees a picture of a girl brushing her teeth and says “The boy is holding a baseball bat,” you realize how thin that understanding really is, if ever it was there at all.
+只有当你离开房间时，你才会想起来：这些“深度学习”系统仍然十分笨拙，尽管它们有时看起来多么聪明。他们在看到一堆油炸圈饼的图片堆放在桌子上，会自动地把它称为“一堆甜甜圈堆在桌子上”，似乎理解了世界，但是当它看到一个女孩刷牙的照片时说：“男孩拿着棒球棒。”你就会意识到，如果它真的存在的话，它的理解真的很差。
 
-Neural nets are just thoughtless fuzzy pattern recognizers, and as useful as fuzzy pattern recognizers can be—hence the rush to integrate them into just about every kind of software—they represent, at best, a limited brand of intelligence, one that is easily fooled. A deep neural net that recognizes images can be totally stymied when you change a single pixel, or add visual noise that’s imperceptible to a human. Indeed, almost as often as we’re finding new ways to apply deep learning, we’re finding more of its limits. Self-driving cars can fail to navigate conditions they’ve never seen before. Machines have trouble parsing sentences that demand common-sense understanding of how the world works.
+ 神经网络只是没有思想的的模糊模式识别，正如模糊模式识别有用的原因，人们因此急于将它们集成到几乎每一种软件中使用，在最好的情况下，有限的品牌的智慧，是一个很容易被愚弄。深度神经网络识别的图像的功能很容易被影响当你改变一个像素，或增加视觉噪声是觉察不到的人。事实上，在我们发现新的方法来应用深度学习时，我们也发现了更多的局限性。无人驾驶的汽车无法在以前从未见过的条件下航行。机器在分析需要对日常生活有常识性了解的句子时遇到困难。 
 
-Deep learning in some ways mimics what goes on in the human brain, but only in a shallow way—which perhaps explains why its intelligence can sometimes seem so shallow. Indeed, backprop wasn’t discovered by probing deep into the brain, decoding thought itself; it grew out of models of how animals learn by trial and error in old classical-conditioning experiments. And most of the big leaps that came about as it developed didn’t involve some new insight about neuroscience; they were technical improvements, reached by years of mathematics and engineering. What we know about intelligence is nothing against the vastness of what we still don’t know.
+在某些方面，深层学习模仿了人类大脑中正在发生的事情，但是仅仅以一种简单的方式——这也许解释了为什么它的智力有时看起来如此肤浅。的确，反向传播不是通过深入大脑，解码思想本身来发现的；它是由动物在古老的经典条件反射实验中通过反复试验来学习的模型发展而来的。当它发展起来的时候，其中大部分的进步并没有涉及一些关于神经科学的新见解；它们是由多年的数学和工程学所达到的技术进步。目前，我们所不知道的远远多于我们所知道的。
 
-David Duvenaud, an assistant professor in the same department as Hinton at the University of Toronto, says deep learning has been somewhat like engineering before physics. “Someone writes a paper and says, ‘I made this bridge and it stood up!’ Another guy has a paper: ‘I made this bridge and it fell down—but then I added pillars, and then it stayed up.’ Then pillars are a hot new thing. Someone comes up with arches, and it’s like, ‘Arches are great!’” With physics, he says, “you can actually understand what’s going to work and why.” Only recently, he says, have we begun to move into that phase of actual understanding with artificial intelligence.
+Hinton说，“大多数会议都包含一些细微的变化……而不是努力思考然后说，‘我们现在所做的真正不足的是什么？’有什么困难吗？让我们集中注意力在困难上。“
 
-Hinton himself says, “Most conferences consist of making minor variations … as opposed to thinking hard and saying, ‘What is it about what we’re doing now that’s really deficient? What does it have difficulty with? Let’s focus on that.’”
+当你看到内部的一个又一个的巨大进步时，这是很难从外部欣赏。但现在AI的最新进展没有工程那么科学，甚至有时候是修修补补。尽管我们已经开始更好地掌握了什么样的变化可以改进深层学习系统，但我们仍然在很大程度上不了解这些系统是如何工作的，或许它们可以组成像人类思想这样强大的东西。
 
-It can be hard to appreciate this from the outside, when all you see is one great advance touted after another. But the latest sweep of progress in AI has been less science than engineering, even tinkering. And though we’ve started to get a better handle on what kinds of changes will improve deep-learning systems, we’re [still largely in the dark](https://www.technologyreview.com/s/604087/the-dark-secret-at-the-heart-of-ai/) about how those systems work, or whether they could ever add up to something as powerful as the human mind.
+值得思考的是，关于反向传播，我们是否已经绞尽脑汁。如果是这样的话，这可能意味着人工智能进展的停滞期。
 
-It’s worth asking whether we’ve wrung nearly all we can out of backprop. If so, that might mean a plateau for progress in artificial intelligence.
-
-##### Recommended for You
+##### 给你的一些推荐
 
 1. [New autonomous farm wants to produce food without human workers](https://www.technologyreview.com/s/612230/new-autonomous-farm-wants-to-produce-food-without-human-workers/)
 2. [Quantum machine learning is a big leap away, at least for now](https://www.technologyreview.com/the-download/612235/quantum-machine-learning-is-a-big-leap-away-at-least-for-now/)
@@ -100,46 +84,46 @@ It’s worth asking whether we’ve wrung nearly all we can out of backprop. If 
 4. [How to know if you’re affected by Facebook’s massive data breach](https://www.technologyreview.com/the-download/612218/how-to-know-if-youre-affected-by-the-facebooks-massive-data-breach/)
 5. [Jeff Bezos has just bagged a massive rocket engine deal](https://www.technologyreview.com/the-download/612214/jeff-bezos-has-just-bagged-a-massive-rocket-engine-deal/)
 
-### Patience
+### 耐心
 
-If you want to see the next big thing, something that could form the basis of machines with a much more flexible intelligence, you should probably check out research that resembles what you would’ve found had you encountered backprop in the ’80s: smart people plugging away on ideas that don’t really work yet.
+如果你想看到下一个大的成果，一些可以构成具有灵活智能的机器基础的东西，你应该去看看那些在80年代遇到反向传播的研究结果：聪明的人会放弃那些没有起到作用的想法。
 
-A few months ago I went to the Center for Minds, Brains, and Machines, a multi-institutional effort headquartered at MIT, to watch a friend of mine, Eyal Dechter, defend his dissertation in cognitive science. Just before the talk started, his wife Amy, their dog Ruby, and their daughter Susannah were milling around, wishing him well. On the screen was a picture of Ruby, and next to it one of Susannah as a baby. When Dad asked Susannah to point herself out, she happily slapped a long retractable pointer against her own baby picture. On the way out of the room, she wheeled a toy stroller behind her mom and yelled “Good luck, Daddy!” over her shoulder. “Vámanos!” she said finally. She’s two.
+几个月前，我去了总部设在麻省理工学院的“大脑与机器中心”，它是一个多伦多的机构。去那里看我的一个朋友，Eyal Dechter，并为他的认知科学论文辩护。就在演讲开始前，他的妻子 Amy,、他们的狗Ruby和他们的女儿苏珊娜在附近闲逛，祝他一切顺利。屏幕上是他的狗的照片，接下来一张是她女儿小时候的样子。当爸爸要求苏珊娜指出自己的时候，她高兴地拿了一个长的可缩回的指针来指着她自己小时候的照片。在走出房间的路上，她推着一辆玩具推车跟在她妈妈身后喊道：“祝你好运，爸爸！”在她的肩膀上。“Vámanos！“她最后说。她才两岁。
 
-**“The fact that it doesn’t work is just a temporary annoyance.”**
+事实是它并不起作用只是暂时的烦恼。
 
-Eyal started his talk with a beguiling question: How is it that Susannah, after two years of experience, can learn to talk, to play, to follow stories? What is it about the human brain that makes it learn so well? Will a computer ever be able to learn so quickly and so fluidly?
+Eyal以一个引人思考的问题开始他的谈话：Susannah,经历两年的时间，怎么能学会说话、玩耍、说故事呢？是什么使人类大脑学习得这么好？计算机能如此快速、如此流畅地学习吗？
 
-We make sense of new phenomena in terms of things we already understand. We break a domain down into pieces and learn the pieces. Eyal is a mathematician and computer programmer, and he thinks about tasks—like making a soufflé—as really complex computer programs. But it’s not as if you learn to make a soufflé by learning every one of the program’s zillion micro-instructions, like “Rotate your elbow 30 degrees, then look down at the countertop, then extend your pointer finger, then …” If you had to do that for every new task, learning would be too hard, and you’d be stuck with what you already know. Instead, we cast the program in terms of high-level steps, like “Whip the egg whites,” which are themselves composed of subprograms, like “Crack the eggs” and “Separate out the yolks.”
+我们从我们已经了解的事物中理解新现象。我们把一个领域分解成碎片，学习这些碎片。Eyal是一个数学家和程序员，他认为制作蛋奶酥这样的任务，就像制作复杂的计算机程序一样。但是并不是说你通过学习无数个程序的微指令，比如“转动手肘30度，然后俯视桌面，然后伸出你的手指，然后……”来学习制作蛋奶酥，如果你必须为每个新任务都这样做，那么学习就太难了。你会努力坚持你已经知道的。一样的来看，我们按照高级步骤来编写程序，比如“搅打蛋清”，它们本身由子程序组成，比如“敲打鸡蛋”和“分离蛋黄”。
 
-Related Story
+相关的故事
 
 ![img](https://cdn.technologyreview.com/i/images/mj17-aiblackbox1.jpg?sw=180&cx=0&cy=377&cw=1563&ch=879)
 
-The Dark Secret at the Heart of AI
+AI核心的黑暗秘密。
 
-No one really knows how the most advanced algorithms do what they do. That could be a problem.
+ 没有人真正知道最先进的算法是如何做到的。这是一个问题。 
 
-Computers don’t do this, and that is a big part of the reason they’re dumb. To get a deep-learning system to recognize a hot dog, you might have to feed it 40 million pictures of hot dogs. To get Susannah to recognize a hot dog, you show her a hot dog. And before long she’ll have an understanding of language that goes deeper than recognizing that certain words often appear together. Unlike a computer, she’ll have a model in her mind about how the whole world works. “It’s sort of incredible to me that people are scared of computers taking jobs,” Eyal says. “It’s not that computers can’t replace lawyers because lawyers do really complicated things. It’s because lawyers read and talk to people. It’s not like we’re close. We’re so far.”
+计算机不这么做，这也是他们愚蠢的一个重要原因。要想让深度学习系统能够识别一个热狗，你必须给它喂4000万张热狗图片。为了让Susannah认出一只热狗，你给她看了一条热狗。用不了多久，她对语言的理解就会比意识到某些词经常出现在一起更深刻。与计算机不同，她的脑子里会有一个关于整个世界如何运作的概念。Eyal说：“对我来说，人们害怕计算机工作这是不可思议的一件事。就像计算机不能取代律师并不是因为律师确实做了复杂的事情，而是因为律师会阅读并会与人交谈。这并不是说我们不是很亲密，我们走得太远了。”
 
-A real intelligence doesn’t break when you slightly change the requirements of the problem it’s trying to solve. And the key part of Eyal’s thesis was his demonstration, in principle, of how you might get a computer to work that way: to fluidly apply what it already knows to new tasks, to quickly bootstrap its way from knowing almost nothing about a new domain to being an expert.
+当你稍微改变它试图解决的问题的要求时，真正的智力不会出现问题。Eyal的论文的关键部分是他的演示，原则上，如何让计算机以这种方式工作：流畅地将计算机已经知道的应用到新的任务中，快速引导其从几乎不知道的新领域到成为专家的方式。
 
 ![img](https://cdn.technologyreview.com/i/images/nd17-hinton1.png?sw=600&cx=0&cy=0&cw=2235&ch=2365)
 
-Hinton made this sketch for his next big idea, to organize neural nets with "capsules."
+Hinton为他的下一个大创意画了这个草图，用“胶囊”来组织神经网络。
 
-Essentially, it is a procedure he calls the “exploration–compression” algorithm. It gets a computer to function somewhat like a programmer who builds up a library of reusable, modular components on the way to building more and more complex programs. Without being told anything about a new domain, the computer tries to structure knowledge about it just by playing around, consolidating what it’s found, and playing around some more, the way a human child does.
+本质上，这是一个他称之为“探索-压缩”算法的过程。它让计算机像程序员一样工作，在构建越来越复杂的程序的过程中建立一个可重用、模块化的组件库。计算机不被告知任何有关新领域的知识，而是试图通过尝试、巩固所发现的内容以及尝试更多的东西来构建关于它的知识，就像人类孩子所做的那样。
 
-His advisor, Joshua Tenenbaum, is one of the most highly cited researchers in AI. Tenenbaum’s name came up in half the conversations I had with other scientists. Some of the key people at DeepMind—the team behind AlphaGo, which shocked computer scientists by beating a world champion player in the complex game of Go in 2016—had worked as his postdocs. He’s involved with a startup that’s trying to give self-driving cars some intuition about basic physics and other drivers’ intentions, so they can better anticipate what would happen in a situation they’ve never seen before, like when a truck jackknifes in front of them or when someone tries to merge very aggressively.
+他的导师Joshua Tenenbaum是AI届受高度重视的研究者之一。Tenenbaum的名字经常出现在我和其他科学家谈话的。DeepMind—AlphaGo背后的团队—在2016年围棋的游戏中击败了一位世界冠军选手，这让计算机科学家大吃一惊的一些关键人物都曾经担任过他的博士后。他参与了一家创业公司，试图给自动驾驶汽车提供一些关于基本物理学和其他司机意图的直觉，这样他们就能更好地预见在他们以前从未见过的情况会如何处理，比如当一辆卡车在他们面前行驶，或者当有人非常快的跑过去。
 
-Eyal’s thesis doesn’t yet translate into those kinds of practical applications, let alone any programs that would make headlines for besting a human. The problems Eyal’s working on “are just really, really hard,” Tenenbaum said. “It’s gonna take many, many generations.”
+Eyal的论文还没有被翻译成那些实际的应用，更不用说那些号称任何能成为打败人类的头条新闻的程序了。Tenenbaum说，Eyal正在努力解决的问题“真的很难”。“这需要很多很多代人。”
 
-Tenenbaum has long, curly, whitening hair, and when we sat down for coffee he had on a button-down shirt with black slacks. He told me he looks to the story of backprop for inspiration. For decades, backprop was cool math that didn’t really accomplish anything. As computers got faster and the engineering got more sophisticated, suddenly it did. He hopes the same thing might happen with his own work and that of his students, “but it might take another couple decades.”
+Tenenbaum有一头长长的卷曲的美白头发，当我们坐下来喝咖啡时，他穿了一件带黑裤的纽扣衬衫。他告诉我，他关注的是反向传播的故事。几十年来，反向传播是一个很酷的数学，并没有真正完成任何事情。随着计算机变得越来越快，工程变得越来越复杂，它突然出现了。他希望同样的事情可能发生在他自己的作品和他的学生身上，“但这可能还要再花几十年。”
 
-As for Hinton, he is convinced that overcoming AI’s limitations involves building “a bridge between computer science and biology.” Backprop was, in this view, a triumph of biologically inspired computation; the idea initially came not from engineering but from psychology. So now Hinton is trying to pull off a similar trick.
+至于Hinton，他确信克服人工智能的局限性需要建立“计算机科学与生物学之间的桥梁”。在这个观点中，Backprop是生物学启发的计算的胜利；这个想法最初不是来自工程，而是来自心理学。现在，Hinton正试图采取类似的方法。
 
-Neural networks today are made of big flat layers, but in the human neocortex real neurons are arranged not just horizontally into layers but vertically into columns. Hinton thinks he knows what the columns are for—in vision, for instance, they’re crucial for our ability to recognize objects even as our viewpoint changes. So he’s building an artificial version—he calls them “capsules”—to test the theory. So far, it hasn’t panned out; the capsules haven’t dramatically improved his nets’ performance. But this was the same situation he’d been in with backprop for nearly 30 years.
+如今的神经网络是由大而平的层构成的，但是在人类新皮层中，真正的神经元不仅水平地排列成层，而且垂直地排列成列。Hinton认为他知道列是做什么用的，例如，即使我们的观点发生了变化，它们对于我们识别对象的能力也是至关重要的。所以他正在构建一个人工版本，他称之为“胶囊”来测试这个理论。到目前为止，它还没有被淘汰，胶囊并没有显著改善他的神经网络的性能。就像他在研究反向传播的那30年的情况一样。
 
-“This thing just has to be right,” he says about the capsule theory, laughing at his own boldness. “And the fact that it doesn’t work is just a temporary annoyance.”
+“这件事一定是正确的，”他谈到胶囊理论时，嘲笑自己的大胆。“它现在不起作用只是暂时的烦恼。”
 
-*James Somers is a writer and programmer based in New York City. His previous article for* MIT Technology Review *was “Toolkits for the Mind” in May/June 2015, which showed how Internet startups are shaped by the programming languages they use.*
+*James Somers*是一位作家和程序员，居住在纽约。在2015年5月/6月，他在《麻省理工技术评论》上发表的文章是的“思维的工具包”，文章展示了他们使用的编程语言是如何塑造互联网创业企业的。
