@@ -1,5 +1,5 @@
-| 标题 | 简介 |
-| ---- | ---- |
-|      |      |
-|      |      |
-|      |      |
+| 标题                                                         | 简介 |
+| ------------------------------------------------------------ | ---- |
+| [A Tour of Gotchas When Implementing Deep Q Networks with Keras and OpenAi Gym](http://srome.github.io/A-Tour-Of-Gotchas-When-Implementing-Deep-Q-Networks-With-Keras-And-OpenAi-Gym/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [Scientists Can Read a Bird’s Brain and Predict Its Next Song](https://www.technologyreview.com/s/609032/scientists-can-read-a-birds-brain-and-predict-its-next-song/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [TensorFlow* Optimizations on Modern Intel® Architecture](https://software.intel.com/en-us/articles/tensorflow-optimizations-on-modern-intel-architecture?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
