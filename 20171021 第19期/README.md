@@ -1,5 +1,5 @@
-| 标题 | 简介 |
-| ---- | ---- |
-|      |      |
-|      |      |
-|      |      |
+| 标题                                                         | 简介 |
+| ------------------------------------------------------------ | ---- |
+| [How to Prepare Movie Review Data for Sentiment Analysis](https://machinelearningmastery.com/prepare-movie-review-data-sentiment-analysis/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [8 Essential Tips for People starting a Career in Data Science](https://www.analyticsvidhya.com/blog/2017/10/tips-people-starting-career-data-science/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [Hey Siri: An On-device DNN-powered Voice Trigger for Apple’s Personal Assistant](https://machinelearning.apple.com/2017/10/01/hey-siri.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
