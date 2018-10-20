@@ -2,6 +2,8 @@
 
 # Word embeddings in 2017: Trends and future directions
 
+原文链接：[Word embeddings in 2017: Trends and future directions](http://ruder.io/word-embeddings-2017/index.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
+
 Table of contents:
 
 - [Subword-level embeddings](http://ruder.io/word-embeddings-2017/index.html#subwordlevelembeddings)

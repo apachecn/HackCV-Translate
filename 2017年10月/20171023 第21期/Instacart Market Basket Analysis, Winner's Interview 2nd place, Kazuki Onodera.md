@@ -1,8 +1,6 @@
 # Instacart Market Basket Analysis, Winner's Interview: 2nd place, Kazuki Onodera
 
-[Edwin Chen](http://blog.kaggle.com/author/edwinchen/)|09.21.2017
-
-
+原文链接：[Instacart Market Basket Analysis, Winner's Interview: 2nd place, Kazuki Onodera](http://blog.kaggle.com/2017/09/21/instacart-market-basket-analysis-winners-interview-2nd-place-kazuki-onodera/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 Our recent [Instacart Market Basket Analysis competition](https://www.kaggle.com/c/instacart-market-basket-analysis) challenged Kagglers to predict which grocery products an Instacart consumer will purchase again and when. Imagine, for example, having milk ready to be added to your cart right when you run out, or knowing that it's time to stock up again on your favorite ice cream.
 

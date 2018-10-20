@@ -1,12 +1,6 @@
 # 8 Essential Tips for People starting a Career in Data Science
 
-[FAIZAN SHAIKH](https://www.analyticsvidhya.com/blog/author/jalfaizy/), 
-
-OCTOBER 13, 2017
-
-
-
-
+原文链接：[8 Essential Tips for People starting a Career in Data Science](https://www.analyticsvidhya.com/blog/2017/10/tips-people-starting-career-data-science/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 ## Introduction
 

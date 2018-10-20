@@ -2,7 +2,9 @@
 
 # The difference between Statistical Modeling and Machine Learning, as I see it
 
-原文链接：[The difference between Statistical Modeling and Machine Learning, as I see it](https://www.linkedin.com/pulse/difference-between-statistical-modeling-machine-i-see-schabenberger?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
+Published on June 30, 2016
+
+![Oliver Schabenberger](https://static.licdn.com/sc/h/djzv59yelk5urv2ujlazfyvrk)
 
 ### [Oliver Schabenberger](https://www.linkedin.com/in/oschabenberger?trk=author_mini-profile_title)[Follow](https://www.linkedin.com/uas/login?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Fpulse%2Fdifference-between-statistical-modeling-machine-i-see-schabenberger&trk=author-info__follow-button)
 

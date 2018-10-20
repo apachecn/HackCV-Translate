@@ -1,14 +1,6 @@
 # How to Prepare Movie Review Data for Sentiment Analysis
 
-by [Jason Brownlee](https://machinelearningmastery.com/author/jasonb/) on October 16, 2017 in [Deep Learning for Natural Language Processing](https://machinelearningmastery.com/category/natural-language-processing/)
-
-
-
-
-
-
-
-
+原文链接：[How to Prepare Movie Review Data for Sentiment Analysis](https://machinelearningmastery.com/prepare-movie-review-data-sentiment-analysis/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 Text data preparation is different for each problem.
 

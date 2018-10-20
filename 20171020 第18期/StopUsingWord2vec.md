@@ -1,5 +1,7 @@
 # Stop Using word2vec
 
+原文链接：[Stop Using word2vec](https://multithreaded.stitchfix.com/blog/2017/10/18/stop-using-word2vec/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
+
 When I started playing with word2vec four years ago I needed (and luckily had) tons of supercomputer time. But because of advances in our understanding of word2vec, computing word vectors now takes fifteen minutes on a single run-of-the-mill computer with standard numerical libraries[1](https://multithreaded.stitchfix.com/blog/2017/10/18/stop-using-word2vec/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com#1). Word vectors are [awesome](http://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/) but you don’t need a neural network – and definitely don’t need deep learning – to find them[2](https://multithreaded.stitchfix.com/blog/2017/10/18/stop-using-word2vec/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com#2). So if you’re using word vectors and aren’t gunning for state of the art or a paper publication then *stop using word2vec.*
 
 When we’re finished you’ll measure word similarities:

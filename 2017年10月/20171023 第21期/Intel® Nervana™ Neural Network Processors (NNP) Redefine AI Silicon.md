@@ -1,6 +1,6 @@
 ## Intel® Nervana™ Neural Network Processors (NNP) Redefine AI Silicon
 
-October 17, 2017
+原文链接：[Intel® Nervana™ Neural Network Processors (NNP) Redefine AI Silicon)](http://iamtrask.github.io/2015/07/12/basic-python-network/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 As our Intel CEO Brian Krzanich discussed earlier today at Wall Street Journal’s [D.Live event](https://dlive.wsj.com/), Intel will soon be shipping the world’s first family of processors designed from the ground up for artificial intelligence (AI): the [Intel® Nervana™ Neural Network Processor](https://newsroom.intel.com/editorials/intel-pioneers-new-technologies-advance-artificial-intelligence/) family (formerly known as “Lake Crest”). This family of processors is over 3 years in the making, and on behalf of the team building it, I’d like to share a bit more insight on the motivation and design behind the world’s first neural network processor.
 

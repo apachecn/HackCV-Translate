@@ -1,5 +1,6 @@
-| ±êÌâ | ¼ò½é |
-| --- | --- |
-| [Intel·¢²¼nervanaÉñ¾­ÍøÂç´¦ÀíÆ÷ÖØĞÂ¶¨ÒåAIĞ¾Æ¬](https://www.intelnervana.com/intel-nervana-neural-network-processors-nnp-redefine-ai-silicon/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | |
-| [ÓÃÓÚÍ³¼Æ·ÖÀàµÄ±´Ò¶Ë¹Ñ§Ï°](https://blog.statsbot.co/bayesian-learning-for-statistical-classification-f2362d620428?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | |
-| [InstacartÊĞ³¡·ÖÎöµÚ¶şÃûµÄ·ÃÌ¸](http://blog.kaggle.com/2017/09/21/instacart-market-basket-analysis-winners-interview-2nd-place-kazuki-onodera/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | |
+| æ ‡é¢˜                                                         | ç®€ä»‹ |
+| ------------------------------------------------------------ | ---- |
+| [IntelÂ® Nervanaâ„¢ Neural Network Processors (NNP) Redefine AI Silicon)](http://iamtrask.github.io/2015/07/12/basic-python-network/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [Bayesian Learning for Statistical Classification](https://blog.statsbot.co/bayesian-learning-for-statistical-classification-f2362d620428?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [Instacart Market Basket Analysis, Winner's Interview: 2nd place, Kazuki Onodera](http://blog.kaggle.com/2017/09/21/instacart-market-basket-analysis-winners-interview-2nd-place-kazuki-onodera/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+

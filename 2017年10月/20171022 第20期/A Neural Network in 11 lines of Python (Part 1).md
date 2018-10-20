@@ -1,11 +1,6 @@
-- [CONTACT](http://iamtrask.github.io/contact/)
-- 
-- 
-- 
-- 
-- 
-
 # A Neural Network in 11 lines of Python (Part 1)
+
+原文链接：[A Neural Network in 11 lines of Python (Part 1)](http://iamtrask.github.io/2015/07/12/basic-python-network/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 ## A bare bones neural network implementation to describe the inner workings of backpropagation.
 
