@@ -1,5 +1,6 @@
-| ±êÌâ | ¼ò½é |
-| --- | --- |
-| [2017ÄêµÄ´ÊÇ¶ÈëµÄ·¢Õ¹Ç÷ÊÆºÍÎ´À´·½Ïò](http://ruder.io/word-embeddings-2017/index.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | |
-| [Îª»úÆ÷Ñ§Ï°ºÍÉî¶ÈÑ§Ï°¶øÑ§Ï°ÊýÑ§](https://medium.com/towards-data-science/learning-maths-for-machine-learning-and-deep-learning-5509c097ee83?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | |
-| [¸ø³õ¼¶ºÍÖÐ¼¶Êý¾Ý¿ÆÑ§¼ÒµÄ½¨Òé](https://medium.com/@rchang/advice-for-new-and-junior-data-scientists-2ab02396cf5b?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | |
+| æ ‡é¢˜                                                         | ç®€ä»‹ |
+| ------------------------------------------------------------ | ---- |
+| [Word embeddings in 2017: Trends and future directions](http://ruder.io/word-embeddings-2017/index.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [Learning Maths for Machine Learning and Deep Learning](https://medium.com/towards-data-science/learning-maths-for-machine-learning-and-deep-learning-5509c097ee83?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [Advice For New and Junior Data Scientists](https://medium.com/@rchang/advice-for-new-and-junior-data-scientists-2ab02396cf5b?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+
