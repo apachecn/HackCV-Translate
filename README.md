@@ -28,7 +28,7 @@
 | [2017/10/11 第9期](https://hackcv.com/daily/p/9/)   |                                          |      |
 | [2017/10/11 第10期](https://hackcv.com/daily/p/10/) |                                          |      |
 | [2017/10/13 第11期](https://hackcv.com/daily/p/11/) | [@wnma](https://github.com/wnma3mz)      |      |
-| [2017/10/14 第12期](https://hackcv.com/daily/p/12/) |                                          |      |
+| [2017/10/14 第12期](https://hackcv.com/daily/p/12/) | [@wnma](https://github.com/wnma3mz)      |      |
 | [2017/10/15 第13期](https://hackcv.com/daily/p/13/) |                                          |      |
 | [2017/10/16 第14期](https://hackcv.com/daily/p/14/) |                                          |      |
 | [2017/10/17 第15期](https://hackcv.com/daily/p/15/) |                                          |      |
