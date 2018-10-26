@@ -1,5 +1,7 @@
 # ML算法附录：被动攻击算法
 
+原文链接：[ML Algorithms addendum: Passive Aggressive Algorithms](https://www.bonaccorso.eu/2017/10/06/ml-algorithms-addendum-passive-aggressive-algorithms/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
+
 被动攻击（Passive Aggressive ）算法是Crammer在al提出的一系列在线学习算法（用于分类和回归）。这个想法非常简单，并且它们的性能已被证明优于许多其他替代方法，如[Online Perceptron](https://en.wikipedia.org/wiki/Perceptron)和[MIRA](https://en.wikipedia.org/wiki/Margin-infused_relaxed_algorithm)（参见参考部分的原始论文）。
 
 ## 分类
@@ -42,68 +44,68 @@ L的值在0（意味着完全匹配）和K之间取决于f（x（t），θ），
 
 旋转后，θ<90°，点积变为负值，因此样品被正确分类为+1。Scikit-Learn实现了Passive Aggressive算法，但我更喜欢实现代码，只是为了表明它们有多简单。在下一个片段（也在此[GIST中](https://gist.github.com/giuseppebonaccorso/d700d7bd48b1865990d2f226759686b1)可用）中，我首先创建一个数据集，然后使用Logistic回归计算得分，最后应用PA并测量测试集上的最终得分：
 
-```
-导入 numpy 为 np
+```python
+import numpy as np
 
 
-从 sklearn.datasets 进口 make_classification
- 从 sklearn.linear_model 进口逻辑回归
- 从 sklearn.model_selection 进口 train_test_split
+from sklearn.datasets import make_classification
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 
 
-＃设置随机种子（重复性） 
-np.random.seed（ 1000）
+# Set random seed (for reproducibility)
+np.random.seed(1000)
 
 
-nb_samples =  5000 
-nb_features =  4
+nb_samples = 5000
+nb_features = 4
 
 
-＃创建数据集 
-X，Y = make_classification（ n_samples = nb_samples， 
-                            n_features = nb_features， 
-                            n_informative = nb_features -  2， 
-                            n_redundant = 0， 
-                            n_repeated = 0， 
-                            n_classes = 2， 
-                            n_clusters_per_class = 2）
+# Create the dataset
+X, Y = make_classification(n_samples=nb_samples, 
+                           n_features=nb_features, 
+                           n_informative=nb_features - 2, 
+                           n_redundant=0, 
+                           n_repeated=0, 
+                           n_classes=2, 
+                           n_clusters_per_class=2)
 
 
-＃拆分数据集 
-X_train，X_test，Y_train，Y_test = train_test_split（X，Y， test_size = 0.35， random_state = 1000）
+# Split the dataset
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.35, random_state=1000)
 
 
-＃执行逻辑回归 
-lr = LogisticRegression（）
-lr.fit（X_train，Y_train）
-print（' Logistic Regression score：{} '。 format（lr.score（X_test，Y_test）））
+# Perform a logistic regression
+lr = LogisticRegression()
+lr.fit(X_train, Y_train)
+print('Logistic Regression score: {}'.format(lr.score(X_test, Y_test)))
 
 
-＃将y = 0标签设置为-1 
-Y_train [Y_train == 0 ] =  - 1 
-Y_test [Y_test == 0 ] =  - 1
+# Set the y=0 labels to -1
+Y_train[Y_train==0] = -1
+Y_test[Y_test==0] = -1
 
 
-C =  0.01 
-w = np.zeros（（nb_features，1））
+C = 0.01
+w = np.zeros((nb_features, 1))
 
 
-＃实现一个被动攻击分类
-为我在 范围（X_train.shape [ 0 ]）：
-    xi = X_train [i] .reshape（（nb_features，1））
+# Implement a Passive Aggressive Classification
+for i in range(X_train.shape[0]):
+    xi = X_train[i].reshape((nb_features, 1))
     
-    损失=  最大值（0，1  -（Y_train [I] * np.dot（WT，XI）））
-    tau蛋白=损失/（np.power（np.linalg.norm（XI，ORD = 2），2）+（1  /（2 * C）））
+    loss = max(0, 1 - (Y_train[i] * np.dot(w.T, xi)))
+    tau = loss / (np.power(np.linalg.norm(xi, ord=2), 2) + (1 / (2*C)))
     
-    coeff = tau * Y_train [i]
-    w + = coeff * xi
+    coeff = tau * Y_train[i]
+    w += coeff * xi
     
-＃计算精度 
-Y_pred = np.sign（np.dot（wT，X_test.T））
-c = np.count_nonzero（Y_pred - Y_test）
+# Compute accuracy
+Y_pred = np.sign(np.dot(w.T, X_test.T))
+c = np.count_nonzero(Y_pred - Y_test)
 
 
-print（' PA accuracy：{} '。 format（1  -  float（c）/ X_test.shape [ 0 ]））
+print('PA accuracy: {}'.format(1 - float(c) / X_test.shape[0]))
 ```
 
 
@@ -120,59 +122,59 @@ print（' PA accuracy：{} '。 format（1  -  float（c）/ X_test.shape [ 0 ]�
 
 就像分类一样，Scikit-Learn也实现了回归，但是，在下一个片段（也可以在这个[GIST中使用](https://gist.github.com/giuseppebonaccorso/d459e15308b4faeb3a63bbbf8a6c9462)）中，有一个自定义实现：
 
-```
-将 matplotlib.pyplot 导入为 plt
- import numpy as np
+```python
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-来自 sklearn.datasets 导入 make_regression
+from sklearn.datasets import make_regression
 
 
-＃设置随机种子（重复性） 
-np.random.seed（ 1000）
+# Set random seed (for reproducibility)
+np.random.seed(1000)
 
 
-nb_samples =  500 
-nb_features =  4
+nb_samples = 500
+nb_features = 4
 
 
-＃创建数据集 
-X，Y = make_regression（ n_samples = nb_samples， 
-                        n_features = nb_features）
+# Create the dataset
+X, Y = make_regression(n_samples=nb_samples, 
+                       n_features=nb_features)
 
 
-＃实现被动积极回归 
-C =  0.01 
-eps =  0.1 
-w = np.zeros（（X.shape [ 1 ]， 1））
-错误= []
+# Implement a Passive Aggressive Regression
+C = 0.01
+eps = 0.1
+w = np.zeros((X.shape[1], 1))
+errors = []
 
 
-对于我在 范围（X.shape [ 0 ]）：
-    xi = X [i] .reshape（（X.shape [ 1 ]，1））
-    yi = np.dot（wT，xi）
+for i in range(X.shape[0]):
+    xi = X[i].reshape((X.shape[1], 1))
+    yi = np.dot(w.T, xi)
     
-    loss =  max（0，np.abs（yi - Y [i]）- eps）
+    loss = max(0, np.abs(yi - Y[i]) - eps)
     
-    tau蛋白=损失/（np.power（np.linalg.norm（XI，ORD = 2），2）+（1  /（2 * C）））
+    tau = loss / (np.power(np.linalg.norm(xi, ord=2), 2) + (1 / (2*C)))
     
-    coeff = tau * np.sign（Y [i] - yi）
-    errors.append（np.abs（值Y [i] - yi）的[ 0，0 ]）
+    coeff = tau * np.sign(Y[i] - yi)
+    errors.append(np.abs(Y[i] - yi)[0, 0])
     
-    w + = coeff * xi
+    w += coeff * xi
     
-＃，显示错误情节 
-无花果，斧 = plt.subplots（ figsize =（ 16， 8））
+# Show the error plot
+fig, ax = plt.subplots(figsize=(16, 8))
 
 
-ax.plot（错误）
-ax.set_xlabel（'时间'）
-ax.set_ylabel（'错误'）
-ax.set_title（'被动积极回归绝对错误'）
-ax.grid（）
+ax.plot(errors)
+ax.set_xlabel('Time')
+ax.set_ylabel('Error')
+ax.set_title('Passive Aggressive Regression Absolute Error')
+ax.grid()
 
 
-plt.show（）
+plt.show()
 ```
 
 错误图如下图所示：
