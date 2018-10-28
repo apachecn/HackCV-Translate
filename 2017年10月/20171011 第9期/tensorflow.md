@@ -1,3 +1,9 @@
+# **tensorflow**
+
+原文链接：[tensorflow](https://github.com/nicodjimenez/nicodjimenez.github.io/blob/master/_posts/2017-10-08-tensorflow.markdown)
+
+# 介绍
+
 每隔几个月我就会向Google输入以下查询：“Tensorflow糟透了”或“f*** Tensorflow”，希望能在互联网上找到志同道合的人。 不幸的是，虽然Tensorflow已经存在了大约两年，但我仍然无法找到让Tensorflow完全满意的抨击。
 
 虽然我认为我可能使用了错误的搜索引擎，但我认为这里有不同的力量：谷歌嫉妒。 被称为“谷歌深度嫉妒”的现象是世界各地工程师做出的以下假设：
