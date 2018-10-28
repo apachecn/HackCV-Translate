@@ -96,4 +96,5 @@ http://tflearn.org/
 https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/slim
 https://github.com/fchollet/keras
 https://github.com/tensorflow/skflow
+
 注意：我会承认Tensorboard（Tensorflow的监控工具）是一个非常好的想法。如果您想为您的机器学习项目提供一个漂亮的监控解决方案，其中包括高级模型比较功能，请查看Losswise（https://losswise.com）。我开发它是为了让像我这样的机器学习开发人员能够将他们模型的性能从他们使用的任何机器学习库中分离出来，并实现我想要的Tensorboard不提供的许多很棒的功能。
