@@ -1,18 +1,18 @@
-# AlphaGo Zero: Learning from scratch
+# AlphaGo Zero: 从零开始学习
 
 原文链接：[AlphaGo Zero: Learning from scratch](https://deepmind.com/blog/alphago-zero-learning-scratch/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-Artificial intelligence research has made rapid progress in a wide variety of domains from speech recognition and image classification to genomics and drug discovery. In many cases, these are specialist systems that leverage enormous amounts of human expertise and data.**
+人工智能研究在语音识别和图片分类到基因学和药物发现等不同的领域取得了巨大的进步。在许多场景中，都有大量利用人们专业之和数据的专业的系统
 
-However, for some problems this human knowledge may be too expensive, too unreliable or simply unavailable. As a result, a long-standing ambition of AI research is to bypass this step, creating algorithms that achieve superhuman performance in the most challenging domains with no human input. In our most recent [paper](http://nature.com/articles/doi:10.1038/nature24270), published in the [journal Nature](https://www.nature.com/), we demonstrate a significant step towards this goal.
-
-
+然而，对于一些问题来说，利用人们的知识也许代价太大，太过不可靠，或者根本不可用。因此，人工智能长期的目标就是跨过这一步——创造在没有人为输入的情况下可以在绝大多数充满挑战性的领域里展现出超人一般的表现的算法。在[《自然杂志》](https://www.nature.com/)上发表的最新[论文](http://nature.com/articles/doi:10.1038/nature24270)中，我们展示了向这个目标迈出的重要一步。
 
 #  Starting from scratch
 
 ![img](https://storage.googleapis.com/deepmind-live-cms/images/AlphaGoZero-Illustration-WideScreen.width-320_oOByzmR.jpg)
 
 The paper introduces AlphaGo Zero, the latest evolution of [AlphaGo](https://deepmind.com/research/alphago/), the first computer program to defeat a world champion at the ancient Chinese game of Go. Zero is even more powerful and is arguably the strongest Go player in history.
+
+这篇论文介绍了最新一代的AlphaGo产品AlphaGo Zero，第一个在古中国游戏中打败了世界冠军的电脑程序。AlphaGo Zero甚至可以说是能力最强的并且按理说是历史上最强的下棋选手。
 
 Previous versions of AlphaGo initially trained on thousands of human amateur and professional games to learn how to play Go. AlphaGo Zero skips this step and learns to play simply by playing games against itself, starting from completely random play. In doing so, it quickly surpassed human level of play and defeated the [previously published](http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html?foxtrotcallback=true) champion-defeating version of AlphaGo by 100 games to 0.
 

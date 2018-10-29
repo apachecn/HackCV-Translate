@@ -1,12 +1,12 @@
-# Perceptually uniform color spaces
+# 感知一致性色彩空间
 
 原文链接：[Perceptually uniform color spaces](https://programmingdesignsystems.com/color/perceptually-uniform-color-spaces/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-> “In visual perception a color is almost never seen as it really is - as it physically is. This fact makes color the most relative medium in art.”
+> “在视觉感知中，颜色几乎从未被看到，因为它实际上就是它。这一事实使得色彩成为艺术中最相关的媒介。“
 >
 > Josef Albers (1963), Interaction of Color
 
-If you rounded up a group of graphic designers and asked them to define the concept of perceptually uniform color spaces, there is a good chance that none of them would know what to say. On the surface, perceptual uniformity is somewhat easy to explain: These color spaces are human-friendly alternatives to color spaces such as sRGB, and they are incredibly helpful for designers working in code. Despite of this, they can feel daunting to use in programmatic designs. Perceptually uniform color spaces have roots in scientific color theory, and this community does little to make them accessible to a larger audience. In this chapter, we will look at the concept of perceptually uniform color spaces, and answer some common questions related to them: What are they? Why do we need them? How can we use them in code?
+如果你围捕了一组图形设计师并要求他们定义感知统一色彩空间的概念,t那么很可能他们都不知道该说些什么。 On the surface, perceptual uniformity is somewhat easy to explain: These color spaces are human-friendly alternatives to color spaces such as sRGB, and they are incredibly helpful for designers working in code. Despite of this, they can feel daunting to use in programmatic designs. Perceptually uniform color spaces have roots in scientific color theory, and this community does little to make them accessible to a larger audience. In this chapter, we will look at the concept of perceptually uniform color spaces, and answer some common questions related to them: What are they? Why do we need them? How can we use them in code?
 
 # What is wrong with sRGB?
 
