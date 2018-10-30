@@ -6,28 +6,26 @@
 
 然而，对于一些问题来说，利用人们的知识也许代价太大，太过不可靠，或者根本不可用。因此，人工智能长期的目标就是跨过这一步——创造在没有人为输入的情况下可以在绝大多数充满挑战性的领域里展现出超人一般的表现的算法。在[《自然杂志》](https://www.nature.com/)上发表的最新[论文](http://nature.com/articles/doi:10.1038/nature24270)中，我们展示了向这个目标迈出的重要一步。
 
-#  Starting from scratch
+#  从零开始
 
 ![img](https://storage.googleapis.com/deepmind-live-cms/images/AlphaGoZero-Illustration-WideScreen.width-320_oOByzmR.jpg)
 
-The paper introduces AlphaGo Zero, the latest evolution of [AlphaGo](https://deepmind.com/research/alphago/), the first computer program to defeat a world champion at the ancient Chinese game of Go. Zero is even more powerful and is arguably the strongest Go player in history.
+这篇论文介绍了最新一代的AlphaGo产品AlphaGo Zero，第一个在古中国下棋游戏中打败了世界冠军的电脑程序。AlphaGo Zero甚至可以说是能力最强的并且按理说是历史上最强的下棋选手。
 
-这篇论文介绍了最新一代的AlphaGo产品AlphaGo Zero，第一个在古中国游戏中打败了世界冠军的电脑程序。AlphaGo Zero甚至可以说是能力最强的并且按理说是历史上最强的下棋选手。
-
-Previous versions of AlphaGo initially trained on thousands of human amateur and professional games to learn how to play Go. AlphaGo Zero skips this step and learns to play simply by playing games against itself, starting from completely random play. In doing so, it quickly surpassed human level of play and defeated the [previously published](http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html?foxtrotcallback=true) champion-defeating version of AlphaGo by 100 games to 0.
+以前版本的AlpGo最初与成千上万的人类业余爱好者和专业游戏者训练来学习如何下棋。AlphaGoZero跳过了这一步骤并通过和自己下棋来学习，从最开始的胡乱下棋开始。通过这个方法，它很快的就超越了人类下棋的水平，并且以100比0的战绩打败了[之前发布](http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html?foxtrotcallback=true)的打败了下棋冠军的AlpGo版本。
 
 ![Training time graphic](https://storage.googleapis.com/deepmind-live-cms/documents/TrainingTime-Graph-171019-r01.gif)
 
-It is able to do this by using a novel form of [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning), in which AlphaGo Zero becomes its own teacher. The system starts off with a neural network that knows nothing about the game of Go. It then plays games against itself, by combining this neural network with a powerful search algorithm. As it plays, the neural network is tuned and updated to predict moves, as well as the eventual winner of the games.
+之所以能够这么做是因为它使用了[强化学习](https://en.wikipedia.org/wiki/Reinforcement_learning)的一种新的形式——AlpGoZero变成了他自己的老师。这个系统由一个完全不知道下棋游戏的神经网络系统开始。然后，通过将这个神经网络系统和强大的搜索算法相结合，他就会他自己和自己下棋。随着它不断地和自己下棋，神经网络不断被调整和升级来预测下一步动作，并最终成为游戏的赢家。
 
-This updated neural network is then recombined with the search algorithm to create a new, stronger version of AlphaGo Zero, and the process begins again. In each iteration, the performance of the system improves by a small amount, and the quality of the self-play games increases, leading to more and more accurate neural networks and ever stronger versions of AlphaGo Zero.
+这个被更新过的神经网络之后又和搜索算法结合来创造新的更加强大版本的AlpGo Zero，并且这个过程还会再次开始。在每次迭代中这个系统的表现都会有微小的提升，并且自己玩游戏的质量也会有所增加，导致越来越多的准确的神经网络和甚至更加强大版本的AlphaGoZero。
 
-This technique is more powerful than previous versions of AlphaGo because it is no longer constrained by the limits of human knowledge. Instead, it is able to learn tabula rasa from the strongest player in the world: AlphaGo itself.
+这个技术比之前版本的AlpGo更加强大因为它不再局限于人们现有的知识。取而代之的是他能够从零开始向世界上最强的下棋选手:AlpGo他自己学习。
 
-It also differs from previous versions in other notable ways.
+它还有其他一些有别于之前版本的显著的区别：
 
-- AlphaGo Zero only uses the black and white stones from the Go board as its input, whereas previous versions of AlphaGo included a small number of hand-engineered features.
-- It uses one neural network rather than two. Earlier versions of AlphaGo used a “policy network” to select the next move to play and a ”value network” to predict the winner of the game from each position. These are combined in AlphaGo Zero, allowing it to be trained and evaluated more efficiently.
+- AlpGoZero仅仅将棋盘上的黑棋白棋作为输入，而之前版本的AlpGo则是包括了少量的手工设计的特性
+- 他使用一个神经网络而不是两个，之前版本的AlpGo使用的是policy network来选择下一步做什么然后使用value network来预测游戏赢家的每一个位置。这两个神经网络在AlpGoZero中被结合了，使得它能够更加有效的去训练和评估。
 - AlphaGo Zero does not use “rollouts” - fast, random games used by other Go programs to predict which player will win from the current board position. Instead, it relies on its high quality neural networks to evaluate positions.
 
 All of these differences help improve the performance of the system and make it more general. But it is the algorithmic change that makes the system much more powerful and efficient.
