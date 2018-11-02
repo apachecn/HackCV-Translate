@@ -26,42 +26,42 @@
 
 - AlpGoZero仅仅将棋盘上的黑棋白棋作为输入，而之前版本的AlpGo则是包括了少量的手工设计的特性
 - 他使用一个神经网络而不是两个，之前版本的AlpGo使用的是policy network来选择下一步做什么然后使用value network来预测游戏赢家的每一个位置。这两个神经网络在AlpGoZero中被结合了，使得它能够更加有效的去训练和评估。
-- AlphaGo Zero does not use “rollouts” - fast, random games used by other Go programs to predict which player will win from the current board position. Instead, it relies on its high quality neural networks to evaluate positions.
+- AlphaGo Zero不使用“初赛”——其他围棋程序使用快速、随机的游戏来预测哪位棋手将在目前的棋盘位置上获胜。取而代之的它依赖于他自己高质量的神经网络来评估位置
 
-All of these differences help improve the performance of the system and make it more general. But it is the algorithmic change that makes the system much more powerful and efficient.
+所有这些差异都有助于提高系统的性能，使其更加通用。但是这正是算法的改变才使得系统更加的强力和高效。
 
 ![img](https://storage.googleapis.com/deepmind-live-cms/images/AlphaGo%2520Efficiency.width-400_cHoMue6.png)
 
-AlphaGo has become progressively more efficient thanks to hardware gains and more recently algorithmic advances
+AlphaGo的效率越来越高得益于硬件的进步和算法的优化。
 
-After just three days of self-play training, AlphaGo Zero emphatically defeated the previously [published version of AlphaGo](https://research.googleblog.com/2016/01/alphago-mastering-ancient-game-of-go.html) - which had itself [defeated 18-time world champion Lee Sedol](https://deepmind.com/research/alphago/alphago-korea/) - by 100 games to 0. After 40 days of self training, AlphaGo Zero became even stronger, outperforming the version of AlphaGo known as “Master”, which has defeated the world's best players and [world number one Ke Jie](https://deepmind.com/research/alphago/alphago-china/).
+经过三天的自我游戏训练，AlphaGo Zero以100比0的比分击败了之前发布的[AlphaGo](https://research.googleblog.com/2016/01/alphago master -ancient-game-of-go.html)。经过40天的自我训练，AlphaGo Zero变得更加强大，超过了被称为“Master”的AlphaGo版本，后者击败了世界上最好的选手和世界第一的棋手[柯洁](https://deepmind.com/research/alphago/alphago-china/)。
 
 ![img](https://storage.googleapis.com/deepmind-live-cms/images/Elo%2520Ratings.width-400_ahXVKga.png)
 
-Elo ratings - a measure of the relative skill levels of players in competitive games such as Go - show how AlphaGo has become progressively stronger during its development
+Elo评定-围棋等竞技游戏中玩家相对技能水平的的衡量方法-展示处理AlphaGo如何在它的发展中变得强大的。
 
-Over the course of millions of AlphaGo vs AlphaGo games, the system progressively learned the game of Go from scratch, accumulating thousands of years of human knowledge during a period of just a few days. AlphaGo Zero also discovered new knowledge, developing unconventional strategies and creative new moves that echoed and surpassed the novel techniques it played in the games against Lee Sedol and Ke Jie.
+AlphaGo在数以百万计的和自己比赛的过程中，系统逐渐地从零开始学习围棋，在短短几天内积累了数千年的人类知识。AlphaGo也发现了新的知识，自创了非传统的策略和创造性的新行为。与李世石(Lee Sedol)和柯洁(Ke Jie)的比赛中使用的新技术相呼应，并超越了后者。
 
 ![AlphaGo Zero knowledge timeline](https://storage.googleapis.com/deepmind-live-cms/documents/Knowledge%2520Timeline.gif)
 
-These moments of creativity give us confidence that AI will be a multiplier for human ingenuity, helping us with [our mission](https://deepmind.com/about/) to solve some of the most important challenges humanity is facing.
+这些创造性的时刻给了我们信心——人工智能将是人类创造力的倍增器，帮助我们完成我们自己的[任务](https://deepmind.com/about/)以解决人类正在面临的一些重要挑战
 
 
 
-#  Discovering new knowledge
+#  发现新的知识
 
 ![img](https://storage.googleapis.com/deepmind-live-cms/images/AlphaGoZero-Illustration-Square.width-320_RDH0108.jpg)
 
-While it is still early days, AlphaGo Zero constitutes a critical step towards this goal. If similar techniques can be applied to other structured problems, such as protein folding, reducing energy consumption or searching for revolutionary new materials, the resulting breakthroughs have the potential to positively impact society.
+虽然现在还为时尚早，但AlphaGo Zero是迈向这一目标的关键一步。如果类似的技术可以应用于其他结构性问题，如蛋白质折叠、降低能源消耗或寻找革命性的新材料，那么由此产生的突破有可能对社会产生积极影响。
 
 ------
 
-Read [the paper](https://www.nature.com/articles/nature24270.epdf?author_access_token=VJXbVjaSHxFoctQQ4p2k4tRgN0jAjWel9jnR3ZoTv0PVW4gB86EEpGqTRDtpIz-2rmo8-KG06gqVobU5NSCFeHILHcVFUeMsbvwS-lxjqQGg98faovwjxeTUgZAUMnRQ)
+阅读 [这篇文章](https://www.nature.com/articles/nature24270.epdf?author_access_token=VJXbVjaSHxFoctQQ4p2k4tRgN0jAjWel9jnR3ZoTv0PVW4gB86EEpGqTRDtpIz-2rmo8-KG06gqVobU5NSCFeHILHcVFUeMsbvwS-lxjqQGg98faovwjxeTUgZAUMnRQ)
 
-Read the accompanying [Nature News and Views article](https://www.nature.com/articles/550336a.epdf?shared_access_token=QbXlOw9nSIP_MS1moc_M0tRgN0jAjWel9jnR3ZoTv0PvinEKRXS2Dk736vL8i-Uo2-6AN8KRxOlLhDGorUgFzEgC3fwrX95r3LQ7u2FBwQ5axjmpMSZrWg4i6D7_g5rV5ze0zLhgo4jufsSKL-UZmw%3D%3D)
+阅读这篇文章相关的 [Nature News and Views article](https://www.nature.com/articles/550336a.epdf?shared_access_token=QbXlOw9nSIP_MS1moc_M0tRgN0jAjWel9jnR3ZoTv0PvinEKRXS2Dk736vL8i-Uo2-6AN8KRxOlLhDGorUgFzEgC3fwrX95r3LQ7u2FBwQ5axjmpMSZrWg4i6D7_g5rV5ze0zLhgo4jufsSKL-UZmw%3D%3D)
 
-Download [AlphaGo Zero games](http://www.alphago-games.com/)
+下载 [AlphaGo Zero games](http://www.alphago-games.com/)
 
-Read [more about AlphaGo](https://deepmind.com/research/alphago/)
+阅读 [更多AlpGo的文章](https://deepmind.com/research/alphago/)
 
-**\*This work was done by David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, Yutian Chen, Timothy Lillicrap, Fan Hui, Laurent Sifre, George van den Driessche, Thore Graepel and Demis Hassabis.***
+**\*这个作品是由David Silver, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, Lucas Baker, Matthew Lai, Adrian Bolton, Yutian Chen, Timothy Lillicrap, Fan Hui, Laurent Sifre, George van den Driessche, Thore Graepel和Demis Hassabis完成的***
