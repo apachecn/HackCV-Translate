@@ -15,26 +15,26 @@
 
 ## 翻译贡献者
 
-| 日期                                                | 翻译                                                     | 校对 |
-| --------------------------------------------------- | -------------------------------------------------------- | ---- |
-| [2017/09/25 第1期](https://hackcv.com/daily/p/1/)   | [@wnma](https://github.com/wnma3mz)                      |      |
-| [2017/10/04 第2期](https://hackcv.com/daily/p/2/)   | [@doordiey](https://github.com/doordiey)                 |      |
-| [2017/10/05 第3期](https://hackcv.com/daily/p/3/)   | [@Arron206](https://github.com/Arron206)                 |      |
-| [2017/10/06 第4期](https://hackcv.com/daily/p/4/)   | [@mllove](https://github.com/mllove)                     |      |
-| [2017/10/07 第5期](https://hackcv.com/daily/p/5/)   | [@wnma](https://github.com/wnma3mz)                      |      |
-| [2017/10/08 第6期](https://hackcv.com/daily/p/6/)   | [@doordiey](https://github.com/doordiey)                 |      |
-| [2017/10/09 第7期](https://hackcv.com/daily/p/7/)   | [@mllove](https://github.com/mllove)                     |      |
-| [2017/10/10 第8期](https://hackcv.com/daily/p/8/)   | [@AlexdanerZe](https://github.com/AlexdanerZe)           |      |
-| [2017/10/11 第9期](https://hackcv.com/daily/p/9/)   | [@exqlnet](https://github.com/exqlnet)                   |      |
-| [2017/10/11 第10期](https://hackcv.com/daily/p/10/) | [@aboutmydreams](https://github.com/aboutmydreams)       |      |
-| [2017/10/13 第11期](https://hackcv.com/daily/p/11/) | [@wnma](https://github.com/wnma3mz)                      |      |
-| [2017/10/14 第12期](https://hackcv.com/daily/p/12/) | [@wnma](https://github.com/wnma3mz)                      |      |
-| [2017/10/15 第13期](https://hackcv.com/daily/p/13/) |                                                          |      |
-| [2017/10/16 第14期](https://hackcv.com/daily/p/14/) | [@pickonecat](https://github.com/pickonecat)（暂未完成） |      |
-| [2017/10/17 第15期](https://hackcv.com/daily/p/15/) |                                                          |      |
-| [2017/10/18 第16期](https://hackcv.com/daily/p/16/) |                                                          |      |
-| [2017/10/19 第17期](https://hackcv.com/daily/p/17/) |                                                          |      |
-| [2017/10/20 第18期](https://hackcv.com/daily/p/18/) |                                                          |      |
+| 日期                                                | 翻译                                                         | 校对 |
+| --------------------------------------------------- | ------------------------------------------------------------ | ---- |
+| [2017/09/25 第1期](https://hackcv.com/daily/p/1/)   | [@wnma](https://github.com/wnma3mz)                          |      |
+| [2017/10/04 第2期](https://hackcv.com/daily/p/2/)   | [@doordiey](https://github.com/doordiey)                     |      |
+| [2017/10/05 第3期](https://hackcv.com/daily/p/3/)   | [@Arron206](https://github.com/Arron206)                     |      |
+| [2017/10/06 第4期](https://hackcv.com/daily/p/4/)   | [@mllove](https://github.com/mllove)                         |      |
+| [2017/10/07 第5期](https://hackcv.com/daily/p/5/)   | [@wnma](https://github.com/wnma3mz)                          |      |
+| [2017/10/08 第6期](https://hackcv.com/daily/p/6/)   | [@doordiey](https://github.com/doordiey)                     |      |
+| [2017/10/09 第7期](https://hackcv.com/daily/p/7/)   | [@mllove](https://github.com/mllove)                         |      |
+| [2017/10/10 第8期](https://hackcv.com/daily/p/8/)   | [@AlexdanerZe](https://github.com/AlexdanerZe)               |      |
+| [2017/10/11 第9期](https://hackcv.com/daily/p/9/)   | [@exqlnet](https://github.com/exqlnet)                       |      |
+| [2017/10/11 第10期](https://hackcv.com/daily/p/10/) | [@aboutmydreams](https://github.com/aboutmydreams)           |      |
+| [2017/10/13 第11期](https://hackcv.com/daily/p/11/) | [@wnma](https://github.com/wnma3mz)                          |      |
+| [2017/10/14 第12期](https://hackcv.com/daily/p/12/) | [@wnma](https://github.com/wnma3mz)                          |      |
+| [2017/10/15 第13期](https://hackcv.com/daily/p/13/) |                                                              |      |
+| [2017/10/16 第14期](https://hackcv.com/daily/p/14/) | [@pickonecat](https://github.com/pickonecat)（暂未完成）     |      |
+| [2017/10/17 第15期](https://hackcv.com/daily/p/15/) |                                                              |      |
+| [2017/10/18 第16期](https://hackcv.com/daily/p/16/) |                                                              |      |
+| [2017/10/19 第17期](https://hackcv.com/daily/p/17/) | [@lbllol365](https://github.com/lbllol365?tdsourcetag=s_pctim_aiomsg) |      |
+| [2017/10/20 第18期](https://hackcv.com/daily/p/18/) |                                                              |      |
 
 ## 贡献指南
 
