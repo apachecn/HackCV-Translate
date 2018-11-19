@@ -1,173 +1,132 @@
-# The Search for Better Search at Reddit
+# 在Reddit上搜索更好的搜索
 
 原文链接：[The Search for Better Search at Reddit](https://redditblog.com/2017/09/07/the-search-for-better-search-at-reddit/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-Because, certainly, we’ve solved it this time
+
 
 [TECHNOLOGY](https://redditblog.com/topic/technology/)	[Staff](https://redditblog.com/author/blabyrinth/) • [September 7, 2017](https://redditblog.com/2017/09/07/the-search-for-better-search-at-reddit/)
 
 **Chris Slowe, Nick Caldwell, & Luis Bitencourt-Emilio***CTO, VP of Engineering, Director of Engineering*
 
-## **What’s the Fuss?**
+## **什么是Fuss?**
 
-A common question we get from newbie engineering team members here at Reddit is “When are we going to fix search?” Until this year, the answer was always “Go ask the search team on the 5th floor.” Which was great fun because a) the elevator button to the 5th floor didn’t work and b) there was no search team.
+我们从Reddit的新手工程团队成员那里得到的一个常见问题是“我们什么时候才能修复搜索？”直到今年，答案总是“去询问5楼的搜索团队。”这很有趣，因为
 
-But the times, they are a-changin’. We’re happy to announce that we’re launching a new search engine at Reddit. Actually, it’s been launched to 50% of traffic for the past couple weeks and has already served up nearly half a billion queries. Now that we’re confident in our system, we’re pushing it to 100% of traffic. We hope you enjoy faster and more reliable results!
+1. 到5楼的电梯按钮没有工作
+2. 没有搜索团队
 
-More importantly, we’ve also started an entire product unit dedicated to search and relevance here at Reddit, led by our Director of Engineering Luis. We recognize that these technologies are critical to Reddit’s future. Our platform contains one of the world’s most interesting collections of content, currently indexing over a quarter billion posts for search, and it gets bigger every day. But we know this content is hard to find. Improving search and relevance will allow Reddit to sift through millions of posts, comments, and communities to create a custom-fit stream of great content straight to your home feed.
+但是时代在进步，这是一个改革。我们很高兴地宣布，我们正在Reddit推出一个新的搜索引擎。实际上，在过去的几周里它已经启动了50％的流量，并且已经提供了近5亿次查询。现在我们对我们的系统充满信心，我们将其推向100％的流量。我们希望您享受更快，更可靠的结果！
 
-That’s the future. For now, we thought it’d be fun to take a trip down memory lane.
+更重要的是，我们还在Reddit开设了一个专门用于搜索和相关的整个产品部门，由我们的工程总监Luis领导。我们认识到这些技术对Reddit的未来至关重要。我们的平台包含世界上最有趣的内容集合之一，目前索引超过25亿个搜索帖子，并且它每天都在变大。但我们知道这个内容很难找到。改进搜索和相关性将使Reddit能够筛选数百万个帖子，评论和社区，以便直接为您的家庭Feed提供定制的精彩内容流。
+
+那就是未来。就目前而言，我们认为沿着记忆之路旅行会很有趣。
 
 <iframe height="326px" width="100%" scrolling="no" frameborder="0" src="https://www.redditmedia.com/r/announcements/comments/59k22p/hey_its_reddits_totally_politically_neutral_ceo/d992fwq/?embed=true&amp;context=1&amp;depth=2&amp;showedits=true&amp;created=2018-10-17T03:25:43.723226+00:00&amp;uuid=548c946c-d1bc-11e8-b1de-0e16448f7cb2&amp;showmore=false" style="user-select: text !important; box-sizing: border-box; word-break: keep-all; font-family: &quot;Open Sans&quot; !important; border: 0px; max-width: 800px; height: 326px; width: 720px; display: block; min-width: 220px; margin: 10px 0px; box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 5px 0.5px;"></iframe>
 
-## **A Brief History of Reddit Search**
+## **Reddit搜索简洁的历史**
 
-Needless to say, search is not an easy challenge to solve. We’ve been on a bit of a roller coaster when it comes to search at Reddit, but now that we’re on our sixth search stack, we’re no strangers to the struggles of doing search at scale. Below is a rough outline of the 12-year history, along with a few select quotes from the team as we’ve iterated to scale our infra to Reddit’s needs:
+不用说，搜索不是一个容易解决的挑战。在Reddit上搜索的时候，我们就像坐过山车一样，但现在我们已经是第六次搜索了，我们对大规模搜索的困难并不陌生。下面是关于12年历史的粗略概述，以及一些来自我们团队的精选引语，我们通过迭代来将我们的infra扩展到Reddit的需求:
 
-- 2005 – Steve Huffman ([u/spez](https://www.reddit.com/user/spez)), co-founder and now CEO, turns on postgres 7.4’s contrib/[tsearch2](http://www.sai.msu.su/~megera/postgres/gist/tsearch/V2/). 
+- 2005 – Steve Huffman ([u/spez](https://www.reddit.com/user/spez)), 创始人之一，现任首席执行官, 开启了 postgres 7.4’s contrib/[tsearch2](http://www.sai.msu.su/~megera/postgres/gist/tsearch/V2/). 
 
-  This was a simpler time, when the statement “Oh, we can just have Postgres do it!” was greeted with “Sounds good to me!  What 
+  当有人说 “哦，我们可以用 Postgres来完成!” ， “对我来说听起来不错!?” “我们当时也非常喜欢TRIGGERs（”不，这很酷。数据库完成所有工作，并且保证准确无误“是我们毫无疑问的说法）。它工作得很好，但它不是很可调，我们很快发现我们正在以少数（约2％）搜索流量阻塞大多数Postgres查询：
 
-  can’t
+  - “我们修复了搜索结果排序中的错误。” —[Steve](https://redditblog.com/2006/02/27/if-you-want-something-done-right-do-it-yourself/)
+  - “我们今天早上更新了搜索系统，以帮助缓解一些负载问题。” —[Steve](https://redditblog.com/2006/07/25/searching/)
+  - “Jeremy正致力于搜索！这不是一个复杂的修复（排序很糟糕）。” —[Steve](https://redditblog.com/2007/04/28/updates/)
 
-   Postgres do!?” We also really liked 
-
-  TRIGGER
-
-  s back then (“No, it’s cool. The database does all the work and it’s guaranteed to be accurate” is something we no doubt said). It worked well, but it wasn’t very tunable, and we quickly discovered we were bogging down the majority of Postgres queries with a small minority (~2%) of search traffic:
-
-  - “We fixed a bug in the search results ordering.” —[Steve](https://redditblog.com/2006/02/27/if-you-want-something-done-right-do-it-yourself/)
-  - “We updated the search system this morning to help alleviate some load problems.” —[Steve](https://redditblog.com/2006/07/25/searching/)
-  - “Jeremy is working on search! It’s not a complicated fix (basically, the sorting is whacky).” —[Steve](https://redditblog.com/2007/04/28/updates/)
-
-- 2007 – Chris Slowe ([u/KeyserSosa](https://www.reddit.com/user/KeyserSosa)), founding engineer (and now CTO), re-implements with PyLucene.
+- 2007 – Chris Slowe ([u/KeyserSosa](https://www.reddit.com/user/KeyserSosa)), 创始工程师（现在是CTO），与PyLucene一起重新实施。
 
    
 
-  This was actually implemented just over 10 years ago in July 2007. It consisted of a single Python process which was set up as a threaded RPC server over TCP. In the initial version, we had actually supported searching for both post titles and comments, and the Lucene index files were comfortably stored on a single box. This was also before we 
+  这实际上是在10年前的2007年7月实现的。它由一个Python进程组成，该进程被设置为TCP上的线程RPC服务器。在初始版本中，我们实际上支持搜索帖子标题和评论，并且Lucene索引文件可以舒适地存储在一个盒子上。这也是在我们搬到AWS之前，当时我们已经认真考虑过使用Google Search Appliance，这对我们的单机架来说是一个很好的补充。这个版本很灵活，但我们没有以一种易于扩展的方式进行设置：
 
-  moved to AWS
+  - “搜索的效果变得更好这标记着用户可以更好的进行控制。” —[Steve](https://redditblog.com/2007/07/26/new-reddit-on-the-horizon/)
+  - “搜索效果更好，但是不是我们喜欢的地方。” —[Steve](https://redditblog.com/2007/08/21/its-slow-its-unstable-its-beta/)
+  - “统计数据和搜索暂时被禁用，但只要我们能够修复它们就会回来。” —[Steve](https://redditblog.com/2007/10/16/reddit-status-update/)
+    - “我们希望包含升级后的搜索，与上一版本不同，它实际上非常有用，可以帮助您找到所需内容。不幸的是，我们确定的版本并没有很好地加载测试。” —[Steve](https://redditblog.com/2007/10/18/reddit-status-update-part-ii/)
+  - “我快速修复了搜索，我希望有所帮助，直到我们有机会真正解决它。” —[Steve](https://redditblog.com/2007/06/08/a-note-on-search-and-what-were-working-on/)
 
-  , and at the time we had seriously considered getting a 
+- 2008 – David King ([u/ketralnis](https://www.reddit.com/user/ketralnis)), 第三名员工，现在是搜索工程师，实施Solr。 
 
-  Google Search Appliance
+  实际上，他实现了一个自制的pysolr，它能够以XML格式将更新文档发送给Solr，并以这样的方式包装响应，以便模拟我们现有的Query模型，足以将其放入任何类型或列表中。它实际上很甜蜜。初始版本不支持评论，但后来确实如此。
 
-  , which would have made a nice addition to our 
+  - “[David]一直在修复Erlang的搜索和黑客攻击项目。” —[Alexis Ohanian](https://redditblog.com/2008/04/17/welcome-david/)
+  - “我完全取代了reddit搜索功能。” —[David King](https://redditblog.com/2008/04/21/new-search-2/)
 
-  single
+- 2010 – David将Solr替换为第三方搜索提供商IndexTank。
 
-   rack. This version was flexible, but we didn’t set it up in a way to make it easily scalable:
+  当你喜欢某些东西时，将其外包......从来没有人说过。随着网站持续增长，我们首先在一个月内与一个四人工程团队一起破解了十亿次网页浏览，我们将所有努力投入503缓解，继续添加Postgres读取，添加更多缓存，开始利用Cassandra的早期版本（之后很快就发生了一次令人难忘的停电），并且通常无视搜索的糟糕程度。我们有一个勇敢的决定，永远使用第三方搜索提供商，比我们为保持Solr运行所付出的更少，所以我们签了！
 
-  - “Search works much better, tagging and user-controlled subreddits are right around the corner” —[Steve](https://redditblog.com/2007/07/26/new-reddit-on-the-horizon/)
-  - “Search is better, but not quite where we’d like it.” —[Steve](https://redditblog.com/2007/08/21/its-slow-its-unstable-its-beta/)
-  - “Stats and search are temporarily disabled, but will be coming back as soon as we can get them repaired.” —[Steve](https://redditblog.com/2007/10/16/reddit-status-update/)
-  - “We were hoping to include an upgraded search, which, unlike the last version, was actually useful and helped you find what you were looking for. Unfortunately, the version we settled on didn’t quite load test as nicely” —[Steve](https://redditblog.com/2007/10/18/reddit-status-update-part-ii/)
-  - “I made a quick fix to search that I hope helps until we get a chance to really fix it.” —[Steve](https://redditblog.com/2007/06/08/a-note-on-search-and-what-were-working-on/)
+  - “我们昨天推出了一个新的搜索引擎。冷静。没关系。我知道。你以前受伤了。” —[David King](https://redditblog.com/2010/07/21/new-search/)
 
-- 2008 – David King ([u/ketralnis](https://www.reddit.com/user/ketralnis)), third employee and now search engineer, implements Solr. 
+- 2012 – Keith Mitchell (u/kemitche) 在LinkedIn关闭IndexTank后实施CloudSearch。
 
-  In fact, he implemented a home-built pysolr, which was capable of shipping update documents to Solr in XML and wrapping the response in such a way as to emulate our existing 
+  很明显，这个永远过于短暂，IndexTank在公司被收购之前为我们提供了很好的帮助。当我们发现他们正在关闭时，我们不得不离开IndexTank并快速过渡到AWS CloudSearch。继续我们长期以来的传统“让新人照顾它”，这项任务落到了Keith身上，在接下来的几年里，我们将CloudSearch扩展到了爆炸状态：
 
-  Query
-
-   models enough to drop it into any sort or listing. It was actually pretty sweet. The initial version didn’t support comments, but that did come later.
-
-  - “[David]’s been fixing search and hacking mystery projects in Erlang.” —[Alexis Ohanian](https://redditblog.com/2008/04/17/welcome-david/)
-  - “I’ve totally replaced the reddit search function.” —[David King](https://redditblog.com/2008/04/21/new-search-2/)
-
-- 2010 – David replaces Solr with IndexTank, a third-party search provider.
-
-   
-
-  When you love something, outsource it… said no one ever. As the site continued to grow and we first cracked a billion 
-
-  pageviews 
-
-  in a month with an engineering team of four, we put all of our effort into 503 mitigation, continuing to add Postgres read slaves, adding more cache, starting to take advantage of a 
-
-  very early version of Cassandra
-
-   (which was followed shortly thereafter by a memorable 24-hour, thundering-herd-related outage), and generally ignoring how bad search was getting. We had an intrepid startup approach us and offer to take search off of our hands 
-
-  forever
-
-   for less than we were paying to keep Solr running, so we signed on!
-
-  - “We launched a new search engine yesterday. Calm down. It’s okay. I know. You’ve been hurt before.” —[David King](https://redditblog.com/2010/07/21/new-search/)
-
-- 2012 – Keith Mitchell (u/kemitche) implements CloudSearch after LinkedIn shut down IndexTank. 
-
-  Clearly, it was one of the 
-
-  shorter
-
-   forevers, but IndexTank served us well until the company was acquired. When we found out they were shutting down, we had to ween off of IndexTank and make a quick transition to AWS CloudSearch. Continuing our long-standing tradition of ‘Let the new guy take care of it,’ that task fell to Keith, and over the next several years we scaled and stretched CloudSearch to bursting:
-
-  - “Today we moved from the old Amazon CloudSearch domain to a new Amazon CloudSearch domain. The old search domain had significant performance issues: roughly 33% of queries took over 5 seconds to complete and would result in the search error page.” —[u/bsimpson](https://www.reddit.com/r/changelog/comments/694o34/reddit_search_performance_improvements/)
+  - “今天，我们从旧的Amazon CloudSearch域迁移到新的Amazon CloudSearch域。旧的搜索域存在严重的性能问题：大约33％的查询需要5秒才能完成，并且会导致搜索错误页面。” —[u/bsimpson](https://www.reddit.com/r/changelog/comments/694o34/reddit_search_performance_improvements/)
 
 - TODAY – Lucidworks Fusion!
 
-   
+  这一次，我们希望确保搜索符合三个标准：它需要快速，需要与Reddit的增长很好地扩展，最重要的是，它需要具有相关性。最终，这促使我们与Lucidworks的搜索专家合作，利用Fusion及其由多个Solr提交者组成的团队的独特搜索专业知识。下面，我们将更详细地解释我们如何进行此操作。
 
-  This time around, we wanted to ensure that search would meet three criteria: it needed to be fast, it needed to scale well with Reddit’s growth, and most importantly, it needed to be relevant. Ultimately, this led us to partner with the search experts at Lucidworks, leveraging Fusion and their unique search expertise from a team comprised of multiple Solr committers. Below, we’ll explain how we went about this in more detail.
+  - “As [/u/bitofsalt](https://www.reddit.com/u/bitofsalt) [几个月前我们提到过](https://www.reddit.com/r/funny/comments/65ryr3/and_now_a_look_at_the_machine_that_powers_reddits/dgd22mi/), 我们一直在努力改进搜索。我们甚至可能领先于 [spez’s 的10年计划](https://www.reddit.com/r/announcements/comments/59k22p/hey_its_reddits_totally_politically_neutral_ceo/d992fwq/?context=1).” —[u/starfishjenga](https://www.reddit.com/r/changelog/comments/6pi0kk/improving_search/)
 
-  - “As [/u/bitofsalt](https://www.reddit.com/u/bitofsalt) [mentioned a few months ago](https://www.reddit.com/r/funny/comments/65ryr3/and_now_a_look_at_the_machine_that_powers_reddits/dgd22mi/), we’ve been working on some improvements to search. We may even be ahead of [spez’s 10 year plan](https://www.reddit.com/r/announcements/comments/59k22p/hey_its_reddits_totally_politically_neutral_ceo/d992fwq/?context=1).” —[u/starfishjenga](https://www.reddit.com/r/changelog/comments/6pi0kk/improving_search/)
+## **感受更多**
 
-## **Once More with Feeling**
-
-Earlier this year, search on Reddit had become truly abysmal. Simple queries could be expected to succeed only half of the time. Want to search with two keywords? Get out of here!
+今年早些时候，对Reddit的搜索变得非常糟糕。简单的查询只能在一半的时间内成功。想要使用两个关键字进行搜索？离开这里！
 
 ![img](https://redditupvoted.files.wordpress.com/2017/09/screen-shot-2017-09-07-at-11-43-15-am.png?w=720&h=505)
 
-Fig. 1: Example error page when our CloudSearch cluster is under heavy load.
+图1：我们的CloudSearch集群负载过重时的示例错误页面。
 
-After looking at several options, we partnered with with [Lucidworks](https://lucidworks.com/) to revitalize Reddit’s search system. Lucidworks is the creator of Fusion, a Solr-based search stack that supports huge document scale and high query throughput.
+在查看了几个选项后，我们与 [Lucidworks](https://lucidworks.com/) 合作，重振Reddit的搜索系统。 Lucidworks是Fusion的创建者，Fusion是一个基于Solr的搜索堆栈，支持巨大的文档规模和高查询吞吐量。
 
-## **First Things First: Ingesting at Reddit Scale**
+## **第一件事：以Reddit量表摄取**
 
-The biggest challenge in moving to a new search system was that our indexing pipeline needed to be updated. The first attempt was a bit of a beast. In the interest of speed, we hastily put it together on our legacy ETL system comprised of [Jenkins](https://jenkins.io/) and [Azkaban](https://azkaban.github.io/) orchestrating numerous Hive queries. As you can see in the diagram below, pulling together data from several sources into one cohesive canonical view to be indexed proved to be more complex than originally expected.
+迁移到新搜索系统的最大挑战是我们的索引管道需要更新。第一次尝试很艰难。为了速度，我们匆忙将它放在我们由 [Jenkins](https://jenkins.io/)和[Azkaban](https://azkaban.github.io/) 组成的遗留ETL系统上，编排了许多Hive查询。正如您在下图中所看到的，将来自多个来源的数据汇总到一个有索引的规范视图中进行索引，证明比最初预期的更复杂。
 
 ![img](https://redditupvoted.files.wordpress.com/2017/09/screen-shot-2017-09-07-at-11-44-37-am.png?w=720&h=433)
 
-Fig. 2: First iteration at our new search ingestion pipeline, now replaced with a significantly simplified version.
+图2：我们新的搜索提取管道的第一次迭代，现在被替换为显着简化的版本。
 
-Our second attempt was both simpler and produced significantly better results. We managed to trim the entire pipeline to just four simpler and more accurate Hive queries, which led to a 33% increase in posts indexed. Another great improvement is that we not only index new post creations but also update their relevance signals in real time as votes, comments, and other signals flow in throughout the day.
+我们的第二次尝试既简单又产生了明显更好的结果。我们设法将整个管道修剪为仅仅四个更简单和更准确的Hive查询，这使得索引的帖子增加了33％。另一个重大改进是，我们不仅索引新的帖子创作，而且还实时更新其相关信号，因为投票，评论和其他信号全天都在流动。
 
-## **Make it Relevant**
+## **使其相关**
 
-Search results don’t mean much if they’re not relevant. For our initial rollout the primary goal was to avoid degrading the overall relevance of results returned.
+如果它们不相关，搜索结果并不意味着什么。对于我们的初始部署，主要目标是避免降低返回结果的整体相关性。
 
-To monitor this, we measured clicks on the search results page and compared the rank of results being clicked across old and new search systems. A perfect search engine would yield 100% of clicks on the top result being returned, which is another way of saying you want the most relevant result at the top. Since we know a perfect search engine isn’t an achievable goal, we use measures like [Mean Reciprocal Rank](https://en.wikipedia.org/wiki/Mean_reciprocal_rank) and [Discounted Cumulative Gain](https://en.wikipedia.org/wiki/Discounted_cumulative_gain) to compare the quality of our results.
+为了监控这一点，我们测量了搜索结果页面上的点击次数，并比较了在新旧搜索系统中点击的结果的排名。一个完美的搜索引擎会在返回的最高结果上产生100％的点击次数，这是另一种表示您希望在顶部获得最相关结果的方式。由于我们知道完美的搜索引擎不是一个可实现的目标，我们使用 [平均互惠等级](https://en.wikipedia.org/wiki/Mean_reciprocal_rank)和 [折扣累积增益](https://en.wikipedia.org/wiki/Discounted_cumulative_gain)等措施来比较我们的结果质量。
 
-While it’s still early in our experiments, the data so far points towards very comparable relevancy measurements between our old vs. new stacks, with Fusion having a slight edge. The promising part of this is that we haven’t done much relevancy tuning yet — something that our new system actually supports. Advancements like personalization, machine learning models, and query intent and rewriting are now low-hanging fruit.
+虽然它在我们的实验中还处于早期阶段，但迄今为止的数据指向了我们的旧堆栈与新堆栈之间非常可比的相关性测量，而Fusion具有轻微的优势。这个有希望的部分是我们还没有进行太多的相关调整 - 这是我们的新系统实际支持的东西。个性化，机器学习模型以及查询意图和重写等进步现在已经成为现实。
 
 ![img](https://redditupvoted.files.wordpress.com/2017/09/screen-shot-2017-09-07-at-11-46-10-am.png?w=720&h=276)
 
-Fig. 3: Comparison of search result click positions between Fusion and CloudSearch stacks.
+图3：Fusion和CloudSearch堆栈之间搜索结果点击位置的比较。
 
-## **The Rollout**
+## **首次展示**
 
-As we overcame the data ingestion challenges and monitored relevance, we continued to ramp up usage to more and more redditors. The [feedback](https://www.reddit.com/r/changelog/comments/6pi0kk/improving_search/) from this early group was invaluable, and we owe the community a huge thank-you in helping us surface bugs and less common use cases. We started out with just 1% of users on the new stack, working through issues reported and improving the ingestion pipeline as we increased rollout percentages to 5, 10, 25 and ultimately 50% of traffic prior to GA. Throughout this time, we sent all search queries as dark traffic to our new search cluster to ensure it would be ready for full scale as we increased rollout percentages.
+在我们克服数据提取挑战和监控相关性时，我们继续将使用率提高到越来越多的redditors。这个早期小组的 [反馈](https://www.reddit.com/r/changelog/comments/6pi0kk/improving_search/)非常宝贵，我们非常感谢社区帮助我们解决漏洞和不太常见的用例。我们在新筹码上只有1％的用户开始工作，处理报告的问题并改进了摄取管道，因为我们在GA之前将推出百分比提高到5,10,25和最终50％的流量。在这段时间里，我们将所有搜索查询作为黑暗流量发送到我们的新搜索群集，以确保随着我们增加推出百分比，它可以全面扩展。
 
 ![img](https://redditupvoted.files.wordpress.com/2017/09/screen-shot-2017-09-07-at-11-47-24-am.png?w=720&h=376)
 
-Fig. 4: CloudSearch Errors in yellow and Fusion in green.
+图4：黄色的CloudSearch错误和绿色的Fusion。
 
-We’re proud to say that Reddit Search is better than ever! A full reindex of all Reddit content now completes in about 5 hours (down from around 11 hours), and we’re constantly streaming live updates to the index. The error rate is down by two orders of magnitude with 99% of search results served in under 500ms. The number of machines needed to run search dropped from ~200 earlier this year down to ~30 so we even managed to get some cost savings.
+我们很自豪地说Reddit Search比以往更好！所有Reddit内容的完整重新索引现在在大约5个小时内完成（从大约11个小时开始），我们不断将实时更新流式传输到索引。错误率下降了两个数量级，99％的搜索结果在500毫秒内完成。运行搜索所需的机器数量从今年早些时候的约200台减少到30台左右，因此我们甚至设法节省了一些成本。
 
 ![img](https://redditupvoted.files.wordpress.com/2017/09/screen-shot-2017-09-07-at-11-48-12-am.png?w=720&h=308)
 
-Fig. 5: Overview of Reddit’s new search stack.
+图5：Reddit新搜索堆栈概述。
 
-Faster, more reliable, more relevant, and lower cost! Certainly this shall be the last time we ever need to change our search stack!
+更快，更可靠，更相关，更低成本！当然这应该是我们最后一次需要更改搜索堆栈！
 
-## **The Future**
+## **展望未来**
 
-In all seriousness, we think you’ll love this update. It’s our hope that the new search stack will be a foundation for improvements that make it easier to discover all the great content on Reddit. More importantly: we’re not done. Fixing search is just the first step in a series of new capabilities that will make Reddit feel more personalized and relevant to your interests. Reddit finally has a Search & Relevance team, and we are hiring like crazy. If you’re excited about working with one of the world’s most interesting datasets on a search and relevance platform used by hundreds of millions of people, then check out our job listings:
+严肃地说，我们认为你会喜欢这个更新。我们希望新的搜索堆栈将成为改进的基础，以便更容易地发现Reddit上的所有优秀内容。更重要的是：我们没有完成。修复搜索只是一系列新功能的第一步，这些功能将使Reddit更加个性化并与您的兴趣相关。 Reddit最终拥有一个Search＆Relevance团队，我们正在疯狂招聘。如果您对在数亿人使用的搜索和相关性平台上使用世界上最有趣的数据集之一感到兴奋，那么请查看我们的工作列表：
 
 **Head of Search:** [https://boards.greenhouse.io/reddit/jobs/723000#.Wa3yONOGOEI
 ](https://boards.greenhouse.io/reddit/jobs/723000#.Wa3yONOGOEI)**Head of Relevance:** [https://boards.greenhouse.io/reddit/jobs/611466#.WbC_ltOGOEI
 ](https://boards.greenhouse.io/reddit/jobs/611466#.WbC_ltOGOEI)**Head of Discovery:** [https://boards.greenhouse.io/reddit/jobs/764831#.WbC_2NOGOEI
 ](https://boards.greenhouse.io/reddit/jobs/764831#.WbC_2NOGOEI)**Search Engineers:** <https://boards.greenhouse.io/reddit/jobs/612128#.Wa3yQtOGOEI>
 
-Finally, thanks to the Lucidworks team for an amazing partnership and helping us end the search for better search at Reddit.
+最后，感谢Lucidworks团队提供了一个惊人的合作伙伴关系，并帮助我们在Reddit上寻找更好的搜索。

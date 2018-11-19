@@ -1,46 +1,44 @@
-# PyTorch tutorial distilled
+# PyTorch教程
 
 原文链接：[PyTorch tutorial distilled](https://towardsdatascience.com/pytorch-tutorial-distilled-95ce8781a89c?from=hackcv&hmsr=hackcv.com)
 
-## Migrating from TensorFlow to PyTorch
+## 从 TensorFlow 转向了 PyTorch
 
 
 
 ![img](https://cdn-images-1.medium.com/max/2000/1*aqNgmfyBIStLrf9k7d9cng.jpeg)
 
-When I first started study PyTorch, I drop it after a few days. It was hard for me to get core concepts of this framework comparing with the TensorFlow. That’s why I’ve put it on my “knowledge bookshelf” and forgot about it. But not so far ago a new version of PyTorch was released. So I’ve decided to give it a chance again. After a while, I understood that this framework is really easy to use and it makes me happy to code in PyTorch. In this post, I will try to explain core concepts of it clearly so that you will be motivated at least give it a try right now, not after a few years or more. We will cover some basic principles and some advanced stuff as learning rate schedulers, custom layers and more.
+在我第一次开始学习PyTorch时候，过了几天我就放弃了，对我来说理解这个框架的核心概念和TensorFlow比起来太难了。这就是为什么我把它放在了我的“知识书架”上，渐渐的遗忘了它。但是不久之后，PyTorch的新版本的发布了，我决定再尝试一次。过了一会，我意识到这个框架简便易行，让我很开心的使用PyTorch来编程。我会尝试清楚地解释它的核心概念，这样你就会有动力，至少现在试一试，而不是几年或更长时间。我们将介绍一些基本原则和一些高级内容，如学习速率调度程序，自定义层等。
 
-#### Resources
+#### 学习资料
 
-First that you should know about PyTorch it that [documentation](http://pytorch.org/docs/master/) and [tutorials](http://pytorch.org/tutorials/)are stored separately. Also sometimes they may don’t meet each other, because of fast development and version changes. So fill free to investigate [source code](http://pytorch.org/tutorials/). It’s very clear and straightforward. And it’s better to mention that there are exist awesome [PyTorch forums](https://discuss.pytorch.org/), where you may ask any appropriate question, and you will get an answer relatively fast. This place seems to be even more popular than StackOverflow for the PyTorch users.
+首先，你应该了解PyTorch， [文档](http://pytorch.org/docs/master/) 和 [教程](http://pytorch.org/tutorials/)是分开存储的。因为更新的太快了，所有他们可能有部分会不一样，所以请查阅 [源代码](http://pytorch.org/tutorials/)，这就非常明确和直截了当。而且，还有一个很棒的[PyTorch论坛](https://discuss.pytorch.org/),在那里你可以提出任何合适的问题，你可以得到一个相对较快的答案。 对于PyTorch用户来说，这个地方似乎比StackOverflow更受欢迎。
 
 #### PyTorch as NumPy
 
-So let’s dive into PyTorch itself. The main building block of the PyTorch is the tensors. Really, they are very similar to the [NumPy ones](https://docs.scipy.org/doc/numpy-dev/user/quickstart.html). Tensors support a lot of the same API, so sometimes you may use PyTorch just as a drop-in replacement of the NumPy. You may ask what the reason is. The principal goal is that PyTorch can utilize GPU so that you can transfer your data preprocessing or any other computation hungry stuff to machine learning workhorse. And it’s very easy to convert tensors from NumPy to PyTorch and vice versa. Let’s check some examples in code:
+让我们来讨论PyTorch本身，PyTorch的主要构建块是tensors。确实他和[NumPy ones](https://docs.scipy.org/doc/numpy-dev/user/quickstart.html)很相似。 Tensors支持很多和相同的API，因此有时可以使用PyTorch作为NumPy的代替品。你可能想问为什么要这么做，主要的原因是PyTorch的主要目标是使用GPU，这样您就可以将数据预处理或任何其他需要大量计算的内容转移到机器学习中。很容易就可以转换tensors从NumPy转换为PyTorch，反之亦然。我们用代码来举个例子：
 
+<iframe width="700" height="250" data-src="/media/caf8def11adef8f02d682c26b30f288b?postId=95ce8781a89c" data-media-id="caf8def11adef8f02d682c26b30f288b" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/caf8def11adef8f02d682c26b30f288b?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 666px;"></iframe
 
+#### 从张量到变量
 
-<iframe width="700" height="250" data-src="/media/caf8def11adef8f02d682c26b30f288b?postId=95ce8781a89c" data-media-id="caf8def11adef8f02d682c26b30f288b" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/caf8def11adef8f02d682c26b30f288b?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 666px;"></iframe>
-
-#### From the tensors to the variables
-
-Tensors are an awesome part of the PyTorch. But mainly all we want is to build some neural networks. What is about backpropagation? Of course, we can manually implement it, but what is the reason? Thankfully automatic differentiation exists. To support it PyTorch [provides variables](http://pytorch.org/tutorials/beginner/examples_autograd/two_layer_net_autograd.html) to you. Variables are wrappers above tensors. With them, we can build our computational graph, and compute gradients automatically later on. Every variable instance has two attributes: `.data` that contain initial tensor itself and `.grad` that will contain gradients for the corresponding tensor.
+张量是PyTorch一个很棒的部分. 。但我们想要的主要是建立一些神经网络。什么是反向传播？当然, 我们可以手动实现它, 但原因是什么？值得庆幸的是, 存在自动分化。为了支持它, pytorch 为您 [提供了变量](http://pytorch.org/tutorials/beginner/examples_autograd/two_layer_net_autograd.html) 。变量是张量的包装。有了它们, 我们就可以建立我们的计算图, 并在以后自动计算梯度。每个变量实例都有两个属性: `. data`, 其中包含初始张量本身, 而 `. gd` 将包含相应张量的渐变。
 
 
 
 <iframe width="700" height="250" data-src="/media/214f557a06e55da09ba5bd2f2740b7cb?postId=95ce8781a89c" data-media-id="214f557a06e55da09ba5bd2f2740b7cb" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/214f557a06e55da09ba5bd2f2740b7cb?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 578.987px;"></iframe>
 
-You may note that we have manually computed and applied our gradients. It’s so tedious. Do we have some optimizer? Of course!
+您可能会注意到, 我们手动计算并应用了渐变。我们有优化器吗？答案是肯定的！
 
 
 
 <iframe width="700" height="250" data-src="/media/1b9b56e531553ae43d9af79942cc1462?postId=95ce8781a89c" data-media-id="1b9b56e531553ae43d9af79942cc1462" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/1b9b56e531553ae43d9af79942cc1462?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 578.987px;"></iframe>
 
-Now all our variables will be updated automatically. But the main point that you should get from the last snippet: we still should manually zero gradients before calculating new ones. This is one of the core concepts of the PyTorch. Sometimes it may be not very obvious why we should do this, but on the other hand, we have full control over our gradients, when and how we want to apply them.
+现在我们所有的变量都会自动更新。但是你应该从最后一个片段得到的要点：我们仍然应该在计算新的渐变之前手动归零。这是PyTorch的核心概念之一。有时为什么我们应该这样做可能不是很明显，但另一方面，我们可以完全控制我们的渐变，我们何时以及如何应用它们。
 
-#### Static vs. dynamic computational graphs
+#### 静态与动态计算图的比较
 
-Next main difference between PyTorch and TensorFlow is their approach to the graph representation. Tensorflow [uses a static graph](https://www.tensorflow.org/programmers_guide/graphs), that means that we define it once and after execute that graph over and over again. In PyTorch each forward pass defines a new computational graph. In the beginning, the distinction between those approaches not so huge. But dynamic graphs became very handful when you want to debug your code or define some conditional statements. You can use your favorite debugger as it is! Compare next two definitions of the while loop statements - the first one in TensorFlow and the second one in PyTorch:
+PyTorch和TensorFlow的下一个主要区别是它们对图形表示的方法。 Tensorflow [使用静态图表](https://www.tensorflow.org/programmers_guide/graphs)，这意味着我们一次又一次地执行该图表后定义它。在PyTorch中，每个前向传递定义了一个新的计算图。一开始，这些方法之间的区别并不那么大。但是，当您想要调试代码或定义一些条件语句时，动态图变得非常少。您可以使用自己喜欢的调试器！比较while循环语句的下两个定义 -  TensorFlow中的第一个定义和PyTorch中的第二个定义：
 
 
 
@@ -54,143 +52,137 @@ It seems to me that second solution much easier than first one. And what do you 
 
 #### Models definition
 
-Ok, now we see that it’s easy to build some if/else/while complex statements in PyTorch. But let’s revert to the usual models. The framework provides out of the box layers constructors very similar to [Keras](https://keras.io/) ones:
+好的，现在我们看到在PyTorch中构建一些if / else / while复杂语句很容易。但是让我们回到通常的模型。该框架提供了与[Keras](https://keras.io/) 非常相似的开箱即用层构造函数：
 
-> The `nn` package defines a set of **Modules**, which are roughly equivalent to neural network layers. A Module receives input Variables and computes output Variables, but may also hold internal state such as Variables containing learnable parameters. The `nn` package also defines a set of useful loss functions that are commonly used when training neural networks.
+> `nn`包定义了一组**模块**，大致相当于神经网络层。模块接收输入变量并计算输出变量，但也可以保持内部状态，例如包含可学习参数的变量。 `nn`包还定义了一组在训练神经网络时常用的有用损失函数。
 
 
 
 <iframe width="700" height="250" data-src="/media/e26dadacc9034bc873a236617a196a5f?postId=95ce8781a89c" data-media-id="e26dadacc9034bc873a236617a196a5f" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/e26dadacc9034bc873a236617a196a5f?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 514px;"></iframe>
 
-Also if we want to build more complex models, we may subclass provided `nn.Module` class. And of course, these two approaches can be mixed with each other.
+另外，如果我们想构建更复杂的模型，我们可以子类提供`nn.Module`类。当然，这两种方法可以相互混合。
 
 
 
 <iframe width="700" height="250" data-src="/media/76edc5e2f5e6d498bbab08aa2b21062d?postId=95ce8781a89c" data-media-id="76edc5e2f5e6d498bbab08aa2b21062d" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/76edc5e2f5e6d498bbab08aa2b21062d?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 450px;"></iframe>
 
-At the `__init__` method we should define all layers that will be used later. In the `forward` method, we should propose steps how we want to use already defined layers. Backward pass, as usual, will be computed automatically.
+在`__init__`方法中，我们应该定义稍后将使用的所有层。在`forward`方法中，我们应该提出我们想要使用已经定义的层的步骤。像往常一样，向后传递将自动计算。
 
-#### Self-defined layers
+#### 自定义图层
 
-But what if we want to define some custom model with nonstandard backprop? Here is one example — XNOR networks:
+但是如果我们想用非标准的backprop定义一些自定义模型呢？这是一个例子 -  XNOR网络：
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1000/1*cjzIFgglAP9xGKg8mlRysQ.png)
 
-I will not dive into details, more about this type of networks you may read in the [initial paper](https://arxiv.org/abs/1603.05279). All relevant to our issue is that backpropagation should be applied only to weights that less than 1 and greater than -1. In PyTorch it [can be implemented quite easy](http://pytorch.org/docs/master/notes/extending.html):
 
 
+我不会深入了解详细信息，更多关于您可能在[入门手册](https://arxiv.org/abs/1603.05279)中阅读的此类网络。与我们的问题相关的是，反向传播应仅适用于小于1且大于-1的权重。在PyTorch中，它[可以非常简单地实现](http://pytorch.org/docs/master/notes/extending.html):
 
 <iframe width="700" height="250" data-src="/media/48bf0fc8fecfe815810a138441674709?postId=95ce8781a89c" data-media-id="48bf0fc8fecfe815810a138441674709" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/48bf0fc8fecfe815810a138441674709?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 730px;"></iframe>
 
-So as you may see, we should only define exactly two methods: one for forward and one for backward pass. If we need access to some variables from the forward pass we may store them in the `ctx` variable. Note: in previous API forward/backward methods were not static and we stored required variables as `self.save_for_backward(input)` and access them as `input, _ = self.saved_tensors`.
+你可能会看到，我们应该只定义两个方法：一个用于前进，一个用于后向传递。如果我们需要从前向传递中访问一些变量，我们可以将它们存储在`ctx`变量中。注意：在以前的API中，前向/后向方法不是静态的，我们将所需的变量存储为`self.save_for_backward(input)`并通过`input,_ = self.saved_tensors`访问。
 
-#### Train model with CUDA
+#### 用CUDA训练模型
 
-If was discussed earlier how we might pass one tensor to the CUDA. But if we want to pass the whole model, it’s ok to call `.cuda()` method from the model itself, and wrap each input variable to the `.cuda()` and it will be enough. After all computations, we should get results back with `.cpu()` method.
+如果之前讨论过如何将一个张量传递给CUDA。但是如果我们想要传递整个模型，可以从模型本身调用`.cuda（）`方法，并将每个输入变量包装到`.cuda（）`中就足够了。在所有计算之后，我们应该使用`.cpu（）`方法返回结果。
 
 
 
 <iframe width="700" height="250" data-src="/media/a0754eaf7543b84f3a14bfabf1ada845?postId=95ce8781a89c" data-media-id="a0754eaf7543b84f3a14bfabf1ada845" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/a0754eaf7543b84f3a14bfabf1ada845?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 450px;"></iframe>
 
-Also, PyTorch supports direct devices allocation at the source code:
+此外，PyTorch支持源代码中的直接设备分配：
 
 
 
 <iframe width="700" height="250" data-src="/media/a4d012ac9617d0a72a7ddd7b8f02e1bd?postId=95ce8781a89c" data-media-id="a4d012ac9617d0a72a7ddd7b8f02e1bd" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/a4d012ac9617d0a72a7ddd7b8f02e1bd?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 406px;"></iframe>
 
-Because sometimes we want to run the same model on the CPU and the GPU without code modification I propose some kind of wrapper:
+因为有时我们想在没有代码修改的情况下在CPU和GPU上运行相同的模型，我建议使用某种包装器：
 
 
 
 <iframe width="700" height="250" data-src="/media/e7a51f45014201aef5f5a02c86ed1460?postId=95ce8781a89c" data-media-id="e7a51f45014201aef5f5a02c86ed1460" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/e7a51f45014201aef5f5a02c86ed1460?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 514px;"></iframe>
 
-#### Weight initialization
+#### 权重初始化
 
-In TensorFlow weights initialization mainly are made during tensor declaration. PyTorch offers another approach — at first, tensor should be declared, and on the next step weights for this tensor should be changed. Weights can be initialized as direct access to the tensor attribute, as a call to the bunch of methods inside `torch.nn.init` package. This decision can be not very straightforward, but it becomes useful when you want to initialize all layers of some type with same initialization.
+在TensorFlow中，权重初始化主要在张量声明期间进行。 PyTorch提供了另一种方法 - 首先应该声明张量，并且在下一步中应该改变该张量的权重。权重可以初始化为对tensor属性的直接访问，作为对`torch.nn.init`包中的一堆方法的调用。这个决定可能不是很简单，但是当你想用相同的初始化初始化某些类型的所有层时它会变得很有用。
 
 
 
 <iframe width="700" height="250" data-src="/media/0152c521ff9c9df1ed546564f8dd7431?postId=95ce8781a89c" data-media-id="0152c521ff9c9df1ed546564f8dd7431" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/0152c521ff9c9df1ed546564f8dd7431?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 752px;"></iframe>
 
-#### Excluding subgraphs from backward
+#### 逆向排除子图
 
-Sometimes when you want to retrain some layers of your model or prepare it for the production mode, it’s great when you can disable autograd mechanics for some layers. For this purposes, [PyTorch provides two flags](http://pytorch.org/docs/master/notes/autograd.html): `requires_grad`and `volatile`. First one will disable gradients for current layer, but child nodes still can calculate some. The second one will disable autograd for current layer and for all child nodes.
+有时，当您想要重新训练模型的某些层或为生产模式做好准备时，您可以为某些图层禁用自动编程机制。为此，[PyTorch提供了两个标志](http://pytorch.org/docs/master/notes/autograd.html)：`requires_grad`和`volatile`。第一个将禁用当前图层的渐变，但子节点仍然可以计算一些。第二个将禁用当前层和所有子节点的autograd。
 
 
 
 <iframe width="700" height="250" data-src="/media/dfdac4bb40bb2190da57603515b22f73?postId=95ce8781a89c" data-media-id="dfdac4bb40bb2190da57603515b22f73" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/dfdac4bb40bb2190da57603515b22f73?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 493px;"></iframe>
 
-#### Training process
+#### 训练过程
 
-There are also exists some other bells and whistles in PyTorch. For example, you may use [learning rate scheduler](http://pytorch.org/docs/master/optim.html#how-to-adjust-learning-rate) that will adjust your learning rate based on some rules. Or you may enable/disable batch norm layers and dropouts with single train flag. If you want it’s easy to change random seed separately for CPU and GPU.
-
-
+PyTorch中还存在一些其他的花里胡哨。例如，您可以使用[学习率调度程序](http://pytorch.org/docs/master/optim.html#how-to-adjust-learning-rate)来根据某些规则调整学习率。或者您可以使用简单的训练标志来启用或者禁用批次归一化和丢失。如果你想要为CPU和GPU分别更改随机种子，将会很容易实现。
 
 <iframe width="700" height="250" data-src="/media/a0e831526a0d22e2988647ad3f8ea1fc?postId=95ce8781a89c" data-media-id="a0e831526a0d22e2988647ad3f8ea1fc" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/a0e831526a0d22e2988647ad3f8ea1fc?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 514px;"></iframe>
 
-Also, you may print info about your model, or save/load it with few lines of code. If your model was initialized with [OrderedDict](https://docs.python.org/3/library/collections.html) or class-based model string representation will contain names of the layers.
+此外，您可以打印有关模型的信息，或使用几行代码保存/加载它。如果您的模型使用[OrderedDict](https://docs.python.org/3/library/collections.html)或者基于类的模型字符串表示形式初始化的，那么将包含层的名称。
 
 
 
-<iframe width="700" height="250" data-src="/media/af9f29a3d4938c4255a98764ccfdd6c2?postId=95ce8781a89c" data-media-id="af9f29a3d4938c4255a98764ccfdd6c2" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/af9f29a3d4938c4255a98764ccfdd6c2?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 621.987px;"></iframe>
+<iframe width="700" height="250" data-src="/media/af9f29a3d4938c4255a98764ccfdd6c2?postId=95ce8781a89c" data-media-id="af9f29a3d4938c4255a98764ccfdd6c2" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/af9f29a3d4938c4255a98764ccfdd6c2?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 621.987px;"></iframe>根据PyTorch文档保存模型，使用‘state_dict()’方法更为可取(http://pytorch.org/docs/master/notes/serializ.htm)。
 
-As per PyTorch documentation saving model with `state_dict()` method is [more preferable](http://pytorch.org/docs/master/notes/serialization.html).
+根据PyTorch文档保存模型，使用`state_dict()`方法[更为可取](http://pytorch.org/docs/master/notes/serializ.htm)。
 
-#### Logging
+#### 记录
 
-Logging of the training process is a pretty important part. Unfortunately, PyTorch has no any tools like tensorboard. So you may use usual text logs with [Python logging module](https://docs.python.org/3/library/logging.html) or try some of the third party libraries:
+记录训练过程是一个非常重要的部分。不幸的是，PyTorch没有tensorboard这样的工具。因此，您可以使用[Python日志模块](https://docs.python.org/3/library/logging.html)中的常规文本日志，或者尝试一些第三方库:
 
-- [A simple logger for experiments](https://github.com/oval-group/logger)
-- [A language-agnostic interface to TensorBoard](https://github.com/torrvision/crayon)
-- [Log TensorBoard events without touching TensorFlow](https://github.com/TeamHG-Memex/tensorboard_logger)
-- [tensorboard for pytorch](https://github.com/lanpa/tensorboard-pytorch)
-- [Facebook visualization library wisdom](https://github.com/facebookresearch/visdom)
+- [一个用于实验的简单记录器](https://github.com/oval-group/logger)
+- [TensorBoard与语言无关的界面](https://github.com/torrvision/crayon)
+- [在不触及TensorFlow的情况下记录TensorBoard事件](https://github.com/TeamHG-Memex/tensorboard_logger)
+- [pytorch使用tensorboard ](https://github.com/lanpa/tensorboard-pytorch)
+- [Facebook可视化库智慧](https://github.com/facebookresearch/visdom)
 
-#### Data handling
+#### 数据处理
 
-You may remember [data loaders proposed in TensorFlow](https://www.tensorflow.org/api_guides/python/reading_data) or even tried to implement some of them. For me, it took about 4 hours or more to get some idea how all pipeline should work.
+您可能还记得[TensorFlow中提出的数据加载器](https://www.tensorflow.org/api_guides/python/reading_data)，甚至尝试实现其中的一些加载器。对我来说，花了大约4个小时或更多的时间来了解所有管道应该如何工作。
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1000/1*S00VU2HiEjNZ35zlj2kqfw.gif)
 
-Image source: TensorFlow docs
+图片来源:TensorFlow docs
 
-Initially, I thought to add here some code, but I think such gif will be enough to explain basic idea how all things happen.
+最初，我想在这里添加一些代码，但我认为这样的gif足以解释所有事情是如何发生的基本思想。
 
-PyTorch developers decided do not reinvent the wheel. They just use multiprocessing. To create your own custom data loader, it’s enough to inherit your class from `torch.utils.data.Dataset` and change some methods:
+PyTorch的开发者决定不重新发明轮子。他们只是使用多处理。要创建自己的自定义数据加载器，从' torch.utils.data '继承类就足够了。数据集'和改变一些方法:
 
 
 
 <iframe width="700" height="250" data-src="/media/7499f54f158531418c5d8fbc27c01f22?postId=95ce8781a89c" data-media-id="7499f54f158531418c5d8fbc27c01f22" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/7499f54f158531418c5d8fbc27c01f22?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 1118.99px;"></iframe>
 
-The two things you should know. First — image dimensions are different from TensorFlow. They are [batch_size x channels x height x width]. But this transformation can be made without you interaction by preprocessing step `torchvision.transforms.ToTensor()`. There are also a lot of useful utils in the [transforms package](http://pytorch.org/docs/master/torchvision/transforms.html).
+你应该知道的两件事。首先 ， 图像尺寸与TensorFlow不同。它们是[batch_size x channels x height x width]。但是，通过预处理步骤`torchvision.transforms.ToTensor()`，可以在没有您交互的情况下进行此转换。[转化包](http://pytorch.org/docs/master/torchvision/transforms.html)中还有很多有用的工具。
 
-The second important thing that you may use pinned memory on GPU. For this, you just need to place additional flag `async=True` to a `cuda()` call and get pinned batches from DataLoader with flag `pin_memory=True`. More about this feature [discussed here](http://pytorch.org/docs/master/notes/cuda.html#use-pinned-memory-buffers).
+第二个重要的事情是你可以在GPU上使用固定内存。为此，您只需要在`cuda()`调用中添加另外的标志`async = True`，并从DataLoader获取带有标志`pin_memory = True`的固定批次。 [更多相关讨论](http://pytorch.org/docs/master/notes/cuda.html#use-pinned-memory-buffers).
 
-#### Final architecture overview
+#### 最后的体系结构概述
 
-Now you know about models, optimizers and a lot of other stuff. What is the right way to merge all of them? I propose to split your models and all wrappers on such building blocks:
-
-
+现在你知道了模型，优化器和很多其他的东西。合并它们的正确方法是什么?我建议将你的模型和所有包装在这样的积木上:
 
 ![img](https://cdn-images-1.medium.com/max/1000/1*A-cWYNur2lqDEhUF1_gdCw.png)
 
-And here is some pseudo code for clarity:
-
-
+这里有一些用于阐述的伪代码:
 
 <iframe width="700" height="250" data-src="/media/528d40b05ef5e7aab5007d10cf57018b?postId=95ce8781a89c" data-media-id="528d40b05ef5e7aab5007d10cf57018b" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Favatars3.githubusercontent.com%2Fu%2F9900548%3Fv%3D4%26s%3D400&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://towardsdatascience.com/media/528d40b05ef5e7aab5007d10cf57018b?postId=95ce8781a89c" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 730px;"></iframe>
 
-#### Conclusion
+#### 总结
 
-I hope with this post you’ve understood main points of PyTorch:
+我希望通过这篇文章，你能理解PyTorch的要点:
 
-- It can be used as drop-in replacement of Numpy
-- It’s really fast for prototyping
-- It’s easy to debug and use conditional flows
-- There are lots of great tools out of the box
+- 它可以作为临时代替Numpy
+- 这对于原型设计来说非常快
+- 调试和使用条件流很容易
+- 有很多现成的好工具
 
-PyTorch is the fast-growing framework with an awesome community. And I think that today is the best day to try it out!
+PyTorch是一个快速发展的框架，拥有很棒的社区。我认为今天的尝试很棒！
