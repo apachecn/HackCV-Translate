@@ -67,7 +67,7 @@
 - **一致性延迟权衡**。如上所示，为保障数据库提供强一致性或持久性，如今存在使用Read-All和Write-All技术的趋势。但这些保证显然与请求延迟成反比。Quorum技术则是一个折中方法。
 - **故障转移一致性/可扩展性/延迟权衡**。有趣的是故障转移与一致性/可伸缩性/延迟之间的取舍冲突并不十分严重。在合理的性能/一致性损失下，通常可以容忍高达N/2个节点的故障。但是，这种权衡是明显可见的，例如两阶段提交和PAXOS协议之间的差异就体现的很明显，而另一个例子是在提升某些一致性保证的能力，例如使用粘性会话进行读写操作，这会使故障转移变得复杂[22]
 
-###反熵协议，Gossip算法
+### 反熵协议，Gossip算法
 
 现在我们开始研究一下几个问题？：
 
@@ -97,7 +97,26 @@
 
 
 ```
-`class` `Counter {``   ``int``[] plus``   ``int``[] minus``   ``int` `NODE_ID` `   ``increment() {``      ``plus[NODE_ID]++``   ``}` `   ``decrement() {``      ``minus[NODE_ID]++``   ``}` `   ``get() {``      ``return` `sum(plus) – sum(minus)``   ``}` `   ``merge(Counter other) {``      ``for` `i in ``1``..MAX_ID {``         ``plus[i] = max(plus[i], other.plus[i])``         ``minus[i] = max(minus[i], other.minus[i])``      ``}``   ``}``}`
+class Counter {
+    int[] plus
+    int[] minus
+    int NODE_ID
+    increment() {
+        plus[NODE_ID]++
+    }
+    decrement() {
+        minus[NODE_ID]++
+    }
+    get() {
+        return sum(plus) – sum(minus)
+    }
+    merge(Counter other) {
+        for i in 1..MAX_ID {
+            plus[i] = max(plus[i], other.plus[i])
+            minus[i] = max(minus[i], other.minus[i])
+        }
+    }
+}
 ```
 
 Cassandra 使用了类似的方法[11]。他可能设计了一种更加复杂的最终一致性的数据结构，其利用基于状态或基于操作的副本原则。例如，[1]中就提及了一系列这样的数据结构，包含：
