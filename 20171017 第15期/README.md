@@ -1,5 +1,5 @@
 | 标题                                                         | 简介 |
 | ------------------------------------------------------------ | ---- |
-| [DISTRIBUTED ALGORITHMS IN NOSQL DATABASES](https://highlyscalable.wordpress.com/2012/09/18/distributed-algorithms-in-nosql-databases/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
-| [MAPREDUCE PATTERNS, ALGORITHMS, AND USE CASES](https://highlyscalable.wordpress.com/2012/02/01/mapreduce-patterns/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
-| [Machine learning skills for software engineers](https://www.infoworld.com/article/3223688/machine-learning/machine-learning-skills-for-software-engineers.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) |      |
+| [DISTRIBUTED ALGORITHMS IN NOSQL DATABASES](https://highlyscalable.wordpress.com/2012/09/18/distributed-algorithms-in-nosql-databases/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | 详细的介绍了分布式的一些实现原理 |
+| [MAPREDUCE PATTERNS, ALGORITHMS, AND USE CASES](https://highlyscalable.wordpress.com/2012/02/01/mapreduce-patterns/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | 介绍了MapReduce的原理及应用并附上伪代码 |
+| [Machine learning skills for software engineers](https://www.infoworld.com/article/3223688/machine-learning/machine-learning-skills-for-software-engineers.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com) | 对于软件工程师来说，是需要学习一些基础知识的 |

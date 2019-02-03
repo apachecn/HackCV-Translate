@@ -1,189 +1,207 @@
-### A Quick Introduction to Neural Networks
+### 神经网络的快速介绍
 
 原文链接：[A Quick Introduction to Neural Networks](https://ujjwalkarn.me/2016/08/09/quick-intro-neural-networks/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-An Artificial Neural Network (ANN) is a computational model that is inspired by the way biological neural networks in the human brain process information. Artificial Neural Networks have generated a lot of excitement in Machine Learning research and industry, thanks to many breakthrough results in speech recognition, computer vision and text processing. In this blog post we will try to develop an understanding of a particular type of Artificial Neural Network called the Multi Layer Perceptron.
+人工神经网，是受人脑中神经元处理信息的方式激励，通过使用电脑建立的模拟这种数据处理方式的建立起来的模型。由于在语义理解、机器视觉和文本处理方向的突破性成就，人工神经网络令机器学习领域和工业界同仁都感到十分激动。在这篇博文中，我们简单的理解一种比较特殊的人工神经网络——多层感知机。
 
-#### A Single Neuron
+#### **一个单独的神经元**
 
-The basic unit of computation in a neural network is the **neuron**, often called a **node** or **unit**. It receives input from some other nodes, or from an external source and computes an output. Each input has an associated **weight** (w), which is assigned on the basis of its relative importance to other inputs. The node applies a function **f** (defined below) to the weighted sum of its inputs as shown in Figure 1 below:
+在神经网络中最基础的计算单元就是**神经元**，经常被叫**节点**或者**单元**。其他节点或者外部数据由它输入，经过计算输出。每个输入有一个与之对应的**权重**W。同时这个节点经过下面的**激活方程**作用到权重矩阵和输入矩阵的乘积之和。
 
 ![Screen Shot 2016-08-09 at 3.42.21 AM.png](https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-09-at-3-42-21-am.png?w=568&h=303)
 
 ###### Figure 1: a single neuron
 
-The above network takes numerical inputs **X1** and **X2** and has weights **w1** and **w2** associated with those inputs. Additionally, there is another input **1** with weight **b** (called the **Bias**) associated with it. We will learn more details about role of the bias later.
+上面的网络需要数值的输入**X1**和**X2**权重**W1**和**W2**分别相乘，另外需要加上一个称为偏置的**b**。以后我们将了解到更多关于偏置的细节信息。
 
-The output **Y** from the neuron is computed as shown in the Figure 1. The function **f** is non-linear and is called the **Activation Function**. The purpose of the activation function is to introduce non-linearity into the output of a neuron. This is important because most real world data is non linear and we want neurons to *learn* these non linear representations.
+图1中从神经元中计算得到的输出**Y**。方程**F**是非线性的一般称为**激活函数**。激活函数的目的就是引入非线性到神经元的输出。这一点的重要性表现在，现实生活中的数据一般都是非线性的，我们需要这些神经元学习表现非线性关系。
 
-Every activation function (or *non-linearity*) takes a single number and performs a certain fixed mathematical operation on it [2]. There are several activation functions you may encounter in practice:
+每一种激活函数使数值产生固定的数学运算。下面介绍几种经常用到的激活函数。
 
-- **Sigmoid:** takes a real-valued input and squashes it to range between 0 and 1
+- **Sigmoid**激活函数: 接收一个实数值输入值，将值转化到0-1区间之内。
 
 σ(x) = 1 / (1 + exp(−x))
 
-- **tanh:** takes a real-valued input and squashes it to the range [-1, 1]
+- **tanh**激活函数**:** 接收一个实数值输入值，将值转化到[-1, 1]区间之内。
 
 tanh(x) = 2σ(2x) − 1
 
-- **ReLU**: ReLU stands for Rectified Linear Unit. It takes a real-valued input and thresholds it at zero (replaces negative values with zero)
+- **ReLU**激活函数: ReLU代表一个修正线性单元。接收一个实数值输入值，当值大于零保持不变，当小于零输出值为零。
 
 f(x) = max(0, x)
 
-The below figures [2]  show each of the above activation functions.
+下图展示以上激活函数：
 
 ###### ![Screen Shot 2016-08-08 at 11.53.41 AM](https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-08-at-11-53-41-am.png?w=748)Figure 2: different activation functions
 
-**Importance of Bias:** The main function of Bias is to provide every node with a trainable constant value (in addition to the normal inputs that the node receives). See [this link](http://stackoverflow.com/q/2480650/3297280) to learn more about the role of bias in a neuron.
+**偏置的重要性**: 偏置的主要功能在于给每个节点提供一个常数值（作为节点常规输入值的补充）。 See [this link](http://stackoverflow.com/q/2480650/3297280) to learn more about the role of bias in a neuron.
 
-#### Feedforward Neural Network
+#### **前馈神经网络**
 
-The feedforward neural network was the first and simplest type of artificial neural network devised [3]. It contains multiple neurons (nodes) arranged in **layers**. Nodes from adjacent layers have **connections** or **edges** between them. All these connections have **weights** associated with them.
+前馈神经网络是最早的最简单的人工神经网络的设计。它包含神经元在**层**间的你安排，相邻的层之间有有**连接**或者**边**。所有这些连接都有相应的**权重值**。
 
-An example of a feedforward neural network is shown in Figure 3.
+以下是一个三层神经网络图：
 
 ![Screen Shot 2016-08-09 at 4.19.50 AM.png](https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-09-at-4-19-50-am.png?w=498&h=368)
 
 ###### Figure 3: an example of feedforward neural network
 
-A feedforward neural network can consist of three types of nodes:
+一个前馈神经网络可以包含三种类型的神经元：
 
-1. **Input Nodes –** The Input nodes provide information from the outside world to the network and are together referred to as the “Input Layer”. No computation is performed in any of the Input nodes – they just pass on the information to the hidden nodes.
-2. **Hidden Nodes –** The Hidden nodes have no direct connection with the outside world (hence the name “hidden”). They perform computations and transfer information from the input nodes to the output nodes. A collection of hidden nodes forms a “Hidden Layer”. While a feedforward network will only have a single input layer and a single output layer, it can have zero or multiple Hidden Layers.
-3. **Output Nodes –** The Output nodes are collectively referred to as the “Output Layer” and are responsible for computations and transferring information from the network to the outside world.
+ 
 
-In a feedforward network, the information moves in only one direction – forward – from the input nodes, through the hidden nodes (if any) and to the output nodes. There are no cycles or loops in the network [3] (this property of feed forward networks is different from Recurrent Neural Networks in which the connections between the nodes form a cycle).
+\1.         **输入神经元**--输入神经元给神经网络带来外部信息，被称为输入层。在输入层没有涉及计算--它仅仅是将信息传入隐含层。
 
-Two examples of feedforward networks are given below:
+\2.         **隐含层神经元**--隐含层的神经元与玩不神经之间没有之间联系，因此称为隐含层。他们能计算和传递输入层与输出层之间的信息。全部的隐含层神经元组成“隐含层”这个概念。一般一个前馈神经网络有一层输入层和一层单独的输出层，可以没有或者有多层隐藏层。
 
-1. **Single Layer Perceptron** – This is the simplest feedforward neural network [4] and does not contain any hidden layer. You can learn more about Single Layer Perceptrons in [4], [5], [6], [7].
-2. **Multi Layer Perceptron** – A Multi Layer Perceptron has one or more hidden layers. We will only discuss Multi Layer Perceptrons below since they are more useful than Single Layer Perceptons for practical applications today.
+\3.         **输出神经元**--输出神经元集体被称为输出层，代表着从网络到外部的计算和传导。
 
-#### Multi Layer Perceptron
+在一个前馈神经网络中，信息只在一个方向运行-前向-由输入层，经由隐藏层到达输出层。在前馈神经网络中没有循环或者圆环网络（这种特性使得前馈神经网络不通与循环神经网络）。
 
-A Multi Layer Perceptron (MLP) contains one or more hidden layers (apart from one input and one output layer).  While a single layer perceptron can only learn linear functions, a multi layer perceptron can also learn non – linear functions.
+下面是两个前馈神经网络的例子：
 
-Figure 4 shows a multi layer perceptron with a single hidden layer. Note that all connections have weights associated with them, but only three weights (w0, w1, w2) are shown in the figure.
+\1.         **单层感知机**--这是最简单的前馈神经网，这种网络不包含隐藏层。
 
-**Input Layer:** The Input layer has three nodes. The Bias node has a value of 1. The other two nodes take X1 and X2 as external inputs (which are numerical values depending upon the input dataset). As discussed above, no computation is performed in the Input layer, so the outputs from nodes in the Input layer are 1, X1 and X2 respectively, which are fed into the Hidden Layer.
+\2.         **多层感知机-**-一个多层感知机有一层或者多层隐藏层。由于实际应用中，相对于单层感知机而言，多层感知机更实用，接下来我们将介绍多层感知机。
 
-**Hidden Layer:** The Hidden layer also has three nodes with the Bias node having an output of 1. The output of the other two nodes in the Hidden layer depends on the outputs from the Input layer (1, X1, X2) as well as the weights associated with the connections (edges). Figure 4 shows the output calculation for one of the hidden nodes (highlighted). Similarly, the output from other hidden node can be calculated. Remember that **f** refers to the activation function. These outputs are then fed to the nodes in the Output layer.
+**多层感知机**
+
+一个多层感知机（MLP）除了输出层和输出层之外，包含一层或者多层隐藏层。一般单层感知机只能训练线性模型，而多层感知机不仅可以训练线性模型，同时可以训练非线性摩西。
+
+图4 展示了一个有一层隐藏层的多层感知机。需要注意的是所有连接均包含与之相对应的权重，只是在图中标示出了w0,w1,w3三个权重。
+
+**输入层**：输入层有三个神经元。偏置神神经元值设置值为1，其他两个神经元分别作为外部输入设置为x1,x2（根据输入值情况数值型标示）。跟上面介绍的一样，在输入层没有计算操作，所以经过层数输出进入隐藏层的分别是1，x1,x2。
+
+**隐藏层**：隐藏层同样有三个神经元，其中偏置神经元的输出设置为1。其他两个神经元的输出取决于输入层的的输出1,x1,x2和连接边的权重的乘积。图中标红的神经元，展示这个神经元的计算方式，另一个神经元以同样的方式输出。需要注意的是其中f指代的是激活函数。这些输出将会输入到输出层。
 
 ![ds.png](https://ujwlkarn.files.wordpress.com/2016/08/ds.png?w=1128)
 
 ###### Figure 4: a multi layer perceptron having one hidden layer
 
-**Output Layer:** The Output layer has two nodes which take inputs from the Hidden layer and perform similar computations as shown for the highlighted hidden node. The values calculated (Y1 and Y2) as a result of these computations act as outputs of the Multi Layer Perceptron.
+**输出层**：输出层有两个神经元，它们接收隐含层的输入，执行类似标红神经元的操作。计算出的Y1 Y2就是这个多层感知机的结果。
 
-Given a set of features **X = (x1, x2, …)** and a target **y**, a Multi Layer Perceptron can learn the relationship between the features and the target, for either classification or regression.
+在给定一组特征x=(x1,x2,...)和目标变量y的前提下，一个多层感知机能学习特征和目标变量之间的关系，进而建立分类或者回归模型。
 
-Lets take an example to understand Multi Layer Perceptrons better. Suppose we have the following student-marks dataset:
+下面使用一个例子来更好的理解多层感知机。假设我们有一下学生的标记数据：
 
 ![train.png](https://ujwlkarn.files.wordpress.com/2016/08/train.png?w=297&h=112)
 
-The two input columns show the number of hours the student has studied and the mid term marks obtained by the student. The Final Result column can have two values 1 or 0 indicating whether the student passed in the final term. For example, we can see that if the student studied 35 hours and had obtained 67 marks in the mid term, he / she ended up passing the final term.
+两个输入项分别表明学生学习的时间和在期中考中获得的成绩。结果列有两个值0或者1，分别表明学生在期末考中是否能通过。例如，我们可知如果学生学习35个小时，在期中考试中获得70分，那么他或者她最终能通过期末考。
 
-Now, suppose, we want to predict whether a student studying 25 hours and having 70 marks in the mid term will pass the final term.
+现在，结社，我们需要预测一个学习学习了25个小时期中考70分能否通过最终考试。
 
 ![test.png](https://ujwlkarn.files.wordpress.com/2016/08/test.png?w=300&h=40)
 
-This is a binary classification problem where a multi layer perceptron can learn from the given examples (training data) and make an informed prediction given a new data point. We will see below how a multi layer perceptron learns such relationships.
+这是一个多层感知机能通过已知例子学习，并给出预测的，二分类的问题。接下来饿哦们看看多层感知机是如何学习这些关系的。
 
-##### Training our MLP: The Back-Propagation Algorithm
+训练我们自己的多层感知机：反向传播算法
 
-The process by which a Multi Layer Perceptron learns is called the Backpropagation algorithm. I would recommend reading [this Quora answer by Hemanth Kumar](https://www.quora.com/How-do-you-explain-back-propagation-algorithm-to-a-beginner-in-neural-network/answer/Hemanth-Kumar-Mantri) (quoted below) which explains Backpropagation clearly.
+训练多层感知机的过程被称为后向传播。我建议读下下面索引中的内容，这些内容给后向传播比较明确的介绍。
 
-> **Backward Propagation of Errors,** often abbreviated as BackProp is one of the several ways in which an artificial neural network (ANN) can be trained. It is a supervised training scheme, which means, it learns from labeled training data (there is a supervisor, to guide its learning).
->
-> To put in simple terms, BackProp is like “**learning from mistakes**“. The supervisor **corrects**the ANN whenever it makes mistakes.
->
-> An ANN consists of nodes in different layers; input layer, intermediate hidden layer(s) and the output layer. The connections between nodes of adjacent layers have “weights” associated with them. The goal of learning is to assign correct weights for these edges. Given an input vector, these weights determine what the output vector is.
->
-> In supervised learning, the training set is labeled. This means, for some given inputs, we know the desired/expected output (label).
->
-> **BackProp Algorithm:**
-> Initially all the edge weights are randomly assigned. For every input in the training dataset, the ANN is activated and its output is observed. This output is compared with the desired output that we already know, and the error is “propagated” back to the previous layer. This error is noted and the weights are “adjusted” accordingly. This process is repeated until the output error is below a predetermined threshold.
->
-> Once the above algorithm terminates, we have a “learned” ANN which, we consider is ready to work with “new” inputs. This ANN is said to have learned from several examples (labeled data) and from its mistakes (error propagation).
+**误差反向传播**，也被简写为反向传播，是人工神经网络训练的一种方式。是监督学习的一种，是需要通过标记过的数据来训练模型的。
 
-Now that we have an idea of how Backpropagation works, lets come back to our student-marks dataset shown above.
+简单来说，后向传播类似**从错误中学习**。这种监督意味着修正网络产生的错误。
 
-The Multi Layer Perceptron shown in Figure 5 (adapted from Sebastian Raschka’s [excellent visual explanation of the backpropagation algorithm](https://github.com/rasbt/python-machine-learning-book/blob/master/faq/visual-backpropagation.md)) has two nodes in the input layer (apart from the Bias node) which take the inputs ‘Hours Studied’ and ‘Mid Term Marks’. It also has a hidden layer with two nodes (apart from the Bias node). The output layer has two nodes as well – the upper node outputs the probability of ‘Pass’ while the lower node outputs the probability of ‘Fail’.
+人工神经网络包含来自不同层的神经元：谁层、中间的隐藏层、和输出层。相邻层之间通过与权重相乘来连接。学习的目标给边分配对的权重。在输入矩阵已知的情况下，这些权重决定输出矩阵。
 
-In classification tasks, we generally use a [Softmax function](http://cs231n.github.io/linear-classify/#softmax) as the Activation Function in the Output layer of the Multi Layer Perceptron to ensure that the outputs are probabilities and they add up to 1. The Softmax function takes a vector of arbitrary real-valued scores and squashes it to a vector of values between zero and one that sum to one. So, in this case,
+在有监督学习中，训练集是有标记的。这就意味着，对于给定的输出，我们知道想要的输出值或者标签。
 
-Probability (Pass) + Probability (Fail) = 1
+**后向传播**：随机的初始化分配边上的权重值。对于训练集中的每次输入，人工神经网络均被激活同时它的产出也是可以被观察到的。网络的输出将同已知标记好的产出进行比较，差异将通过后向传播传给之前的层。权重会根据误差相应的调整。这个过程将不断进行直到输出的错误率小于事先设置的门槛值。
 
-**Step 1: Forward Propagation**
+一旦上面的进程终止，我们训练完的人工神经网络。
 
-All weights in the network are randomly assigned. Lets consider the hidden layer node marked **V** in Figure 5 below. Assume the weights of the connections from the inputs to that node are w1, w2 and w3 (as shown).
+既然我们队后向传播有了大体理解，现在我们回到上面学生分数的数据集。
 
-The network then takes the first training example as input (we know that for inputs 35 and 67, the probability of Pass is 1).
+ 
 
-- Input to the network = [35, 67]
-- Desired output from the network (target) = [1, 0]
+图5中展示的多层感知机在输出层除了偏置神经元，有两个神经元接收输入的学习时间和期中成绩。感知机中隐藏层，除了偏置神经元之外有两个神经元。输出层也有两个神经元-上面点神经元输出通过的概率，下面点的神经元输出挂掉的概率。
 
-Then output V from the node in consideration can be calculated as below (**f** is an activation function such as sigmoid):
+ 
+
+在分类任务中，我们一般使用归一化指数函数在输出层作为激活函数，来保证输出概率和为1.归一化指数函数可以将一个任意真实值转化到0-1之间，并保证和为1.所以，在这个例子中，p(pass)+p(fail)=1
+
+ 
+
+**第1步：前向过程**
+
+随机初始化网络中的权重。让我们只观看下图5中被标记为V的神经元。假设相关的权重分别为w1,w2,w3。
+
+网络接到第一个训练集中的样本作为输入。
+
+l  输入=【35,67】
+
+l  标记的结果=【1,0】
+
+经过下面的计算神经元V的输出：
 
 V = **f** (1*w1 + 35*w2 + 67*w3)
 
-Similarly, outputs from the other node in the hidden layer is also calculated. The outputs of the two nodes in the hidden layer act as inputs to the two nodes in the output layer. This enables us to calculate output probabilities from the two nodes in output layer.
+类似地，隐藏层中另一个神经元也将被计算出来。隐含层中的神经元经过类似输出层神经元类似的操作输入到输出层。这使得我们能够计算输出层输出的概率。
 
-Suppose the output probabilities from the two nodes in the output layer are 0.4 and 0.6 respectively (since the weights are randomly assigned, outputs will also be random). We can see that the calculated probabilities (0.4 and 0.6) are very far from the desired probabilities (1 and 0 respectively), hence the network in Figure 5 is said to have an ‘Incorrect Output’.
+ 
+
+假设，输出层两个神经元给出的概率分别为0.4和0.6（因为权值是随机初始化的，所以输出也是随机的）。这里我们可以发现计算出的概率同想要的概率之间纯真很大差异。因此，图5中的网络输出了一个错误输出。
 
 ![Screen Shot 2016-08-09 at 11.52.57 PM.png](https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-09-at-11-52-57-pm.png?w=748)
 
 ###### Figure 5: forward propagation step in a multi layer perceptron
 
-**Step 2: Back Propagation and Weight Updation**
+**第2****步：后向传播和权重更新**
 
-We calculate the total error at the output nodes and propagate these errors back through the network using Backpropagation to calculate the *gradients*. Then we use an optimization method such as *Gradient Descent* to ‘adjust’ **all** weights in the network with an aim of reducing the error at the output layer. This is shown in the Figure 6 below (ignore the mathematical equations in the figure for now).
+我们计算了输出神经元中的误差，同时后向传播通过这些误差计算梯度。以减少输出层的误差为目标，使用类似梯度下降的优化器，来调整网络中的全部参数。这个过程展示在下图6中。
 
-Suppose that the new weights associated with the node in consideration are w4, w5 and w6 (after Backpropagation and adjusting weights).
+假设与神经元相关的新权证是w4,w5,w6（后向传播和调整权重后）。
 
 ![Screen Shot 2016-08-09 at 11.53.06 PM.png](https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-09-at-11-53-06-pm.png?w=748)
 
 ###### Figure 6: backward propagation and weight updation step in a multi layer perceptron
 
-If we now input the same example to the network again, the network should perform better than before since the weights have now been adjusted to minimize the error in prediction. As shown in Figure 7, the errors at the output nodes now reduce to [0.2, -0.2] as compared to [0.6, -0.4] earlier. This means that our network has learnt to correctly classify our first training example.
+如果我们现在输入相同的样本带网络中，网络应该表现的更好一点，因为我们已经通过最小化误差调整了权重参数。正如图7中所示，输入层的误差同【0.6，-0.4】相比，已经减少到【0.2，-0.2】。这就意味着网络已经学会了如何正确的分类我们之前的训练样本。
 
 ![Screen Shot 2016-08-09 at 11.53.15 PM.png](https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-09-at-11-53-15-pm.png?w=748)
 
 ###### Figure 7: the MLP network now performs better on the same input
 
-We repeat this process with all other training examples in our dataset. Then, our network is said to have *learnt* those examples.
+我们在所有的训练样本中重复以上过程。我们的网络就能学习这些样本。
 
-If we now want to predict whether a student studying 25 hours and having 70 marks in the mid term will pass the final term, we go through the forward propagation step and find the output probabilities for Pass and Fail.
+ 
 
-I have avoided mathematical equations and explanation of concepts such as ‘Gradient Descent’ here and have rather tried to develop an intuition for the algorithm. For a more mathematically involved discussion of the Backpropagation algorithm, refer to [this link](http://home.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html).
+假设我们想预测一个学生学习了25个小时期中考试75分是否能通过期末考，我们将数据输入到网络中就能得到结果。
 
-#### 3d Visualization of a Multi Layer Perceptron
+ 
 
-Adam Harley has created a [3d visualization](http://scs.ryerson.ca/~aharley/vis/fc/) of a Multi Layer Perceptron which has already been trained (using Backpropagation) on the MNIST Database of handwritten digits.
+这里我尽量避免使用数学上方程和解释梯度下降的概念，想通过建立一种对这种算法直观的理解。
 
-The network takes 784 numeric pixel values as inputs from a 28 x 28 image of a handwritten digit (it has 784 nodes in the Input Layer corresponding to pixels). The network has 300 nodes in the first hidden layer, 100 nodes in the second hidden layer, and 10 nodes in the output layer (corresponding to the 10 digits) [15].
+ 
 
-Although the network described here is much larger (uses more hidden layers and nodes) compared to the one we discussed in the previous section, all computations in the forward propagation step and backpropagation step are done in the same way (at each node) as discussed before.
+三维视角的多层感知机
 
-Figure 8 shows the network when the input is the digit ‘5’.
+Adam Harley建立一种三维视角的剁成感知机，这种感知机已经在手写字识别中被训练和运用。
+
+ 
+
+该网络将784个数字像素值作为来自手写数字的28×28图像的输入（其在输入层中具有对应于像素的784个节点）。网络在第一个隐藏层中有300个节点，在第二个隐藏层中有100个节点，在输出层中有10个节点（对应于10个数字）
+
+虽然与前面部分讨论的网络相比，此处描述的网络要大得多（使用更多的隐藏层和节点），但前向传播步骤和反向传播步骤中的所有计算都以相同的方式（在每个节点处）完成，如上所述之前。
 
 ![Screen Shot 2016-08-09 at 5.45.34 PM.png](https://ujwlkarn.files.wordpress.com/2016/08/screen-shot-2016-08-09-at-5-45-34-pm.png?w=748)
 
 ###### Figure 8: visualizing the network for an input of ‘5’
 
-A node which has a higher output value than others is represented by a brighter color. In the Input layer, the bright nodes are those which receive higher numerical pixel values as input. Notice how in the output layer, the only bright node corresponds to the digit 5 (it has an output probability of 1, which is higher than the other nine nodes which have an output probability of 0). This indicates that the MLP has correctly classified the input digit. I highly recommend playing around with this visualization and observing connections between nodes of different layers.
+具有比其他输出值更高的输出值的节点由更亮的颜色表示。在输入层中，亮节点是接收较高数值像素值作为输入的节点。请注意，在输出层中，唯一的明亮节点对应于数字5（输出概率为1，高于其他9个输出概率为0的节点）。这表明MLP已正确分类输入数字。我强烈建议玩这种可视化并观察不同层节点之间的连接。
 
-#### Deep Neural Networks
+#### 深度神经网络
 
-1. [What is the difference between deep learning and usual machine learning?](https://github.com/rasbt/python-machine-learning-book/blob/master/faq/difference-deep-and-normal-learning.md)
-2. [What is the difference between a neural network and a deep neural network?](http://stats.stackexchange.com/questions/182734/what-is-the-difference-between-a-neural-network-and-a-deep-neural-network?rq=1)
-3. [How is deep learning different from multilayer perceptron?](https://www.quora.com/How-is-deep-learning-different-from-multilayer-perceptron)
+1. \1.      [深度学习和普通机器学习有什么区别？](https://github.com/rasbt/python-machine-learning-book/blob/master/faq/difference-deep-and-normal-learning.md)
 
-#### Conclusion
+   \2.      [神经网络和深层神经网络有什么区别？](http://stats.stackexchange.com/questions/182734/what-is-the-difference-between-a-neural-network-and-a-deep-neural-network?rq=1)
 
-I have skipped important details of some of the concepts discussed in this post to facilitate understanding. I would recommend going through [Part1](http://cs231n.github.io/neural-networks-1/), [Part2](http://cs231n.github.io/neural-networks-2/), [Part3](http://cs231n.github.io/neural-networks-3/) and [Case Study](http://cs231n.github.io/neural-networks-case-study/) from Stanford’s Neural Network tutorial for a thorough understanding of Multi Layer Perceptrons.
+   \3.         [深层学习与多层感知器有何不同？](https://www.quora.com/How-is-deep-learning-different-from-multilayer-perceptron)
 
-Let me know in the comments below if you have any questions or suggestions!
+
+#### 结论
+
+我已经跳过了本文中讨论的一些概念的重要细节，以便于理解。我会建议通过去[第一部分](http://cs231n.github.io/neural-networks-1/)，[第2部分](http://cs231n.github.io/neural-networks-2/)，[第三部分](http://cs231n.github.io/neural-networks-3/)和[案例分析](http://cs231n.github.io/neural-networks-case-study/)从斯坦福大学的神经网络教程多层感知的全面理解。
 
 #### References
 
