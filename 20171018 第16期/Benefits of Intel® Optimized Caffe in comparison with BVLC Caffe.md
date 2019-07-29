@@ -1,272 +1,215 @@
-# Benefits of Intel® Optimized Caffe* in comparison with BVLC Caffe*
+# 相比BVLC Caffe，英特尔®优化Caffe的优势
 
 原文链接：[Benefits of Intel® Optimized Caffe* in comparison with BVLC Caffe*](https://software.intel.com/en-us/articles/comparison-between-intel-optimized-caffe-and-vanilla-caffe-by-intel-vtune-amplifier?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-### Overview
+### 总览
 
- This article introduces Berkeley Vision and Learning Center (BVLC) Caffe* and  a custom version of Caffe*, Intel® Optimized Caffe*. We explain why and how Intel® Optimized Caffe* performs efficiently on Intel® architecture via Intel® VTune™ Amplifier and the time profiling option of Caffe* itself.
+本文介绍了Berkeley Vision and Learning Center（BVLC）Caffe 和Caffe 的定制版本，英特尔®优化的Caffe 。 我们将解释英特尔®优化Caffe后在英特尔®架构上通过英特尔®VTune™放大器以及Caffe 本身的性能剖析与如何运用
 
 ###  
 
-### Introduction to BVLC Caffe* and Intel® Optimized Caffe*
+### BVLC Caffe* 和英特尔®优化版Caffe *简介
 
-[Caffe](http://caffe.berkeleyvision.org/)* is a well-known and widely used machine vision based Deep Learning framework developed by the Berkeley Vision and Learning Center ([BVLC](http://bvlc.eecs.berkeley.edu/)). It is an open-source framework and is evolving currently. It allows users to control a variety options such as libraries for BLAS, CPU or GPU focused computation, CUDA, OpenCV*, MATLAB and Python* before you build Caffe* through 'Makefile.config'. You can easily change the options in the configuration file and BVLC provides intuitive instructions on their project web page for developers. 
+[Caffe](http://caffe.berkeleyvision.org/)*是由Berkeley Vision 和Learning Center（[BVLC](http://bvlc.eecs/berkeley.edu/)）开发的一种运用广泛的基于机器视觉的深度学习框架。 它是一个开源框架，目前正在发展。 它允许用户在通过'Makefile.config'构建Caffe *之前修改参数，例如用于BLAS，CPU或GPU关注计算的库，CUDA，OpenCV *，MATLAB和Python *。 您可以轻松更改配置文件中的选项，BVLC可为开发人员提供项目网页上的直接说明。
 
-Intel® Optimized Caffe* is an Intel-distributed customized Caffe* version for Intel architecture. Intel® Optimized Caffe* offers all the goodness of main Caffe* with the addition of Intel architecture-optimized functionality and multi-node distributor training and scoring. Intel® Optimized Caffe* makes it possible to more efficiently utilize CPU resources.
+英特尔®优化版Caffe *是针对英特尔架构的英特尔分布式定制Caffe *版本。英特尔®优化Caffe *通过增加英特尔架构优化功能和多节点分布训练和打分，具有主要Caffe *的所有优点。英特尔®优化版Caffe *可以更有效地利用CPU资源。
 
-To see in detail how Intel® Optimized Caffe* has changed in order to optimize itself to Intel Architectures, please refer this page : <https://software.intel.com/en-us/articles/caffe-optimized-for-intel-architecture-applying-modern-code-techniques>
+要详细了解英特尔®优化Caffe *如何更改以优化自身的英特尔体系结构，请参阅此页：https://software.intel.com/en-us/articles/caffe-optimized-for-intel-architecture-applying-modern-code-techniques
 
-In this article, we will first profile the performance of BVLC Caffe* with Cifar 10 example and then will profile the performance of Intel® Optimized Caffe* with the same example. Performance profile will be conducted through two different methods.
+在本文中，我们将首先使用Cifar 10示例分析BVLC Caffe *的性能，然后使用相同的示例来分析英特尔®优化Caffe *的性能。性能评估将通过两种不同的方法进行。
 
-Tested platform : Xeon Phi™ 7210 ( 1.3Ghz, 64 Cores ) with 96GB RAM, CentOS 7.2
+测试的平台：Xeon Phi™7210（1.3Ghz，64核心），96GB RAM，CentOS 7.2
 
-\1. Caffe* provides its own timing option for example : 
+1. Caffe *提供了自己的计时选项，例如：
 
-| `1`  | `./build/tools/caffe ``time` `\` |
-| ---- | -------------------------------- |
-|      |                                  |
+```bash
+./build/tools/caffe time \ 
+    --model=examples/cifar10/cifar10_full_sigmoid_train_test_bn.prototxt \
+    -iterations 1000
+```
 
-| `2`  | `    ``--model=examples/cifar10/cifar10_full_sigmoid_train_test_bn.prototxt \` |
-| ---- | ------------------------------------------------------------ |
-|      |                                                              |
-
-| `3`  | `    ``-iterations 1000` |
-| ---- | ------------------------ |
-|      |                          |
-
-\2. Intel® VTune™ Amplifier :  Intel® VTune™ Amplifier is a powerful profiling tool that provides advanced CPU profiling features with a modern analysis interface.  <https://software.intel.com/en-us/intel-vtune-amplifier-xe>
+2. 英特尔®VTune™放大器：英特尔®VTune™放大器是一款功能强大的分析工具，可提供先进的CPU分析功能和现代分析界面。  <https://software.intel.com/en-us/intel-vtune-amplifier-xe>
 
  
 
  
 
-### How to Install BVLC Caffe*
+### 如何安装BVLC Caffe*
 
-Please refer the BVLC Caffe project web page for installation : <http://caffe.berkeleyvision.org/installation.html>
+请参考BVLC Caffe项目网页进行安装：<http://caffe.berkeleyvision.org/installation.html>
 
-If you have Intel® MKL installed on your system, it is better using MKL as BLAS library. 
+如果您的系统上安装了英特尔®MKL，那么最好使用MKL作为BLAS库。
 
-In your Makefile.config , choose BLAS := mkl and specify MKL address. ( The default set is BLAS := atlas )
+在Makefile.config中，选择BLAS:= mkl并指定MKL地址。 （默认设置为BLAS:= atlas）
 
-In our test, we kept all configurations as they are specified as default except the CPU only option. 
+在我们的测试中，我们将所有配置保留为默认值，但仅限CPU选项。
 
- 
 
-### Test example
 
-In this article, we will use 'Cifar 10' example included in Caffe* package as default. 
+### 测试样例
 
-You can refer BVLC Caffe project page for detail information about this exmaple : <http://caffe.berkeleyvision.org/gathered/examples/cifar10.html>
+在本文中，我们将使用Caffe *包中包含的“Cifar 10”示例作为默认值。
 
-You can simply run the training example of Cifar 10 as the following : 
+您可以参考BVLC Caffe项目页面以获取有关此例子的详细信息：<http://caffe.berkeleyvision.org/gathered/examples/cifar10.html>
 
-| `1`  | `cd $CAFFE_ROOT` |
-| ---- | ---------------- |
-|      |                  |
+您可以轻松地运行Cifar 10的训练示例，如下所示：
 
-| `2`  | `./data/cifar10/get_cifar10.sh` |
-| ---- | ------------------------------- |
-|      |                                 |
+```bash
+cd $CAFFE_ROOT
+./data/cifar10/get_cifar10.sh
+./examples/cifar10/create_cifar10.sh
+./examples/cifar10/train_full_sigmoid_bn.sh
+```
 
-| `3`  | `./examples/cifar10/create_cifar10.sh` |
-| ---- | -------------------------------------- |
-|      |                                        |
+首先，我们将尝试使用Caffe自己的基准测试方法来获得其性能结果，如下所示：
 
-| `4`  | `./examples/cifar10/train_full_sigmoid_bn.sh` |
-| ---- | --------------------------------------------- |
-|      |                                               |
+```bash
+./build/tools/caffe time\
+    model=examples/cifar10/cifar10_full_sigmoid_train_test_bn.prototxt \
+    -iterations 1000
+```
 
-First, we will try the Caffe's own benchmark method to obtain its performance results as the following:
-
-| `1`  | `./build/tools/caffe ``time` `\` |
-| ---- | -------------------------------- |
-|      |                                  |
-
-| `2`  | `    ``--model=examples/cifar10/cifar10_full_sigmoid_train_test_bn.prototxt \` |
-| ---- | ------------------------------------------------------------ |
-|      |                                                              |
-
-| `3`  | `    ``-iterations 1000` |
-| ---- | ------------------------ |
-|      |                          |
-
-as results, we got the layer-by-layer forward and backward propagation time. The command above measure the time each forward and backward pass over a batch f images. At the end it shows the average execution time per iteration for 1,000 iterations per layer and for the entire calculation. 
+结果，我们得到了逐层前向和后向传播时间。 上面的命令测得每个前向和后向传播批量f图像的时间。 最后，它显示了每层1000次迭代和整个计算的每次迭代的平均执行时间。
 
 ![img](https://software.intel.com/sites/default/files/managed/c1/9d/Picture1.png)
 
-This test was run on Xeon Phi™ 7210 ( 1.3Ghz, 64 Cores ) with 96GB RAM of DDR4 installed with CentOS 7.2.
+该测试在Xeon Phi™7210（1.3Ghz，64核）上运行，其中96GB RAM的DDR4与CentOS 7.2一起安装。
 
-The numbers in the above results will be compared later with the results of Intel® Optimized Caffe*. 
+上述结果中的数字将在稍后与英特尔®优化Caffe *的结果进行比较。
 
-Before that, let's take a look at the VTune™ results also to observe the behave of Caffe* in detail. 
+在此之前，让我们来看看VTune™结果，以便详细观察Caffe *的表现
 
- 
 
-### VTune Profiling
 
-Intel® VTune™ Amplifier is a modern processor performance profiler that is capable of analyzing top hotspots quickly and helping tuning your target application. You can find the details of Intel® VTune™ Amplifier from the following link :
+### VTune 剖析
+
+Intel® VTune™ Amplifier是一款现代处理器性能分析器，能够快速分析”hotspots“并帮助调整目标应用。 您可以从以下链接中找到英特尔®VTune™放大器的详细信息：
 
 Intel® VTune™ Amplifier : <https://software.intel.com/en-us/intel-vtune-amplifier-xe>
 
-We used Intel® VTune™ Amplifier in this article to find the function with the highest total CPU utilization time. Also, how OpenMP threads are working. 
+我们在本文中使用英特尔®VTune™放大器来查找具有最高总CPU利用时间的功能。 此外，OpenMP线程如何工作。
 
  
 
-### VTune result analysis
+### VTune结果分析
 
  
 
 ![img](https://software.intel.com/sites/default/files/managed/5c/97/Capture1.PNG)
 
-What we can see here is some functions listed on the left side of the screen which are taking the most of the CPU time. They are called 'hotspots' and can be the target functions for performance optimization. 
+我们在这里看到的是屏幕左侧列出的一些功能，这些功能占用了大部分CPU时间。 它们被称为“hotspots”，可以作为性能优化的目标函数。
 
-In this case, we will focus on 'caffe::im2col_cpu<float>' function as a optimization candidate. 
+在这种情况下，我们将关注'caffe :: im2col_cpu <float>'函数作为优化候选。
 
-'im2col_cpu<float>' is one of the steps in performing direct convolution as a GEMM operation for using highly optimized BLAS libraries. This function took the largest CPU resource in our test of training Cifar 10 model using BVLC Caffe*. 
+'im2col_cpu <float>'是执行直接卷积作为使用高度优化的BLAS库的GEMM操作的步骤之一。 在我们使用BVLC Caffe *训练Cifar 10模型的测试中，此功能占用了最大的CPU资源。
 
-Let's take a look at the threads behaviors of this function. In VTune™, you can choose a function and filter other workloads out to observe only the workloads of the specified function. 
+我们来看看这个函数的线程行为。 在VTune™中，您可以选择一个功能并过滤其他工作负载，以仅观察指定功能的工作负载。
 
 ![img](https://software.intel.com/sites/default/files/managed/36/a2/Capture2.PNG)
 
-On the above result, we can see the CPI ( Cycles Per Instruction ) of the function is 0.907 and the function utilizes only one single thread for the entire calculation.
+在上面的结果中，我们可以看到函数的CPI（每指令周期数）是0.907，并且该函数仅使用一个单个线程进行整个计算。
 
-One more intuitive data provided by Intel VTune Amplifier is here. 
+英特尔VTune放大器提供的更直观的数据就在这里。
 
 ![img](https://software.intel.com/sites/default/files/managed/45/a8/Capture3.PNG)
 
-This 'CPU Usage Histogram' provides the data of the numbers of CPUs that were running simultaneously. The number of CPUs the training process utilized appears to be about 25. The platform has 64 physical core with Intel® Hyper-Threading Technology so it has 256 CPUs. The CPU usage histogram here might imply that the process is not efficiently threaded. 
+此“CPU使用率直方图”提供同时运行的CPU数量的数据。 训练过程使用的CPU数量似乎约为25.该平台有64个物理内核和英特尔®超线程技术，因此它拥有256个CPU。 这里的CPU使用率直方图可能意味着该进程没有有效的线程。
 
-However, we cannot just determine that these results are 'bad' because we did not set any performance standard or desired performance to classify. We will compare these results with the results of Intel® Optimized Caffe* later.
+但是，我们不能仅仅确定这些结果是“坏的”，因为我们没有设置任何性能标准或期望的性能来进行分类。 我们将在稍后将这些结果与英特尔®优化Caffe *的结果进行比较。
 
- 
-
-Let's move on to Intel® Optimized Caffe* now.
+现在让我们转向英特尔®优化Caffe *。
 
  
 
-### How to Install Intel® Optimized Caffe*
+### 如何安装 Intel® Optimized Caffe*
 
- The basic procedure of installation of  Intel® Optimized Caffe* is the same as BVLC Caffe*. 
+安装英特尔®优化Caffe *的基本步骤与BVLC Caffe *相同。
 
-When clone  Intel® Optimized Caffe* from Git, you can use this alternative : 
+当从Git克隆英特尔®优化的Caffe *时，您可以使用以下替代方法：
 
-| `1`  | `git clone https:``//github.com/intel/caffe` |
-| ---- | -------------------------------------------- |
-|      |                                              |
+```bash
+git clone https: //github.com/intel/caffe
+```
 
- 
+此外，还需要安装英特尔®MKL才能发挥英特尔®优化Caffe *的最佳性能。
 
-Additionally, it is required to install  Intel® MKL to bring out the best performance of  Intel® Optimized Caffe*. 
-
-Please download and install  Intel® MKL. Intel offers MKL for free without technical support or for a license fee to get one-on-one private support. The default BLAS library of  Intel® Optimized Caffe* is set to MKL.
+请下载并安装英特尔®MKL。 英特尔免费提供MKL，无需技术支持或获得许可费即可获得一对一的私人支持。 英特尔®优化Caffe *的默认BLAS库设置为MKL。
 
  Intel® MKL : <https://software.intel.com/en-us/intel-mkl>
 
-After downloading Intel® Optimized Caffe* and installing MKL, in your Makefile.config, make sure you choose MKL as your BLAS library and point MKL include and lib folder for BLAS_INCLUDE and BLAS_LIB
+下载英特尔®优化Caffe *并安装MKL后，在Makefile.config中，确保选择MKL作为BLAS库并指向BLL_INCLUDE和BLAS_LIB的MKL include和lib文件夹
 
-| `1`  | `BLAS :=mkl` |
-| ---- | ------------ |
-|      |              |
+```bash
+BLAS :=mkl
 
-| `2`  |      |
-| ---- | ---- |
-|      |      |
+BLAS_INCLUDE := /opt/intel/mkl/include
+BLAS_LIB := /opt/intel/mkl/lib/intel64
+```
 
-| `3`  | `BLAS_INCLUDE := /opt/intel/mkl/include` |
-| ---- | ---------------------------------------- |
-|      |                                          |
+如果在编译英特尔®优化Caffe *期间遇到“libstdc ++”相关错误，请安装“libstdc++ - static”。 例如 ：
 
-| `4`  | `BLAS_LIB := /opt/intel/mkl/lib/intel64` |
-| ---- | ---------------------------------------- |
-|      |                                          |
+```bash
+sudo yum install libstdc++- static
+```
 
- 
+### 优化因素和曲调
 
-If you encounter 'libstdc++' related error during the compilation of  Intel® Optimized Caffe*, please install 'libstdc++-static'. For example :
+在我们运行和测试示例的性能之前，我们需要更改或调整一些选项以优化性能。
 
-| `1`  | `sudo yum install libstdc++-``static` |
-| ---- | ------------------------------------- |
-|      |                                       |
+- 使用'mkl'作为BLAS库：在Makefile.config中指定'BLAS:= mkl'并配置MKL的include和lib位置的位置。
 
- 
+- 设置CPU利用率限制：
 
- 
+```bash
+echo "100" sudo tee /sys/devices/system/cpu/intel_pstate/min_perf_pct
+echo "0" | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+```
 
- 
+ - 将'engine：“MKL2017”放在train_val.prototxt或solver.prototxt文件的顶部，或者使用此选项和caffe工具：-engine“MKL2017”
 
-### Optimization factors and tunes
+ - 当前实现使用OpenMP线程。默认情况下，OpenMP线程的数量设置为CPU核心数。每个线程都绑定到一个内核以获得最佳性能结果。但是，可以通过OpenMP环境变量（如KMP_AFFINITY，OMP_NUM_THREADS或GOMP_CPU_AFFINITY）提供正确的配置来使用自己的配置。对于下面的示例运行，已使用'OMP_NUM_THREADS = 64'。
 
-Before we run and test the performance of examples, there are some options we need to change or adjust to optimize performance.
+ - 英特尔®优化Caffe *编辑了原始BVLC Caffe *代码的许多部分，以实现与OpenMP *更好的代码并行化。根据在后台运行的其他进程，调整OpenMP *使用的线程数通常很有用。对于Intel Xeon Phi™产品系列单节点，我们建议使用OMP_NUM_THREADS = numer_of_cores-2。
 
-- Use 'mkl' as BLAS library : Specify 'BLAS := mkl' in Makefile.config and configure the location of your MKL's include and lib location also.
+ - 请同时参考：[Intel Recommendation to Achieve the best performance ](https://github.com/intel/caffe/wiki/Recommendations-to-achieve-best-performance)
 
-- Set CPU utilization limit : 
+如果由于OS过于频繁地移动线程而观察到过多的开销，则可以尝试调整OpenMP * affinity环境变量：
 
-  | `1`  | `echo ``"100"` `| sudo tee /sys/devices/``system``/cpu/intel_pstate/min_perf_pct` |
-  | ---- | ------------------------------------------------------------ |
-  |      |                                                              |
 
-  | `2`  | `echo ``"0"` `| sudo tee /sys/devices/``system``/cpu/intel_pstate/no_turbo` |
-  | ---- | ------------------------------------------------------------ |
-  |      |                                                              |
-
-- Put 'engine:"MKL2017" ' at the top of your train_val.prototxt or solver.prototxt file or use this option with caffe tool : -engine "MKL2017"
-
-- Current implementation uses OpenMP threads. By default the number of OpenMP threads is set to the number of CPU cores. Each one thread is bound to a single core to achieve best performance results. It is however possible to use own configuration by providing right one through OpenMP environmental variables like KMP_AFFINITY, OMP_NUM_THREADS or GOMP_CPU_AFFINITY. For the example run below , 'OMP_NUM_THREADS = 64' has been used.
-
-- Intel® Optimized Caffe* has edited many parts of original BVLC Caffe* code to achieve better code parallelization with OpenMP*. Depending on other processes running on the background, it is often useful to adjust the number of threads getting utilized by OpenMP*. For Intel Xeon Phi™ product family single-node we recommend to use OMP_NUM_THREADS = numer_of_cores-2.
-
-- Please also refer here : [Intel Recommendation to Achieve the best performance ](https://github.com/intel/caffe/wiki/Recommendations-to-achieve-best-performance)
-
-If you observe too much overhead because of too frequent movement of thread by OS, you can try to adjust OpenMP* affinity environment variable : 
-
-| `1`  | `KMP_AFFINITY=compact,granularity=fine` |
-| ---- | --------------------------------------- |
-|      |                                         |
+```bash
+KMP_AFFINITY=compact,granularity=fine
+```
 
  
 
-### Test example
+### 测试样例
 
- For Intel® Optimized Caffe* we run the same example to compare the results with the previous results. 
+对于英特尔®优化Caffe *，我们运行相同的示例，将结果与之前的结果进行比较。
 
-| `1`  | `cd $CAFFE_ROOT` |
-| ---- | ---------------- |
-|      |                  |
+```bash
+cd $CAFFE_ROOT
+./data/cifar10/get_cifar10.sh
+./examples/cifar10/create_cifar10.sh             
+```
+```bash
+./build/tools/caffe time \
+    --model=examples/cifar10/cifar10_full_sigmoid_train_test_bn.prototxt \
+    -iterations 1000
+```
 
-| `2`  | `./data/cifar10/get_cifar10.sh` |
-| ---- | ------------------------------- |
-|      |                                 |
 
-| `3`  | `./examples/cifar10/create_cifar10.sh` |
-| ---- | -------------------------------------- |
-|      |                                        |
+### 对比
 
-| `1`  | `./build/tools/caffe ``time` `\` |
-| ---- | -------------------------------- |
-|      |                                  |
+以上示例的结果如下：
 
-| `2`  | `    ``--model=examples/cifar10/cifar10_full_sigmoid_train_test_bn.prototxt \` |
-| ---- | ------------------------------------------------------------ |
-|      |                                                              |
+同样，用于测试的平台是 : Xeon Phi™ 7210 ( 1.3Ghz, 64 Cores ) with 96GB RAM, CentOS 7.2
 
-| `3`  | `    ``-iterations 1000` |
-| ---- | ------------------------ |
-|      |                          |
-
- 
-
-### Comparison
-
- The results with the above example is the following :
-
-Again , the platform used for the test is : Xeon Phi™ 7210 ( 1.3Ghz, 64 Cores ) with 96GB RAM, CentOS 7.2
-
-first, let's look at the BVLC Caffe*'s and Intel® Optimized Caffe* together, 
+首先，我们一起来看看BVLC Caffe *和英特尔®优化Caffe *，
 
 ![img](https://software.intel.com/sites/default/files/managed/a1/80/Picture1.png)  --> ![img](https://software.intel.com/sites/default/files/managed/ed/6f/Picture2.png)
 
-to make it easy to compare, please see the table below. The duration each layer took in milliseconds has been listed, and on the 5th column we stated how many times Intel® Optimized Caffe* is faster than BVLC Caffe* at each layer. You can observe significant performance improvements except for bn layers relatively. Bn stands for "Batch Normalization" which requires fairly simple calculations with small optimization potential. Bn forward layers show better results and Bn backward layers show 2~3% slower results than the original. Worse performance can occur here in result of threading overhead. Overall in total, Intel® Optimized Caffe* achieved about 28 times faster performance in this case. 
+为了便于比较，请参阅下表。 列出了每层采用的持续时间（以毫秒为单位），在第5列中，我们说明了每层英特尔®优化Caffe *比BVLC Caffe *快多少倍。 除了相对的bn层，您可以观察到显着的性能改进。 Bn代表“批量标准化”，它需要相当简单的计算，具有小的优化潜力。 Bn前向层显示更好的结果，Bn后向层显示比原始结果慢2~3％的结果。 由于线程开销，这里可能会出现更糟糕的性能。 总体而言，在这种情况下，英特尔®优化Caffe *的性能提升了约28倍。
+
 
 |          | Direction        | BVLC (ms) | Intel (ms) | Performance Benefit (x) |
 | -------- | ---------------- | --------- | ---------- | ----------------------- |
@@ -303,35 +246,32 @@ to make it easy to compare, please see the table below. The duration each layer 
 | Ave.     | Forward-Backward | 1223.86   | 43.636     | 28.047                  |
 | Total    |                  | 1223860   | 43636      | 28.047                  |
 
- 
 
-Some of many reasons this optimization was possible are :
+这种优化可能的原因有很多：
 
-- Code vectorization for SIMD 
-- Finding hotspot functions and reducing function complexity and the amount of calculations
-- CPU / system specific optimizations
-- Reducing thread movements
-- Efficient OpenMP* utilization
+ -  SIMD的代码矢量化
+ -  查找hotspot功能，降低功能复杂性和计算量
+ -  CPU /系统特定的优化
+ -  减少线程移动
+ -  高效的OpenMP *利用率
 
- 
+另外，让我们比较一下BVLC Caffe和英特尔®优化Caffe *之间的VTune结果。
 
-Additionally, let's compare the VTune results of this example between BVLC Caffe and Intel® Optimized Caffe*. 
-
-Simply we will looking at how efficiently im2col_cpu function has been utilized. 
+我们将简单地研究如何有效地利用im2col_cpu函数。
 
 ![img](https://software.intel.com/sites/default/files/managed/fd/1e/Capture2.PNG)
 
-BVLC Caffe*'s im2col_cpu function had CPI at 0.907 and was single threaded. 
+BVLC Caffe *的im2col_cpu函数的CPI为0.907，并且是单线程的。
 
 ![img](https://software.intel.com/sites/default/files/managed/4f/19/Capture4.PNG)
 
-In case of Intel® Optimized Caffe* , im2col_cpu has its CPI at 2.747 and is multi threaded by OMP Workers. 
+对于英特尔®优化Caffe *，im2col_cpu的CPI为2.747，由OMP Workers提供多线程。
 
-The reason why CPI rate increased here is vectorization which brings higher CPI rate because of longer latency for each instruction and multi-threading which can introduce spinning while waitning for other threads to finish their jobs. However, in this example, benefits from vectorization and multi-threading exceed the latency and overhead and bring performance improvements after all.
+这里CPI率增加的原因是矢量化带来了更高的CPI率，因为每条指令的延迟更长，多线程可以在等待其他线程完成工作时spinning。但是，在此示例中，矢量化和多线程的优势超过了延迟和开销，并且毕竟带来了性能改进。
 
-VTune suggests that CPI rate close to 2.0 is theoretically ideal and for our case, we achieved about the right CPI for the function. The training workload for the Cifar 10 example is to handle 32 x 32 pixel images for each iteration so when those workloads split down to many threads, each of them can be a very small task which may cause transition overhead for multi-threading. With larger images we would see lower spining time and smaller CPI rate.
+VTune建议CPI率接近2.0在理论上是理想的，对于我们的情况，我们实现了该函数的正确CPI。 Cifar 10示例的训练工作量是为每次迭代处理32 x 32像素图像，因此当这些工作负载分解为多个线程时，它们中的每一个都可能是一个非常小的任务，这可能导致多线程的转换开销。对于较大的图像，我们会看到较短的spinning时间和较小的CPI率。
 
-CPU Usage Histogram for the whole process also shows better threading results in this case. 
+在这种情况下，整个过程的CPU使用率直方图也显示出更好的线程结果。
 
 ![img](https://software.intel.com/sites/default/files/managed/bf/89/Capture3.PNG)
 
@@ -341,9 +281,9 @@ CPU Usage Histogram for the whole process also shows better threading results in
 
  
 
-###  
 
-### Useful links
+
+### 推荐链接
 
 BVLC Caffe* Project : [http://caffe.berkeleyvision.org/ ](http://caffe.berkeleyvision.org/)
 
@@ -361,16 +301,14 @@ Intel® Optimized Caffe* Modern Code Techniques : <https://software.intel.com/en
 
  
 
-###  
 
-### Summary
 
-Intel® Optimized Caffe* is a customized Caffe* version for Intel Architectures with modern code techniques.
+### 总结
 
-In Intel® Optimized Caffe*, Intel leverages optimization tools and Intel® performance libraries, perform scalar and serial optimizations, implements vectorization and parallelization. 
+英特尔®优化Caffe *是采用现代代码技术的英特尔架构的定制Caffe *版本。
 
- 
+在英特尔®优化Caffe *中，英特尔利用优化工具和英特尔®性能库，执行标量和串行优化，实现矢量化和并行化。
 
  
 
-For more complete information about compiler optimizations, see our [Optimization Notice](https://software.intel.com/en-us/articles/optimization-notice#opt-en).
+有关编译器优化的更完整信息，请参阅我们的 [Optimization Notice](https://software.intel.com/en-us/articles/optimization-notice#opt-en).

@@ -1,4 +1,4 @@
-# NEW OPTIMIZATIONS IMPROVE DEEP LEARNING FRAMEWORKS FOR CPUS
+# 新的优化改善了CPUS的深度学习框架
 
 原文链接：[NEW OPTIMIZATIONS IMPROVE DEEP LEARNING FRAMEWORKS FOR CPUS](https://www.nextplatform.com/2017/10/13/new-optimizations-improve-deep-learning-frameworks-cpus/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
@@ -6,58 +6,58 @@
 
 
 
-Today, most machine learning is done on processors. Some would say that acceleration of learning has to be done on GPUs, but for most users that is not good advice for several reasons. The biggest reason is now the Intel Xeon SP processor, formerly codenamed “Skylake.”
+今天，大多数机器学习是在处理器上完成的。有人会说加速学习必须在GPU上进行，但对于大多数用户而言，这并不是好的建议。最大的原因是现在的英特尔至强SP处理器，以前代号为“Skylake”。
 
-Up until recently, the software for machine learning has been often more optimized for GPUs than anything else. A series of efforts by Intel have changed that – and when coupled with Platinum version of the Intel Xeon SP family, the top performance gap is closer to 2X than it is to 100X. This may stun some, but it is well documented and not all that surprising when we understand the underlying architectures. With such closeness in performance, use of a GPU accelerator is more of a luxury than a necessity – and there are better choices emerging for ‘luxury’ when we really need it.
+直到最近，用于机器学习的软件通常比GPU更优化。英特尔的一系列努力改变了这一点 - 当与英特尔至强SP系列的白金版本配合使用时，最高性能差距接近2倍，而不是100倍。这可能会使一些人感到震惊，但是当我们理解底层架构时，它已被充分证明并且不令人惊讶。由于性能如此接近，使用GPU加速器是奢侈品而不是必需品 - 当我们真正需要时，'奢侈品'有更好的选择。
 
-Make no mistake however, ‘accelerators’ can have an advantage in performance and/or power consumption when machine learning is all we need. I’ll come back to that with “*What if we only do machine learning?*” at the end of this article. Since most of us need more than a “machine learning only” server, I’ll focus on the reality of how Intel Xeon SP Platinum processors remain the best choice for servers, including servers needing to do machine learning as part of their workload.
+毫无疑问，当我们需要机器学习时，“加速器”可以在性能和（或）功耗方面具有优势。我将在本文末尾附上“*如果我们只进行机器学习怎么办？*”。由于我们大多数人不仅需要“机器学习”服务器，我还将关注英特尔至强SP铂金处理器如何成为服务器的最佳选择，包括需要将机器学习作为其工作量的一部分的服务器。
 
-### WHINE, WHINE, WHINE – WHERE ARE THE BENCHMARKS?
+### 抱怨三连 – 基准在哪?
 
-Intel engineers will tell you that frameworks for deep learning have been highly biased to be optimized for GPUs and not CPUs. So, Intel did something about it – and the lack of CPU optimizations in these frameworks has been addressed today by optimization efforts by Intel to add CPU optimizations to frameworks which were already optimized for GPUs.
+英特尔工程师将告诉您，深度学习的框架已经高度偏向于针对GPU而非CPU进行优化。 因此，英特尔做了一些事情 - 而今天，英特尔通过努力将CPU优化添加到已经针对GPU优化的框架，解决了这些框架中缺乏CPU优化的问题。
 
-The results speak for themselves. TensorFlow benchmarks, with CPU optimizations added, see CPU performance gain as much as 72X (see Intel blog titled *TensorFlow Optimizations on Modern Intel Architecture*). Similarly, Caffe benchmarks, with CPU optimization added see CPUs gain as much as 82X (see Intel blog titled [*Benefits of Intel Optimized Caffe in comparison with BVLC Caffe*](https://software.intel.com/en-us/articles/comparison-between-intel-optimized-caffe-and-vanilla-caffe-by-intel-vtune-amplifier)). That just a start. The website for Torch (torch.ch) proclaims “Torch is a scientific computing framework with wide support for machine learning algorithms that puts GPUs first.” Intel offers an alternative branch, which lets us choose to have CPUs first when we choose to use CPUs.  I’ve personally used this repository for my own work, and I know it helps a lot.
+结果不言自明。 添加了CPU优化的TensorFlow基准测试，CPU性能提升高达72倍（参见英特尔博客，标题为*TensorFlow Optimizations on Modern Intel Architecture*）。 同样，Caffe基准测试，随着CPU优化的增加，CPU的增益高达82倍（参见英特尔博客标题 [*Benefits of Intel Optimized Caffe in comparison with BVLC Caffe*](https://software.intel.com/en-us/articles/comparison-between-intel-optimized-caffe-and-vanilla-caffe-by-intel-vtune-amplifier))。那只是一个开始。 Torch（torch.ch）的网站宣称“Torch是一个科学计算框架，广泛支持将GPU放在首位的机器学习算法。”英特尔提供了另一个分支，当我们选择使用CPU时，我们可以选择首先使用CPU 。我亲自将这个存储库用于我自己的工作，我知道它有很多帮助。
 
-Later in this article, I go through the frameworks and libraries one-by-one and supply links where to download, and details on benchmark results thus far.
+在本文的后面，我将逐一介绍框架和库，并提供下载的链接，以及迄今为止基准测试结果的详细信息。
 
-The most important benchmarks, of course, are your own programs. So, I advise you to compare results when using frameworks and libraries that offer CPU optimizations and GPU optimizations. Thanks to Intel, you can do both now.
+当然，最重要的基准是你自己的程序。因此，我建议您在使用提供CPU优化和GPU优化的框架和库时比较结果。感谢英特尔，您现在可以做到这两点。
 
-This is not obvious unless you know that deep learning frameworks, tools, and libraries exist that are optimized for CPUs. In fact, the most popular frameworks have versions that are well optimized for CPUs, in particular – Intel Xeon SP processors.  Here is a partial run down of key software for accelerating deep learning on Intel Xeon Platinum processor versions enough that the best performance advantage of GPUs is closer to 2X than to 100X.
+除非您知道存在针对CPU优化的深度学习框架，工具和库，否则这一点并不明显。实际上，最流行的框架具有针对CPU优化的版本，特别是 - 英特尔至强SP处理器。以下是关键软件的部分版本，用于加速英特尔至强铂金处理器版本的深度学习，足以使GPU的最佳性能优势接近2倍而不是100倍。
 
-### DEEP LEARNING FRAMEWORKS WE KNOW AND LOVE
+### 我们深知和喜爱的深入学习框架
 
-All of these frameworks have been optimized for both Intel Math Kernel Library (Intel MKL) and Intel Advanced Vector Extensions (Intel AVX).
+所有这些框架都针对英特尔数学核心函数库（英特尔MKL）和英特尔高级矢量扩展（英特尔AVX）进行了优化。
 
-- TensorFlow is a leading deep learning and machine learning framework created by Google. Tensorflow optimizations for processors are available for Linux as a [wheel installable through pip](https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available). Intel performance tests show performance gains of up to 72X for CPUs over the base version of TensorFlow without these performance optimizations. For more information on the optimization work that made this possible, as well as performance data, see the [*blog post titled TensorFlow Optimizations on Modern Intel Architecture*](https://software.intel.com/en-us/articles/tensorflow-optimizations-on-modern-intel-architecture).
-- Caffe is one of the most popular community applications for image recognition. Intel has contributed to an optimized fork dedicated to improving Caffe performance when running on CPUs. It is available from <https://github.com/BVLC/caffe/tree/intel>. Some performance tests showing that adding optimizations for CPUs yields as much as 82X – see the blog [*Benefits of Intel Optimized Caffe in comparison with BVLC Caffe*.](https://software.intel.com/en-us/articles/comparison-between-intel-optimized-caffe-and-vanilla-caffe-by-intel-vtune-amplifier)
-- Torch is a popular framework for deep learning. There is no reason to use the standard Torch on a CPU without applying CPU optimizations. Use the *Intel Software Optimization for Torch* which is dedicated to improving Torch performance when running on CPU, in particular Intel Xeon Scalable processors. It is available from <https://github.com/intel/torch>. I’ve been personally using this on Intel processors (I use: install.sh icc off mkl noskip) and on Intel Xeon Phi processors (I use: install.sh icc avx512 mkl noskip). The team is very open to feedback, and has proven responsive to questions and feedback I have offered.
-- Theano is an open source Python library, popular with machine learning programmers, to help define, optimize, and evaluate mathematical expressions involving multi-dimensional arrays efficiently. CPU optimizations are available that improves performance on CPU devices, in particular Intel Xeon Scalable processors and Intel Xeon Phi, and is available at <https://github.com/intel/theano>.
-- Neon is a Python-based deep learning framework designed for ease of use and extensibility on modern deep neural networks and is committed to best performance on all hardware. Neon was created by Nervana, which was acquired by Intel. Learn more about it, including optimizations on all hardware, at <https://www.intelnervana.com/neon/>.
+ -  TensorFlow是由Google创建的领先的深度学习和机器学习框架。在处理器方面，Tensorflow进行了优化以适用于Linux作为[可通过pip安装的wheel](https://software.intel.com/en-us/articles/intel-optimized-tensorflow-wheel-now-available)。英特尔性能测试表明，与没有这些性能优化的基本版TensorFlow相比，CPU的性能提升高达72倍。有关实现此功能的优化工作以及性能数据的更多信息，请参阅[*博客文章标题为现代英特尔架构上的TensorFlow优化*](https://software.intel.com/en-us/articles/tensorflow-optimizations-on-modern-intel-architecture).
+ -  Caffe是最受欢迎的图像识别社区应用程序之一。英特尔为优化的分支做出了贡献，该分支致力于在CPU上运行时提高Caffe性能。它可以从<https://github.com/BVLC/caffe/tree/intel>获得。一些性能测试表明，为CPU添加优化产生的效果高达82倍 - 请参阅博客[*与BVLC Caffe *相比，英特尔优化Caffe的优势](https://software.intel.com/en-us/articles/comparison-between-intel-optimized-caffe-and-vanilla-caffe-by-intel-vtune-amplifier)。
+ - Torch是深度学习的流行框架。没有应用CPU优化，没有理由在CPU上使用标准Torch。使用*Intel Software for Torch*，专门用于在CPU上运行时提高Torch性能，特别是Intel Xeon Scalable处理器。它可以从<https://github.com/intel/torch>下载。我自己在英特尔处理器上使用它（我使用：install.sh icc off mkl noskip）和英特尔至强Phi处理器（我使用：install.sh icc avx512 mkl noskip）。团队对反馈非常开放，并且已经证明对我提供的问题和反馈有所回应。
+ -  Theano是一个开源的Python库，深受机器学习程序员的欢迎，可以帮助定义，优化和评估涉及多维数组的数学表达式。 CPU优化可用于提高CPU设备（尤其是Intel Xeon Scalable处理器和Intel Xeon Phi）的性能，可通过<https://github.com/intel/theano>获得。
+ -  Neon是一个基于Python的深度学习框架，旨在实现现代深度神经网络的易用性和可扩展性，并致力于在所有硬件上实现最佳性能。 Neon由Nervana创建，被英特尔收购。在<https://www.intelnervana.com/neon/>上了解有关它的更多信息，包括对所有硬件的优化。
 
-### DEEP LEARNING MATH LIBRARIES
+### 深度学习数学库
 
-- Python, and its libraries, is perhaps *the* most popular basis for machine learning applications. The accelerated version of Python has gained widespread adoption in the last few year – and is available for download directly, or via Conda, or via yum or apt-get, or Docker images. There is no excuse to be running vanilla un-accelerated Python. Every machine that I develop on has these accelerations for Python installed. Look at <https://software.intel.com/distribution-for-python> for all the information you need to know to use it. There is a nice piece titled *Overcome Python Performance Barriers for Machine Learning* in [Parallel Universe Magazine](https://software.intel.com/intel-parallel-universe-magazine), Issue 26, starting on page 33.
-- BigDL is a distributed deep learning library for Apache Spark. With BigDL, users can write their deep learning applications as standard Apache Spark programs, which can directly run on top of existing Apache Spark or Hadoop clusters. Modeled after Torch, BigDL provides comprehensive support for deep learning, including numeric computing (via Tensor) and high level neural networks; in addition, users can load pre-trained Caffe or Torch models into Spark programs using BigDL. Intel has been reported to claim that processing in BigDL is “orders of magnitude faster than out-of-box open source Caffe, Torch, or TensorFlow on a single-node Xeon processor (i.e., comparable with mainstream GPU).” It is available from <https://github.com/intel-analytics/BigDL>. There is also a nice article on BigDL in [Parallel Universe Magazine](https://software.intel.com/intel-parallel-universe-magazine), Issue 28, starting on page 57.
-- MXNet is an open-source, deep learning framework available from <https://github.com/apache/incubator-mxnet>.
-- Intel MKL-DNN is an open source, performance-enhancing library for accelerating deep learning frameworks on CPUs with information with the [Intel MKL-DNN Overview blog](https://software.intel.com/articles/intel-mkl-dnn-part-1-library-overview-and-installation.).
+ -  Python及其库可能是机器学习应用程序最常用的基础。 Python的加速版本在过去几年中得到了广泛采用 - 可直接下载，或通过Conda，或通过yum或apt-get或Docker镜像下载。没有理由不提高Python的性能。我开发的每台机器都安装了Python的这些加速功能。查看<https://software.intel.com/distribution-for-python>，了解使用它需要了解的所有信息。在[Parallel Universe Magazine](https://software.intel.com/intel-parallel-universe-magazine)，第26期，从第33页开始，有一篇名为*克服机器学习的Python性能障碍的好文章*。
+ -  BigDL是Apache Spark的分布式深度学习库。使用BigDL，用户可以将他们的深度学习应用程序编写为标准的Apache Spark程序，它可以直接在现有的Apache Spark或Hadoop集群上运行。以Torch为模型，BigDL为深度学习提供全面支持，包括数值计算（通过Tensor）和高级神经网络;此外，用户可以使用BigDL将预先训练的Caffe或Torch模型加载到Spark程序中。据报道，英特尔声称BigDL处理在单节点Xeon处理器上比开箱即用的开源Caffe，Torch或TensorFlow快几个数量级（即与主流GPU相当）。“它可用来自<https://github.com/intel-analytics/BigDL>。在[Parallel Universe Magazine](https://software.intel.com/intel-parallel-universe-magazine)，第28期，从第57页开始，还有一篇关于BigDL的好文章。
+ -  MXNet是一个开源的深度学习框架，可从<https://github.com/apache/incubator-mxnet>获得。
+ - 英特尔MKL-DNN是一个开源的，性能增强的库，用于加速CPU上的深度学习框架，其中包含[英特尔MKL-DNN概述博客](https://software.intel.com/articles/intel-mkl-dnn-part-1-library-overview-and-installation.)。
 
-In addition to the frameworks and libraries noted above, the Intel Data Analytics Acceleration Library (DAAL) is an open source library of optimized algorithmic building blocks for data analysis stages most commonly associated with solving Big Data problems. The library is designed for use popular data platforms including Hadoop, Spark, R, and Matlab. It is available from <https://software.intel.com/intel-daal>. There is also a good article in *Parallel Universe Magazine*, Issue 28, starting on page 26, titled *Solving Real-World Machine Learning Problems with Intel Data Analytics Acceleration Library*.
+除了上面提到的框架和库之外，英特尔数据分析加速库（DAAL）是一个开源的优化算法构建模块库，用于最常与解决大数据问题相关的数据分析阶段。该库设计用于流行的数据平台，包括Hadoop，Spark，R和Matlab。它可以从<https://software.intel.com/intel-daal>获得。在* Parallel Universe Magazine *，第28期，从第26页开始，还有一篇很好的文章，名为*解决英特尔数据分析加速库*的实际机器学习问题。
 
-### WHAT IF WE ONLY DO MACHINE LEARNING?
+### 如果我们只做机器学习怎么办？
 
-While Intel Xeon Scalable processors may be the best solution when we justify a server supporting a variety of workloads, what if we want to take a leap and buy a “machine learning only” server or supercomputer?
+虽然英特尔至强可扩展处理器可能是我们证明服务器支持各种工作负载的最佳解决方案，但如果我们想要实现跨越并购买“仅限机器学习”的服务器或超级计算机呢？
 
-My best advice “be sure you really know what you need” and be aware that things are really changing in the field. I do not mean to dissuade any one, but it is difficult to guess all the options we will have even a year from now. I have no doubt that the reality is that accelerators for machine learning will shift from GPUs to FPGAs, ASICs, and products with ‘neural’ in their descriptions. The CPU of choice in all these solutions where you have to support a variety of workloads will remain Intel Xeon processors.
+我最好的建议是“确保你真的知道你需要什么”，并注意事情在这个领域真的发生了变化。我并不是要劝阻任何一个人，但很难猜到我们即将在一年之后所拥有的所有选择。我毫不怀疑现实情况是机器学习的加速器将从GPU转向FPGA，ASIC和产品中的“neural”。在您必须支持各种工作负载的所有这些解决方案中，所选择的CPU仍将是Intel Xeon处理器。
 
-Choices for accelerators are getting more diverse. High-core count CPUs (the Intel Xeon Phi processors – in particular the upcoming “Knights Mill” version), and FPGAs (Intel Xeon processors coupled with Intel/Altera FPGAs), offer highly flexible options excellent price/performance and power efficiencies. An Intel Xeon Phi processor-based system can train, or learn an AlexNet image classification system, up to 2.3 times faster than a similarly configured system using Nvidia GPUs. (see *Inside Intel: The Race for Faster Machine Learning*). Intel has shown that the Intel Xeon Phi Processor delivers up to nine times more performance per dollar versus a hosted GPU solution, and up to eight times more performance per watt. Coming soon are more products that are purpose built for AI from Intel Nervana.
+加速器的选择越来越多样化。高核计数CPU（Intel Xeon Phi处理器 - 特别是即将推出的“Knights Mill”版本）和FPGA（Intel Xeon处理器与Intel/Altera FPGA结合）提供高度灵活的选项，具有出色的性价比和功效。基于英特尔至强处理器的系统可以训练或学习AlexNet图像分类系统，速度比使用Nvidia GPU的类似配置系统快2.3倍。 （参见*英特尔内部：更快的机器学习竞赛*）。英特尔表明，与托管GPU解决方案相比，英特尔至强融核处理器的每美元性能提高了9倍，每瓦性能提高了8倍。即将推出更多专为英特尔Nervana设计的AI产品。
 
-It’s an exciting time to be a computer geek, and machine learning is nothing if it is not fun. It is great to see all the options available to build super-fast machines for machine learning.
+成为一名电脑爱好者是一个激动人心的时刻，如果机器学习不好玩，那么机器学习就不算什么了。很高兴看到可用于构建用于机器学习的超快速机器的所有选择。
 
-### FOUNDATION FOR MACHINE LEARNING
+### 机器学习基础
 
-The Xeon SP processors, particularly the Platinum processors, offer outstanding performance for machine learning, while giving us more versatility than any other solution. If and when we are ready to add acceleration, Intel Xeon Scalable processors still serve as the core of a versatile system with accelerators – and the choice of what those accelerators can be is growing quickly. Either way, relying on Skylake processors and their excellent support for machine learning gives us the best combination of performance and versatility in one package.
+Xeon SP处理器，特别是Platinum处理器，为机器学习提供了出色的性能，同时为我们提供了比任何其他解决方案更多的功能。 如果我们准备好增加加速度，英特尔至强可扩展处理器仍然是带加速器的多功能系统的核心 - 并且这些加速器的选择正在快速增长。 无论哪种方式，依靠Skylake处理器及其对机器学习的出色支持，我们在一个包装中为我们提供了性能和多功能性的最佳组合。
 
-Learn more:
+学到更多：
 
 - [*Inside Intel: The Race for Faster Machine Learning*](https://www.intel.com/content/www/us/en/analytics/machine-learning/the-race-for-faster-machine-learning.html)
 - Intel’s official site for information on deep learning frameworks and optimization available to ensure top CPU performance: <https://www.intelnervana.com/framework-optimizations/>
@@ -76,4 +76,4 @@ Learn more:
 - MXNet is an open-source, deep learning framework available from <https://github.com/apache/incubator-mxnet>.
 - Neon – all platform optimized – <https://www.intelnervana.com/neon/>
 
-*James Reinders is an independent consultant in high performance computing and parallel programming. Reinders was most recently the parallel programming model architect for Intel’s HPC business, and was a key contributor to the design and implementation of the ASCI Red and Tianhe-2A massively parallel supercomputers.*
+*James Reinders是高性能计算和并行编程的独立顾问。 Reinders最近是英特尔HPC业务的并行编程模型架构师，并且是ASCI Red和Tianhe-2A大规模并行超级计算机设计和实现的关键贡献者。*

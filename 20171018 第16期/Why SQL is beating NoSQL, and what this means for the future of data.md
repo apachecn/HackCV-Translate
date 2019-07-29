@@ -1,8 +1,8 @@
-# Why SQL is beating NoSQL, and what this means for the future of data
+# 为什么SQL打败NoSQL，这对未来的数据意味着什么
 
 原文链接：[Why SQL is beating NoSQL, and what this means for the future of data](Why SQL is beating NoSQL, and what this means for the future of data)
 
-*After years of being left for dead, SQL today is making a comeback. How come? And what effect will this have on the data community?*
+*经过多年的死亡，SQL今天正在卷土重来。 这是怎么发生的？ 这会对数据社区产生什么影响？*
 
 *(Update: #1 on Hacker News!* [*Read the discussion here.*](https://news.ycombinator.com/item?id=15335717)*)*
 
@@ -12,41 +12,37 @@
 
 ![img](https://cdn-images-1.medium.com/max/2000/1*HMEoq1e2RNxSwiQo_RL6tw.gif)
 
-**SQL awakens to fight the dark forces of NoSQL**
+**SQL唤醒了对抗NoSQL的黑暗势力**
 
-Since the dawn of computing, we have been collecting exponentially growing amounts of data, constantly asking more from our data storage, processing, and analysis technology. In the past decade, this caused software developers to cast aside SQL as a relic that couldn’t scale with these growing data volumes, leading to the rise of NoSQL: MapReduce and Bigtable, Cassandra, MongoDB, and more.
+自计算开始以来，我们一直在收集指数级增长的数据，不断从我们的数据存储，处理和分析技术中获取更多信息。在过去十年中，这导致软件开发人员抛弃SQL作为遗留物，无法随着这些不断增长的数据量而扩展，导致NoSQL的兴起：MapReduce和Bigtable，Cassandra，MongoDB等等。
 
-Yet today SQL is resurging. All of the major cloud providers now offer popular managed relational database services: e.g., [Amazon RDS](https://aws.amazon.com/rds/), [Google Cloud SQL](https://cloud.google.com/sql/docs/), [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql/) (Azure launched just this year). In Amazon’s own words, its PostgreSQL- and MySQL-compatible database Aurora database product has been the “[fastest growing service in the history of AWS](http://www.businesswire.com/news/home/20161130006131/en/AWS-Extends-Amazon-Aurora-PostgreSQL-Compatibility)”. SQL interfaces on top of Hadoop and Spark continue to thrive. And just last month, [Kafka launched SQL support](https://www.confluent.io/blog/ksql-open-source-streaming-sql-for-apache-kafka/). Your humble authors themselves are developers of a new [time-series database](https://github.com/timescale/timescaledb) that fully embraces SQL.
+然而今天SQL正在复苏。所有主要的云提供商现在都提供流行的托管关系数据库服务：例如， [Amazon RDS](https://aws.amazon.com/rds/), [Google Cloud SQL](https://cloud.google.com/sql/docs/), [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql/) （Azure今年刚刚推出）。用亚马逊的话来说，它的PostgreSQL和MySQL兼容的数据库Aurora数据库产品一直是“[AWS历史上发展最快的服务]((http://www.businesswire.com/news/home/20161130006131/en/AWS-Extends-Amazon-Aurora-PostgreSQL-Compatibility))”。 Hadoop和Spark之上的SQL接口继续蓬勃发展。就在上个月，[Kafka发起了SQL支持](https://www.confluent.io/blog/ksql-open-source-streaming-sql-for-apache-kafka/)。你卑微的作者本身就是一个完全包含SQL的新[时间序列数据库](https://github.com/timescale/timescaledb)的开发人员。
 
-In this post we examine why the pendulum today is swinging back to SQL, and what this means for the future of the data engineering and analysis community.
+在这篇文章中，我们将研究为什么今天的钟摆回到SQL，以及这对数据工程和分析社区的未来意味着什么。
 
-------
+### 第一部分: 新希望
 
-### Part 1: A New Hope
-
-To understand why SQL is making a comeback, let’s start with why it was designed in the first place.
-
-
+为了理解SQL为什么可以卷土重来，让我们从回顾设计它的原因。
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*fAiBMwVRHoAPwLL7.)
 
-**Like all good stories, ours starts in the 1970s**
+**像所有好故事一样，我们的故事始于20世纪70年代**
 
-Our story starts at IBM Research in the early 1970s, where the relational database was born. At that time, query languages relied on complex mathematical logic and notation. Two newly minted PhDs, Donald Chamberlin and Raymond Boyce, were impressed by the relational data model but saw that the query language would be a major bottleneck to adoption. They set out to design a new query language that would be (in their own words): “[more accessible to users without formal training in mathematics or computer programming](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6359709).”
+我们的故事始于20世纪70年代早期的IBM Research，关系数据库诞生于此。 那时，查询语言依赖于复杂的数学逻辑和符号。 两位新创建的博士Donald Chamberlin和Raymond Boyce对关系数据模型印象深刻，但发现查询语言将成为采用的主要瓶颈。 他们开始设计一种新的查询语言（用他们自己的话说）：“[没有正式的数学或计算机编程基础的用户更容易使用](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6359709).”
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*Y5w_pCl0K9Fo9AF8.)
 
-**Query languages before SQL ( a, b ) vs SQL ( c ) (**[**source**](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6359709)**)**
+**在SQL（a，b）与SQL（c）之前查询语言 (**[**source**](http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6359709)**)**
 
-Think about this. Way before the Internet, before the Personal Computer, when the programming language C was first being introduced to the world, two young computer scientists realized that, “[much of the success of the computer industry depends on developing a class of users other than trained computer specialists.](http://www.almaden.ibm.com/cs/people/chamberlin/sequel-1974.pdf)” They wanted a query language that was as easy to read as English, and that would also encompass database administration and manipulation.
+想想看。互联网发展之前，在个人计算机诞生之前，当编程语言C首次从世界上诞生时，两位年轻的计算机科学家意识到了这一点, “[计算机行业的成功大部分取决于除受过训练的计算机专家以外的一类用户。](http://www.almaden.ibm.com/cs/people/chamberlin/sequel-1974.pdf)” 他们想要一种像英语一样容易阅读的查询语言，并且还包括数据库管理和操作。
 
-The result was SQL, first introduced to the world in 1974. Over the next few decades, SQL would prove to be immensely popular. As relational databases like System R, Ingres, DB2, Oracle, SQL Server, PostgreSQL, MySQL (and more) took over the software industry, SQL became established as the preeminent language for interacting with a database, and became the *lingua franca* for an increasingly crowded and competitive ecosystem.
+结果是SQL，于1974年首次在世界上诞生。在接下来的几十年中，SQL将被证明非常受欢迎。 随着System R，Ingres，DB2，Oracle，SQL Server，PostgreSQL，MySQL等关系数据库接管软件行业，SQL成为与数据库交互的优秀语言，并成为纷繁复杂生态系统中的*通用语言* 。
 
-(Sadly, Raymond Boyce never had a chance to witness SQL’s success. [He died of a brain aneurysm](https://en.wikipedia.org/wiki/Raymond_F._Boyce) 1 month after giving one of the earliest SQL presentations, just 26 years of age, leaving behind a wife and young daughter.)
+(可悲的是，Raymond Boyce没有机会见证SQL的成功， [他死于脑动脉瘤](https://en.wikipedia.org/wiki/Raymond_F._Boyce) 。在给出一个最早的SQL演示文稿之后的一个月，仅仅26岁，留下了一个妻子和年幼的女儿。)
 
-For a while, it seemed like SQL had successfully fulfilled its mission. But then the Internet happened.
+有一段时间，似乎SQL已经成功完结。 但随后进入了互联网时代。
 
 
 
@@ -54,163 +50,161 @@ For a while, it seemed like SQL had successfully fulfilled its mission. But then
 
 ------
 
-### Part 2: NoSQL Strikes Back
+### 第二部分: NoSQL反击
 
-While Chamberlin and Boyce were developing SQL, what they didn’t realize is that a second group of engineers in California were working on another budding project that would later widely proliferate and threaten SQL’s existence. That project was [ARPANET](https://en.wikipedia.org/wiki/ARPANET), and on October 29, 1969, [it was born](http://all-that-is-interesting.com/internet-history).
-
-
+虽然Chamberlin和Boyce正在开发SQL，但他们没有意识到的是，加利福尼亚的第二组工程师正在研究另一个新兴的项目，该项目后来会广泛传播并威胁SQL的存在。 该项目是[ARPANET](https://en.wikipedia.org/wiki/ARPANET)，并于1969年10月29日，[它诞生](http://all-that-is-interesting.com/internet-history)。
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*L-W7e8jSXtgdWSXu.)
 
-**Some of the creators of ARPANET, which eventually evolved into today’s Internet (**[**source**](http://all-that-is-interesting.com/internet-history)**)**
+**ARPANET的一些创造者，最终演变成今天的互联网 (**[**source**](http://all-that-is-interesting.com/internet-history)**)**
 
-But SQL was actually fine until another engineer showed up and invented the [World Wide Web](https://en.wikipedia.org/wiki/World_Wide_Web), in 1989.
+但是，在另一位工程师出现并发明了SQL之前，SQL实际上很好 [World Wide Web](https://en.wikipedia.org/wiki/World_Wide_Web), in 1989.
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*6kZJR84blb_BkDxc.)
 
-**The physicist who invented the Web (**[**source**](https://webfoundation.org/about/vision/history-of-the-web/)**)**
+**发明网络的物理学家 (**[**source**](https://webfoundation.org/about/vision/history-of-the-web/)**)**
 
-Like a weed, the Internet and Web flourished, massively disrupting our world in countless ways, but for the data community it created one particular headache: new sources generating data at much higher volumes and velocities than before.
+就像杂草一样，互联网和网络蓬勃发展，以无数种方式大规模地扰乱了我们的世界，但对于数据社区来说，它造成了一个特别令人头疼的问题：新数据比以前数据的生成速度更快。
 
-As the Internet continued to grow and grow, the software community found that the relational databases of that time couldn’t handle this new load. *There was a disturbance in the force, as if a million databases cried out and were suddenly overloaded.*
+随着互联网的不断发展和壮大，软件界发现当时的关系数据库无法处理这种新的负载。 *部队受到干扰，好像有数百万个数据库喊叫并突然超载。*
 
-Then two new Internet giants made breakthroughs, and developed their own distributed non-relational systems to help with this new onslaught of data: **MapReduce** ([published 2004](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)) and **Bigtable** ([published 2006](https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)) by Google, and **Dynamo** ([published 2007](http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf)) by Amazon. These seminal papers led to even more non-relational databases, including **Hadoop** (based on the MapReduce paper, [2006](https://en.wikipedia.org/wiki/Apache_Hadoop)), **Cassandra** (heavily inspired by both the Bigtable and Dynamo papers, [2008](https://en.wikipedia.org/wiki/Apache_Cassandra)) and **MongoDB** ([2009](https://en.wikipedia.org/wiki/MongoDB)). Because these were new systems largely written from scratch, they also eschewed SQL, leading to the rise of the NoSQL movement.
+然后两个新的互联网巨头取得了突破，并开发了自己的分布式非关系系统，以帮助这一新的数据冲击: **MapReduce** ([published 2004](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)) 与 **Bigtable** ([published 2006](https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)) 由谷歌开发, 和 **Dynamo** ([published 2007](http://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf)) 由Amazon开发. 这些开创性的论文导致了更多的非关系型数据库, 包括**Hadoop** (基于MapReduce论文, [2006](https://en.wikipedia.org/wiki/Apache_Hadoop)), **Cassandra** (受Bigtable和Dynamo论文的启发, [2008](https://en.wikipedia.org/wiki/Apache_Cassandra)) 和 **MongoDB** ([2009](https://en.wikipedia.org/wiki/MongoDB)). 因为这些是从头开始编写的新系统，所以它们也避开了SQL，导致了NoSQL运动的兴起。
 
-And boy did the software developer community eat up NoSQL, embracing it arguably much more broadly than the original Google/Amazon authors intended. It’s easy to understand why: NoSQL was new and shiny; it promised scale and power; it seemed like the fast path to engineering success. But then the problems started appearing.
+而且男孩让软件开发者社区吃掉了NoSQL，可以说它比原来的谷歌/亚马逊作者想的要广泛得多。 很容易理解为什么：NoSQL是新的，有光泽的; 它具有一定的规模和力量; 这似乎是工程成功的捷径。 但随后问题开始出现。
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*G6Hx2C1l9abkVkxq.)
 
-**Classic software developer tempted by NoSQL. Don’t be this guy.**
+**经典软件开发人员受NoSQL的诱惑。 不要成为这个人。**
 
-Developers soon found that not having SQL was actually quite limiting. Each NoSQL database offered its own unique query language, which meant: more languages to learn (and to teach to your coworkers); increased difficulty in connecting these databases to applications, leading to tons of brittle glue code; a lack of a third party ecosystem, requiring companies to develop their own operational and visualization tools.
+开发人员很快发现，没有SQL实际上是非常有限的。每个NoSQL数据库都提供了自己独特的查询语言，这意味着：学习更多语言（以及向同事传授）;将这些数据库连接到应用程序的难度增加，导致大量脆弱的胶水代码;缺乏第三方生态系统，要求公司开发自己的运营和可视化工具。
 
-These NoSQL languages, being new, were also not fully developed. For example, there had been years of work in relational databases to add necessary features to SQL (e.g., JOINs); the immaturity of NoSQL languages meant more complexity was needed at the application level. The lack of JOINs also led to denormalization, which led to data bloat and rigidity.
+这些NoSQL语言虽然是新的，但还没有完全开发出来。例如，关系数据库中已经有多年的工作要为SQL添加必要的功能（例如，JOIN）; NoSQL语言的不成熟意味着在应用程序级别需要更多的复杂性。缺乏JOIN也导致非规范化，导致数据膨胀和僵化。
 
-Some NoSQL databases added their own “SQL-like” query languages, like Cassandra’s CQL. But this often made the problem worse. Using an interface that is *almost* identical to something more common actually created more mental friction: engineers didn’t know what was supported and what wasn’t.
+一些NoSQL数据库添加了自己的“类SQL”查询语言，如Cassandra的CQL。但这往往使问题变得更糟。使用与更常见的*几乎相同的界面实际上创造了更多的精神摩擦：工程师不知道支持什么和不支持什么。
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*NxNoLnTnFQ7LkqBj.)
 
-**SQL-like query languages are like the** [**Star Wars Holiday Special**](https://www.youtube.com/watch?v=ZX0x-I06Fpc)**. Accept no imitations.** [*(And always avoid the Star Wars Holiday Special.)*](https://xkcd.com/653/)
+**类SQL的查询语言就像** [**Star Wars Holiday Special**](https://www.youtube.com/watch?v=ZX0x-I06Fpc)**. 不接受任何模仿.** [*(And always avoid the Star Wars Holiday Special.)*](https://xkcd.com/653/)
 
-Some in the community saw the problems with NoSQL early on (e.g., [DeWitt and Stonebraker in 2008](https://homes.cs.washington.edu/~billhowe/mapreduce_a_major_step_backwards.html)). Over time, through hard-earned scars of personal experience, more and more software developers joined them.
+社区中的一些人早期就看到了NoSQL的问题 (e.g., [DeWitt and Stonebraker in 2008](https://homes.cs.washington.edu/~billhowe/mapreduce_a_major_step_backwards.html)). 随着时间的推移，通过不断积攒的个人经验，越来越多的软件开发人员加入了他们。
 
 [**Time-series data: Why (and how) to use a relational database instead of NoSQL**
 *Contrary to the belief of most developers, we show that relational databases can be made to scale for time-series data.*blog.timescale.com](https://blog.timescale.com/time-series-data-why-and-how-to-use-a-relational-database-instead-of-nosql-d0cd6975e87c)
 
 ------
 
-### Part 3: Return of the SQL
+### 第三部分：回归SQL
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/1*QsZLtPL0t9bspQ16fpmeLA.gif)
 
-Initially seduced by the dark side, the software community began to see the light and come back to SQL.
+最初被黑暗的一面诱惑，软件界开始看到光明并回到SQL。
 
-First came the SQL interfaces on top of Hadoop (and later, Spark), leading the industry to “back-cronym” NoSQL to “Not Only SQL” (yeah, nice try).
+首先是在Hadoop（以及后来的Spark）之上的SQL接口，引领业界将“back-cronym”NoSQL改为“Not Only SQL”（是的，不错的尝试）。
 
-Then came the rise of NewSQL: new scalable databases that fully embraced SQL. **H-Store** [(published 2008](http://hstore.cs.brown.edu/papers/hstore-demo.pdf)) from MIT and Brown researchers was one of the first scale-out OLTP databases. Google again led the way for a geo-replicated SQL-interfaced database with their first **Spanner** paper [(published 2012](https://static.googleusercontent.com/media/research.google.com/en//archive/spanner-osdi2012.pdf)) (whose authors include the original MapReduce authors), followed by other pioneers like **CockroachDB** ([2014](https://en.wikipedia.org/wiki/Cockroach_Labs)).
+然后是NewSQL的兴起：新的可扩展数据库完全包含SQL。 麻省理工学院和布朗研究人员的**H-Store** [(published 2008](http://hstore.cs.brown.edu/papers/hstore-demo.pdf))是最早的横向扩展OLTP数据库之一。 Google再次凭借他们的第一篇**Spanner** 论文引领了地理复制的SQL接口数据库 [(published 2012](https://static.googleusercontent.com/media/research.google.com/en//archive/spanner-osdi2012.pdf)) (其作者包括原始的MapReduce作者), 其次是其他**CockroachDB** ([2014](https://en.wikipedia.org/wiki/Cockroach_Labs))开拓者.
 
-At the same time, the **PostgreSQL** community began to revive, adding critical improvements like a JSON datatype (2012), and a potpourri of new features in [PostgreSQL 10](https://wiki.postgresql.org/wiki/New_in_postgres_10): better native support for partitioning and replication, full text search support for JSON, and more (release slated for later this year). Other companies like **CitusDB** ([2016](https://www.citusdata.com/blog/2016/03/24/citus-unforks-goes-open-source/)) and yours truly ([**TimescaleDB**](https://github.com/timescale/timescaledb), [released this year](https://blog.timescale.com/when-boring-is-awesome-building-a-scalable-time-series-database-on-postgresql-2900ea453ee2)) found new ways to scale PostgreSQL for specialized data workloads.
+同时,  **PostgreSQL** 社区开始复活, 添加像JSON数据类型这样的关键改进(2012), 和一个新的功能的 [PostgreSQL 10](https://wiki.postgresql.org/wiki/New_in_postgres_10): 更好的本机支持分区和复制，JSON的全文搜索支持等（将在今年晚些时候发布）。 其他公司如**CitusDB** ([2016](https://www.citusdata.com/blog/2016/03/24/citus-unforks-goes-open-source/)) 和 ([**TimescaleDB**](https://github.com/timescale/timescaledb), [released this year](https://blog.timescale.com/when-boring-is-awesome-building-a-scalable-time-series-database-on-postgresql-2900ea453ee2))找到了为专业数据工作负载扩展PostgreSQL的新方法。
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/1*iGyZFQzaXJwP6gPAjqdgwQ.png)
 
-In fact, our journey developing [**TimescaleDB**](https://github.com/timescale/timescaledb) closely mirrors the path the industry has taken. Early internal versions of [TimescaleDB](http://www.timescale.com/) featured our own SQL-like query language called “ioQL.” Yes, we too were tempted by the dark side: building our own query language felt powerful. But while it seemed like the easy path, we soon realized that we’d have to do a lot more work: e.g., deciding syntax, building various connectors, educating users, etc. We also found ourselves constantly looking up the proper syntax to queries that we could already express in SQL, for a query language we had written ourselves!
+事实上，我们开发[**TimescaleDB**](https://github.com/timescale/timescaledb)的过程非常反映了该行业的发展方向。 [TimescaleDB](http://www.timescale.com/)的早期内部版本使用了我们自己的类似SQL的查询语言“ioQL”。是的，我们也受到黑暗面的诱惑：构建我们自己的查询语言感觉强大。虽然看起来很简单，但我们很快意识到我们还需要做更多的工作：例如，决定语法，构建各种连接器，教育用户等等。我们还发现自己不断地查找正确的查询语法对于我们自己编写的查询语言，我们已经可以在SQL中表达了！
 
-One day we realized that building our own query language made no sense. That the key was to embrace SQL. And that was one of the best design decisions we have made. Immediately a whole new world opened up. Today, even though we are just a 5 month old database, our users can use us in production and get all kinds of wonderful things out of the box: visualization tools (Tableau), connectors to common ORMs, a variety of tooling and backup options, an abundance of tutorials and syntax explanations online, etc.
+有一天，我们意识到构建我们自己的查询语言毫无意义。关键是要拥抱SQL。这是我们做出的最佳设计决策之一。立刻开启了一个全新的世界。今天，即使我们只是一个5个月大的数据库，我们的用户也可以在生产中使用我们并获得开箱即用的各种精彩内容：可视化工具（Tableau），常见ORM的连接器，各种工具和备份选项，在线等丰富的教程和语法解释等。
 
 [**Eye or the Tiger: Benchmarking Cassandra vs. TimescaleDB for time-series data**
 *How a 5 node TimescaleDB cluster outperforms 30 Cassandra nodes, with higher inserts, up to 5800x faster queries, 10%…*blog.timescale.com](https://blog.timescale.com/time-series-data-cassandra-vs-timescaledb-postgresql-7c2cc50a89ce)
 
 ------
 
-### But don’t take our word for it. Take Google’s.
+### 但是不要相信我们的话。看看Google
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/1*CiKNT6_V8VH5hRVoWNcIHA.png)
 
-Google has clearly been on the leading edge of data engineering and infrastructure for over a decade now. It behooves us to pay close attention to what they are doing.
+十多年来，谷歌显然一直处于数据工程和基础设施的前沿。 我们应该密切关注他们正在做的事情。
 
-Take a look at Google’s second major **Spanner** paper, released just four months ago ([Spanner: Becoming a SQL System](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46103.pdf), May 2017), and you’ll find that it bolsters our independent findings.
+看一下四个月前发布的谷歌第二篇主要的**Spanner**论文（[Spanner: Becoming a SQL System](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46103.pdf)，2017年5月），你会发现它支持我们的独立发现。
 
-For example, Google began building on top of Bigtable, but then found that the lack of SQL created problems (emphasis in all quotes below ours):
+例如，Google开始在Bigtable之上构建，但后来发现缺少SQL会产生问题（强调所有引号内容都在）：
 
-> “While these systems provided some of the benefits of a database system, they lacked many traditional database features that application developers often rely on. **A key example is a robust query language**, meaning that developers had to write complex code to process and aggregate the data in their applications. **As a result, we decided to turn Spanner into a full featured SQL system**, with query execution tightly integrated with the other architectural features of Spanner (such as strong consistency and global replication).”
+> “虽然这些系统提供了数据库系统的一些优点，但它们缺少应用程序开发人员经常依赖的许多传统数据库功能。 **一个关键的例子是强大的查询语言**，这意味着开发人员必须编写复杂的代码来处理和聚合应用程序中的数据。 **因此，我们决定将Spanner变成一个功能齐全的SQL系统**，查询执行与Spanner的其他架构特性紧密集成（例如强一致性和全局复制）。”
 
-Later in the paper they further capture the rationale for their transition from NoSQL to SQL:
+在本文的后面，他们进一步了解了从NoSQL转换到SQL的基本原理：
 
-> The original API of Spanner provided NoSQL methods for point lookups and range scans of individual and interleaved tables. While NoSQL methods provided a simple path to launching Spanner, and continue to be useful in simple retrieval scenarios, **SQL has provided significant additional value in expressing more complex data access patterns and pushing computation to the data**.
+> Spanner的原始API为单个和交错表的点查找和范围扫描提供了NoSQL方法。 虽然NoSQL方法提供了启动Spanner的简单路径，并且在简单的检索方案中继续有用，但是**在表达更复杂的数据访问模式和将计算推送到数据方面提供了显着的附加价值**。
 
-The paper also describes how the adoption of SQL doesn’t stop at Spanner, but actually extends across the rest of Google, where multiple systems today share a common SQL dialect:
+本文还描述了SQL的采用如何不止于Spanner，而是实际扩展到Google的其他部分，其中多个系统现在共享一种常见的SQL方言：
 
-> **Spanner’s SQL engine shares a common SQL dialect, called “Standard SQL”,** with several other systems at Google including internal systems such as F1 and Dremel (among others), and external systems such as BigQuery…
+> **Spanner的SQL引擎共享一种常见的SQL方言，称为“标准SQL”，**与谷歌的其他几个系统，包括内部系统，如F1和Dremel（以及其他系统），以及外部系统，如BigQuery ......
 
-> **For users within Google, this lowers the barrier of working across the systems.** A developer or data analyst who writes SQL against a Spanner database can transfer their understanding of the language to Dremel without concern over subtle differences in syntax, NULL handling, etc.
+> **对于Google中的用户，这降低了跨系统工作的障碍。**针对Spanner数据库编写SQL的开发人员或数据分析师可以将他们对语言的理解转移到Dremel，而无需担心语法上的细微差别，NULL处理 等
 
-The success of this approach speaks for itself. Spanner is already the *“source of truth”* for major Google systems, including AdWords and Google Play, while *“Potential Cloud customers are overwhelmingly interested in using SQL.”*
+这种方法的成功说明了一切。 对于主要的Google系统，包括AdWords和Google Play，扳手已经是*“真相来源”*，而*“潜在云客户对使用SQL非常感兴趣。”*
 
-Considering that Google helped initiate the NoSQL movement in the first place, it is quite remarkable that it is embracing SQL today. (Leading some to recently wonder: “[Did Google Send the Big Data Industry on a 10 Year Head Fake?](https://medium.com/@garyorenstein/did-google-send-the-big-data-industry-on-a-10-year-head-fake-9c94d553925a)”.)
+考虑到谷歌首先帮助启动了NoSQL运动，今天它正在接受SQL是非常值得注意的。 （引导一些人最近想知道： “[Did Google Send the Big Data Industry on a 10 Year Head Fake?](https://medium.com/@garyorenstein/did-google-send-the-big-data-industry-on-a-10-year-head-fake-9c94d553925a)”.)
 
 ------
 
-### What this means for the future of data: SQL as the universal interface
+### 这对数据的未来意味着什么：SQL作为通用接口
 
-In computer networking, there is a concept called the “[narrow waist](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1.4614&rep=rep1&type=pdf),” describing a universal interface.
+在计算机网络中，有一个叫做“[narrow waist](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.1.4614&rep=rep1&type=pdf),”的概念用来描述通用接口。
 
-This idea emerged to solve a key problem: On any given networked device, imagine a stack, with layers of hardware at the bottom and layers of software on top. There can exist a variety of networking hardware; similarly there can exist a variety of software and applications. One needs a way to ensure that no matter the hardware, the software can still connect to the network; and no matter the software, that the networking hardware knows how to handle the network requests.
+出现这个想法是为了解决一个关键问题：在任何给定的网络设备上，想象一下堆栈，底层有硬件层，顶层有软件层。 可以存在各种网络硬件; 类似地，可以存在各种软件和应用程序。 人们需要一种方法来确保无论硬件如何，软件仍然可以连接到网络; 无论软件如何，网络硬件都知道如何处理网络请求。
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*qm2HH4Ob3YnH3C3f.)
 
-**IP as the Networking Universal Interface (**[**source**](http://slideplayer.com/slide/7597601/)**)**
+**IP作为网络通用接口 (**[**source**](http://slideplayer.com/slide/7597601/)**)**
 
-In networking, the role of the universal interface is played by [Internet Protocol (IP)](https://en.wikipedia.org/wiki/Internet_Protocol), acting as a connecting layer between lower-level networking protocols designed for local-area network, and higher-level application and transport protocols. ([Here’s one nice explanation](https://www.youtube.com/watch?v=uXumm52oBMo).) And (in a broad oversimplification), this universal interface became the *lingua franca* for computers, enabling networks to interconnect, devices to communicate, and this “network of networks” to grow into today’s rich and varied Internet.
+在网络中，通用接口的作用由[因特网协议（IP）](https://en.wikipedia.org/wiki/Internet_Protocol)起作用，作为为本地设计的低级网络协议之间的连接层。区域网络，以及更高级别的应用程序和传输协议。 （[这是一个很好的解释](https://www.youtube.com/watch?v=uXumm52oBMo)。）和（在一个广泛的过度简化），这个通用接口成为计算机的*通用语言*，使网络互连，设备进行通信，这个“网络中的网络”将成长为今天丰富多彩的互联网。
 
-**We believe that SQL has become the universal interface for data analysis.**
+**我们相信SQL已成为数据分析的通用接口。**
 
-We live in an era where data is becoming “the world’s most valuable resource” ([The Economist, May 2017](https://www.economist.com/news/leaders/21721656-data-economy-demands-new-approach-antitrust-rules-worlds-most-valuable-resource)). As a result, we have seen a Cambrian explosion of specialized databases (OLAP, time-series, document, graph, etc.), data processing tools (Hadoop, Spark, Flink), data buses (Kafka, RabbitMQ), etc. We also have more applications that need to rely on this data infrastructure, whether third-party data visualization tools (Tableau, Grafana, PowerBI, Superset), web frameworks (Rails, Django) or custom-built data-driven applications.
+我们生活在一个数据正在成为“世界上最宝贵的资源”的时代（[The Economist，2017年5月](https://www.economist.com/news/leaders/21721656-data-economy-demands-new-approach-antitrust-rules-worlds-most-valuable-resource)）。结果，我们看到寒武纪爆炸的专业数据库（OLAP，时间序列，文档，图形等），数据处理工具（Hadoop，Spark，Flink），数据总线（Kafka，RabbitMQ）等。还有更多需要依赖这种数据基础架构的应用程序，无论是第三方数据可视化工具（Tableau，Grafana，PowerBI，Superset），Web框架（Rails，Django）还是定制的数据驱动应用程序。
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/1*iC7lwedryNOSSYiQc3M7-Q.png)
 
-Like networking we have a complex stack, with infrastructure on the bottom and applications on top. Typically, we end up writing a lot of glue code to make this stack work. But glue code can be brittle: it needs to be maintained and tended to.
+与网络一样，我们有一个复杂的堆栈，底层有基础设施，顶层有应用程序。通常，我们最终编写了大量的胶水代码来使这个堆栈工作。但胶水代码可能很脆弱：它需要维护和倾向于。
 
-What we need is an interface that allows pieces of this stack to communicate with one another. Ideally something already standardized in the industry. Something that would allow us to swap in/out various layers with minimal friction.
+我们需要的是一个接口，允许这个堆栈的各个部分相互通信。理想情况下，业界已经标准化了。能够让我们以最小的摩擦交换各种层的东西。
 
-That is the power of SQL. Like IP, SQL is a universal interface.
+这就是SQL的强大功能。与IP一样，SQL是一种通用接口。
 
-But SQL is in fact much more than IP. Because data also gets analyzed by humans. And true to the purpose that SQL’s creators initially assigned to it, SQL is readable.
+但SQL实际上远不止IP。因为数据也会被人类分析。对于SQL创建者最初分配给它的目的而言，SQL是可读的。
 
-Is SQL perfect? No, but it is the language that most of us in the community know. And while there are already engineers out there working on a more natural language oriented interface, what will those systems then connect to? SQL.
+SQL完美吗？不，但这是我们社区大多数人都知道的语言。虽然已经有工程师在开发更自然的语言界面，但这些系统会连接到什么？ SQL。
 
-So there is another layer at the very top of the stack. And that layer is us.
+所以在堆栈的最顶层还有另一层。那层是我们。
 
 ------
 
-### SQL is Back
+### SQL回来了
 
-SQL is back. Not just because writing glue code to kludge together NoSQL tools is annoying. Not just because retraining workforces to learn a myriad of new languages is hard. Not just because standards can be a good thing.
+SQL回来了。 不只是因为编写胶水代码以合并NoSQL工具是令人讨厌的。 这不仅仅是因为重新培训劳动力来学习无数新语言也很困难。 不仅仅因为标准可以是一件好事。
 
-But also because the world is filled with data. It surrounds us, binds us. At first, we relied on our human senses and sensory nervous systems to process it. Now our software and hardware systems are also getting smart enough to help us. And as we collect more and more data to make better sense of our world, the complexity of our systems to store, process, analyze, and visualize that data will only continue to grow as well.
+但也因为世界充满了数据。 它环绕着我们，束缚着我们。 起初，我们依靠人类的感官和感觉神经系统来处理它。 现在，我们的软件和硬件系统也变得足够聪明，可以帮助我们。 随着我们收集越来越多的数据以更好地了解我们的世界，我们用于存储，处理，分析和可视化数据的系统的复杂性也将继续增长。
 
 
 
 ![img](https://cdn-images-1.medium.com/max/1600/0*0NbRxZrtmccWwYJ_.)
 
-**Master Data Scientist Yoda**
+**硕士数据科学家尤达**
 
-Either we can live in a world of brittle systems and a million interfaces. Or we can continue to embrace SQL. And restore balance to the force.
+要么我们生活在一个脆弱的系统和一百万个接口的世界里。 或者我们可以继续接受SQL。 并恢复力量的平衡。
 
 ------
 
