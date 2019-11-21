@@ -1,8 +1,8 @@
-# Advice For New and Junior Data Scientists
+# 给初学者和初级数据科学家的建议
 
 原文链接：[Advice For New and Junior Data Scientists](https://medium.com/@rchang/advice-for-new-and-junior-data-scientists-2ab02396cf5b?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-## What I Would Have Told Myself a Few Years ago
+## 我会在几年前告诉自己的
 
 
 
@@ -10,19 +10,19 @@
 
 Image credit: Alice Truong
 
-### Motivation
+### 动机
 
-Two years ago, I shared my [experience](https://medium.com/@rchang/my-two-year-journey-as-a-data-scientist-at-twitter-f0c13298aee6) on doing data science in the industry. The writing was originally meant to be a private reflection for myself to celebrate my two year twitterversary at Twitter, but I instead published it on Medium because I believe it could be very useful for many aspiring data scientists.
+两年前，我分享了我在数据科学领域内的行业[经验](https://medium.com/@rchang/my-two-year-journey-as-a-data-scientist-at-twitter-f0c13298aee6)。最初写这本书的目的是为了对我自己进行自我反思，以庆祝我在Twitter上的两年推特活动，但我最后将其发表在Medium上，因为我认为它对许多有抱负的数据科学家来说非常有用。
 
-Fast forward to 2017, I have been working at Airbnb for a little bit less than two years and have recently become a senior data scientist — an industry title used to signal that one has acquired a certain level of technical expertise. As I reflect on my journey so far and imagine what’s next to come, I once again wrote down a few lessons that I wish I had known in the earlier days of my career.
+快进到2017年，我在Airbnb工作了不到两年，最近晋升为一名高级数据科学家。这是一个行业头衔，用来表示某些人技术上已经达到了一定的高度。当我回顾迄今为止的旅程并想象接下来会发生什么时，我再次写下了一些我希望在职业生涯的早些时候就知道的课程。
 
-If the intended audience of my previous post was for aspiring data scientists and people who are completely new to the field, then this article is for people who are already in the field but are just starting out. My goal is to not only use this post as a reminder to myself about the important things that I have learned, but also to inspire others as they embark onto their DS careers!
+如果我之前文章的目标读者是有抱负的数据科学家和该领域的新手，那么本文适用于已经在该领域但刚刚起步的人。我的目标不仅是希望通过这篇文章来提醒自己我学到的重要知识，而且还可以激励其他人踏上DS生涯！
 
-### Whose Critical Path Are You On?
+### 你在谁的关键路径上？
 
-Philip Guo, an outstanding academic and prolific blogger, reflected on his experience interacting with various mentors throughout his years as a student, intern, and researcher. In his blot post “[Whose Critical Path Are You On?](http://www.pgbovine.net/critical-path.htm)”, he made the following observation:
+郭飞（Philip Guo）是一位杰出的学术和多才多艺的博客作者，他回顾了自己在学生，实习生和研究员期间与各种导师互动的经验。 在他的污点文章“ [你的关键路径在哪里？](http://www.pgbovine.net/critical-path.htm)”中，他进行了以下观察：
 
-> If I was on my mentor’s **critical path** [for career advancement or fulfillment], then they would fight hard to make sure I got the help that I needed to succeed. Conversely, if I wasn’t on my mentor’s critical path, then I was usually left to fend for myself. […] If you get on someone’s critical path, then you force them to tie your success to theirs, which will motivate them to lift you up as hard as they can.
+> 如果我处于导师的**关键道路**[为了职业发展或成就]，那么他们会尽力提供我成功的所需。 相反，如果我不在导师的关键路线上，那么我只能自供自给。 […]如果你在某人的关键道路，那么你会迫使他们将你的成功与他们的成功联系起来，这将激励他们尽最大努力帮助你。
 
 
 
@@ -30,44 +30,42 @@ Philip Guo, an outstanding academic and prolific blogger, reflected on his exper
 
 Image credit: The Icefields Parkway // Daniel Han
 
-This work dynamic is pretty intuitive, and I wish I had internalized it earlier in my career when choosing projects, selecting teams, or even evaluating which mentors or companies to work for.
+这种工作动态非常直观，我希望我可以在职业生涯的早期将其内部化，这时可以选择项目，选择团队，甚至可以选择要为哪些导师或公司工作。
 
-As an example, while at Twitter, I had always wanted to learn more about machine learning, but my team, despite being very data driven, largely needed data scientists to focus on experiment design and product analytics. Despite my best efforts, I often found it difficult to marry this intellectual desire with the critical projects of my team.
+例如，在Twitter上，我一直想了解有关机器学习的更多信息，尽管我的团队非常依赖数据驱动，但仍非常需要数据科学家专注于实验设计和产品分析。 虽然我尽了最大的努力，但我发现很难将这种理想的愿望与团队的关键项目相结合。
 
-As a result, when I arrived at Airbnb, I made a conscious decision to focus on joining a project/team where ML is critical to its success. I worked with my manager to identify a few promising opportunities, one of which is to model the lifetime value (LTV) of listings on Airbnb.
+结果，当我到Airbnb时，我做出了一个明智的决定，即专注于加入ML对于其成功至关重要的项目/团队。 我与我的经理一起确定了一些有前景的机会，其中之一是对Airbnb上房源的终身价值（LTV）进行建模。
 
-This project was not only critical to the success of our business, but also to the development of my career. I learned so much about the workflow of [building machine learning model at scale](https://medium.com/airbnb-engineering/using-machine-learning-to-predict-value-of-homes-on-airbnb-9272d3d4739d), and there was no better way to learn other than learning in the context of solving a concrete business problem.
+这个项目不仅对我们业务的成功至关重要，而且对我的职业发展也至关重要。我了解到很多[大规模构建机器学习模型](https://medium.com/airbnb-engineering/using-machine-learning-to-predict-value-of-homes-on-airbnb-9272d3d4739d)的工作流程，除了在解决具体业务问题的背景下进行学习之外，没有更好的学习方法。
 
-Undoubtedly, I was very lucky to find a project that aligned with my aspirations and where I wanted to build my skills. I believe the framework of picking projects on our mentors’ critical paths can make us increasingly “lucky” over time on matching our aspirations with the right projects at work.
+毫无疑问，我很幸运地找到了一个与我的志向以及我想在其中培养技能的项目。我相信，在导师的关键路径上挑选项目的框架可以使我们随着时间的流逝，将自己的理想与正确的项目相匹配，从而使我们越来越“幸运”。
 
-P**rinciple I learned**: *We all have skills that we would like to develop and intellectual interests that we would love to pursue. It’s important to evaluate how well our aspirations align with the critical path of the environment we are in. Find projects, teams, and companies whose critical path best aligned with yours.*
+**我学到的原则**：*我们所有人都有我们想发展的技能和我们追求的知识兴趣。评估我们的理想与我们所处环境的关键路径的契合度非常重要。找到关键路径与你的关键路径最相符的项目，团队和公司。*
 
-### Picking the Right Tools For The Problem
+### 选择正确的工具解决问题
 
-Before Airbnb, I had been coding in R and [dplyr](https://github.com/tidyverse/dplyr) for most of my professional life. After starting on the LTV project, I soon realized the deliverable was not a piece of analysis code, but rather a production machine learning pipeline. Given that it is much easier to build complex pipelines in [Airflow](https://medium.com/the-astronomer-journey/airflow-and-the-future-of-data-engineering-a-q-a-266f68d956a9) using Python, I was faced with a dilemma — should I switch from R to Python?
-
-
+在加入Airbnb之前，我一生的大部分时间都在使用R和[dplyr](https://github.com/tidyverse/dplyr)。 在开始LTV项目之后，我很快意识到可交付成果不是一段分析代码，而是一条生产机器学习流水线。 鉴于使用Python在[Airflow](https://medium.com/the-astronomer-journey/airflow-and-the-future-of-data-engineering-aqa-266f68d956a9)中构建复杂的流水线要容易得多， 我面临两难的境地— —我应该从R切换到Python吗？
 
 ![img](https://cdn-images-1.medium.com/max/800/1*dZaHst97QwHkKtWd0HlZ4Q.png)
 
 Image source: quickmeme.com (besides R or Python, Excel is also a serious contender 👊)
 
-This turns out to be a very common question among data scientists, since many struggled to decide which language to choose. For me, there is clearly a switching cost once committed to one or the other. I went through the pros and cons to understand the tradeoffs, but the more I thought about it, the more I fell into the trap of decision paralysis. (Here is an entertaining [talk](https://blog.dominodatalab.com/video-huge-debate-r-vs-python-data-science/) that demonstrates this concept). Eventually, I escaped from this paralysis after reading this response on [Reddit](https://www.reddit.com/r/Python/comments/2tkkxd/considering_putting_my_efforts_into_python/):
+事实证明，这是数据科学家中一个非常普遍的问题，因为许多人都在选择哪种语言上纠结。对我来说，一旦承诺一个或另一个，显然会有转换成本。我通过分析利弊来了解折衷，但是我对它的思考越多，我越容易陷入两难之地。 （这里是一个有趣的[talk](https://blog.dominodatalab.com/video-huge-debate-r-vs-python-data-science/)（展示了这个概念）。最终，我在[Reddit](https://www.reddit.com/r/Python/comments/2tkkxd/considering_putting_my_efforts_into_python/)上阅读以下回复后，摆脱了这种纠结：
 
-> Instead of thinking about which programming language to learn, think about which language offers you the right set of Domain Specific Languages (DSL) that fit your problems.
+>不用考虑学习哪种编程语言，而是考虑哪种语言可以为你提供适合你问题的正确的领域特定语言（DSL）。
 
-The appropriateness of a tool is always context dependent and problem specific. It’s not about whether I should learn Python, it’s whether Python is the right tool for the job. To elaborate more on this point, here are a few examples:
+工具的适当性始终取决于上下文和具体问题。这与我是否应该学习Python无关，而与Python是否适合这项工作无关。为了详细说明这一点，下面是一些示例：
 
-- If your goal is to apply the most current, cutting-edge statistical methods, R is likely to be the better choice. Why? Because R is built by statisticians and for statisticians. Nowadays, academics publish their research not only in papers but also in R packages. Each week, there are many interesting new R packages made available on [CRAN](https://cran.r-project.org/mirrors.html), like this [one](https://github.com/susanathey/causalTree).
-- On the other hand, Python is great for building production data pipelines, since it is a general-purpose programming language. For example, one can easily wrap a [scikit-learn](http://scikit-learn.org/) model using [Python UDF](http://www.florianwilhelm.info/2016/10/python_udf_in_hive/) to do distributed scoring in Hive, orchestrate Airflow DAGs with complex logic, or write a Flask web app to showcase the output of the model in a browser.
+- 如果您的目标是最新应用，最先进的统计方法，则R可能是更好的选择。 为什么？ 因为R是由统计学家为统计学家建立的。 如今，学者们不仅在论文中发表研究成果，还在R包中发表研究成果。 每周，[CRAN](https://cran.r-project.org/mirrors.html)上都会提供许多有趣的新R软件包，例如[这个](https://github.com/susanathey/ causalTree)。
+- 另一方面，Python是构建生产数据管道的理想选择，因为它是一种通用的编程语言。 例如，可以使用[Python UDF](http://www.florianwilhelm.info/2016/10/python_udf_in_hive/)轻松包装[scikit-learn](http://scikit-learn.org/)模型 在Hive中进行分布式计算，使用复杂的逻辑编排Airflow DAG，或编写Flask Web应用程序以在浏览器中展示模型的输出。
 
-For my particular project, I needed to build a production machine learning pipeline, and my life would be a lot easier if I did it in Python. Eventually, I rolled up my sleeves and embraced this new challenge!
+对于我的特定项目，我需要构建一个生产机器学习管道，如果我使用Python进行工作，我的生活会容易得多。 最终，我卷起袖子迎接了这个新挑战！
 
-P**rinciple I learned**: *Instead of fixating on a single technique or programming language, ask yourself, what is the best set of tools or techniques that will help you to solve your problem? Focus on problem solving, and the tools will come naturally.*
+**我学到的原则**: *不问自己只使用一种技术或编程语言，而是问自己，什么是最能帮助你解决问题的工具或技术？ 专注于解决问题，使用工具就变成很自然地*。
 
-### Building A Learning Project
+### 建立学习项目
 
-Even though I have not used Python to do Data Science work before, I did play with the language in a [different capacity](https://medium.com/@rchang/learning-how-to-build-a-web-application-c5499bd15c8f). However, I never really learned Python fundamentals properly. As a result, I got scared when code was organized into [classes](https://jeffknupp.com/blog/2014/06/18/improve-your-python-python-classes-and-object-oriented-programming/), and I always wondered what *__init__.py* was [used](https://stackoverflow.com/questions/448271/what-is-init-py-for) for*.*
+即使我以前从未使用过Python从事数据科学工作，但我还是以[不同身份](https://medium.com/@rchang/learning-how-to-build-a-web-application-c5499bd15c8f)使用了该语言。 但是，我从来没有真正正确地学习过Python基础知识。 结果，当代码组织成 [classes](https://jeffknupp.com/blog/2014/06/18/improve-your-python-python-classes-and-object-oriented-programming/)时，我感到恐惧，我一直想知道 *__init__.py*  的用途
 
 To really learn the fundamentals properly this time, I took inspiration from Anders Ericsson’s research on [**Deliberate Practice**](https://www.amazon.com/Peak-Secrets-New-Science-Expertise/dp/1531864880):
 
@@ -132,7 +130,6 @@ Finally, I would end this section with a tweet from [Hadley Wickham](https://twi
 
 
 <iframe data-width="500" data-height="185" width="500" height="185" data-src="/media/d2a4a2b22832b73a7c1aa1d7da9a4eb1?postId=2ab02396cf5b" data-media-id="d2a4a2b22832b73a7c1aa1d7da9a4eb1" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F677589103710306304%2Fm56O6Wgf_400x400.jpg&amp;key=a19fcc184b9711e1b4764040d3dc5c07" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://medium.com/media/d2a4a2b22832b73a7c1aa1d7da9a4eb1?postId=2ab02396cf5b" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 259px;"></iframe>
-
 <https://twitter.com/hadleywickham/status/890107458219368448>
 
 P**rinciple I learned:** *Teaching is the best way to test your understanding of the subject and the best way to improve your skills. When you learn something valuable, share it with others. You don’t always have to create new software, explaining how existing tools work can also be super valuable.*
@@ -167,7 +164,6 @@ Recently, I came across a lecture from [Richard Hamming](https://en.wikipedia.or
 
 
 <iframe data-width="640" data-height="480" width="640" height="480" data-src="/media/70791d910c2b5748671fad34eec86b8c?postId=2ab02396cf5b" data-media-id="70791d910c2b5748671fad34eec86b8c" data-thumbnail="https://i.embed.ly/1/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2Fa1zDuOPkMSw%2Fhqdefault.jpg&amp;key=4fce0568f2ce49e8b54624ef71a8a5bd" class="progressiveMedia-iframe js-progressiveMedia-iframe" allowfullscreen="" frameborder="0" src="https://medium.com/media/70791d910c2b5748671fad34eec86b8c?postId=2ab02396cf5b" style="user-select: text !important; display: block; position: absolute; margin: auto; max-width: 100%; box-sizing: border-box; transform: translateZ(0px); top: 0px; left: 0px; width: 700px; height: 525px;"></iframe>
-
 <https://www.youtube.com/watch?v=a1zDuOPkMSw>
 
 As he shared his stories, a few important points stood out for me.

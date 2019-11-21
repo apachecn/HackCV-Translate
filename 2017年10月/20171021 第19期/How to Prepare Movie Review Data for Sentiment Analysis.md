@@ -1,50 +1,51 @@
-# How to Prepare Movie Review Data for Sentiment Analysis
+# 如何准备电影评论数据以进行情感分析
 
 原文链接：[How to Prepare Movie Review Data for Sentiment Analysis](https://machinelearningmastery.com/prepare-movie-review-data-sentiment-analysis/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-Text data preparation is different for each problem.
+每个问题的文本数据准备都不同。
 
-Preparation starts with simple steps, like loading data, but quickly gets difficult with cleaning tasks that are very specific to the data you are working with. You need help as to where to begin and what order to work through the steps from raw data to data ready for modeling.
+准备工作从简单的步骤开始，例如加载数据，但是对于与您正在使用的数据非常相关的清理任务，很快就会变得困难。 从原始数据到准备好建模的步骤，您需要有关从何处开始以及以什么顺序工作的帮助。
 
-In this tutorial, you will discover how to prepare movie review text data for sentiment analysis, step-by-step.
+在本教程中，您将逐步了解如何准备电影评论文本数据以进行情感分析。
 
-After completing this tutorial, you will know:
+完成本教程后，您将知道：
 
-- How to load text data and clean it to remove punctuation and other non-words.
-- How to develop a vocabulary, tailor it, and save it to file.
-- How to prepare movie reviews using cleaning and a pre-defined vocabulary and save them to new files ready for modeling.
+- 如何加载和清除文本数据以删除标点符号和其他非单词。
+- 如何开发词汇表，定制词汇表并将其保存到文件中。
+- 如何使用清洁和预定义的词汇准备电影评论，并将其保存到可供建模的新文件中。
 
-Let’s get started.
+让我们开始吧。
 
-- **Update Oct/2017**: Fixed a small bug when skipping non-matching files, thanks Jan Zett.
-- **Update Dec/2017**: Fixed a small typo in full example, thanks Ray and Zain.
+- **2017年10月更新**：修复了跳过不匹配文件时的一个小错误，感谢Jan Zett。
 
+- **2017年12月更新**：修复了完整示例中的小错字，感谢Ray和Zain。
 
+  
 
-How to Prepare Movie Review Data for Sentiment Analysis
-Photo by [Kenneth Lu](https://www.flickr.com/photos/toasty/1125019024/), some rights reserved.
+如何准备电影评论数据以进行情感分析
+[肯尼思·鲁](https://www.flickr.com/photos/toasty/1125019024/)摄，保留一些权利。
 
-## Tutorial Overview
+## 教程概述
 
-This tutorial is divided into 5 parts; they are:
+本教程分为5个部分。 他们是：
 
-1. Movie Review Dataset
-2. Load Text Data
-3. Clean Text Data
-4. Develop Vocabulary
-5. Save Prepared Data
-
-
-
+1. 电影评论数据集
+2. 加载文本数据
+3. 清除文本数据
+4. 训练词汇量
+5. 保存准备的数据
 
 
 
 
-### Need help with Deep Learning for Text Data?
 
-Take my free 7-day email crash course now (with code).
 
-Click to sign-up and also get a free PDF Ebook version of the course.
+
+### 在文本数据深度学习方面需要帮助吗？
+
+立即参加我的7天免费电子邮件崩溃课程（包含代码）。
+
+单击以注册，并获得该课程的免费PDF电子书版本。
 
 [Start Your FREE Crash-Course Now](https://machinelearningmastery.lpages.co/leadbox/144855173f72a2%3A164f8be4f346dc/5655638436741120/)
 
@@ -54,94 +55,149 @@ Click to sign-up and also get a free PDF Ebook version of the course.
 
 
 
-## 1. Movie Review Dataset
+## 1. 电影评论数据集
 
-The Movie Review Data is a collection of movie reviews retrieved from the imdb.com website in the early 2000s by Bo Pang and Lillian Lee. The reviews were collected and made available as part of their research on natural language processing.
+电影评论数据是Bo Pang和Lillian Lee在2000年代初期从imdb.com网站检索的电影评论的集合。 收集了这些评论，并将其作为他们对自然语言处理的研究的一部分提供。
 
-The reviews were originally released in 2002, but an updated and cleaned up version was released in 2004, referred to as “*v2.0*“.
+这些评论最初于2002年发布，但于2004年发布了更新和清理的版本，称为“ * v2.0 *”。
 
-The dataset is comprised of 1,000 positive and 1,000 negative movie reviews drawn from an archive of the rec.arts.movies.reviews newsgroup hosted at [IMDB](http://reviews.imdb.com/Reviews). The authors refer to this dataset as the “*polarity dataset*“.
+该数据集由从[IMDB](http://reviews.imdb.com/Reviews)托管的rec.arts.movies.reviews新闻组的存档中抽取的1,000条正面和负面电影评论组成。 作者将此数据集称为“ *极性数据集*”。
 
-> Our data contains 1000 positive and 1000 negative reviews all written before 2002, with a cap of 20 reviews per author (312 authors total) per category. We refer to this corpus as the polarity dataset.
-
-— [A Sentimental Education: Sentiment Analysis Using Subjectivity Summarization Based on Minimum Cuts](http://xxx.lanl.gov/abs/cs/0409058), 2004.
-
-The data has been cleaned up somewhat, for example:
-
-- The dataset is comprised of only English reviews.
-- All text has been converted to lowercase.
-- There is white space around punctuation like periods, commas, and brackets.
-- Text has been split into one sentence per line.
-
-The data has been used for a few related natural language processing tasks. For classification, the performance of classical models (such as Support Vector Machines) on the data is in the range of high 70% to low 80% (e.g. 78%-to-82%).
-
-More sophisticated data preparation may see results as high as 86% with 10-fold cross validation. This gives us a ballpark of low-to-mid 80s if we were looking to use this dataset in experiments on modern methods.
-
-> … depending on choice of downstream polarity classifier, we can achieve highly statistically significant improvement (from 82.8% to 86.4%)
+> 我们的数据包含2002年之前撰写的1000条正面评论和1000条负面评论，每个类别每位作者的评论上限为20（总共312作者）。 我们将此语料库称为极性数据集。
 
 — [A Sentimental Education: Sentiment Analysis Using Subjectivity Summarization Based on Minimum Cuts](http://xxx.lanl.gov/abs/cs/0409058), 2004.
 
-You can download the dataset from here:
+数据已经进行了一些清理，例如：
+
+- 数据集仅包含英文评论。
+- 所有文字均已转换为小写。
+- 标点符号周围有空格，例如句号，逗号和方括号。
+- 文本已被分成每行一个句子。
+
+该数据已用于一些相关的自然语言处理任务。 对于分类，经典模型（例如支持向量机）在数据上的性能在高70％至低80％（例如78％至82％）的范围内。
+
+进行10倍交叉验证后，更复杂的数据准备可能会看到高达86％的结果。 如果我们希望在现代方法的实验中使用此数据集，那么这将使我们处于80年代中期到中期的水平。
+
+> …根据下游极性分类器的选择，我们可以实现统计学上显着的改进（从82.8％到86.4％）
+
+— [A Sentimental Education: Sentiment Analysis Using Subjectivity Summarization Based on Minimum Cuts](http://xxx.lanl.gov/abs/cs/0409058), 2004.
+
+您可以从此处下载数据集：
 
 - [Movie Review Polarity Dataset](http://www.cs.cornell.edu/people/pabo/movie-review-data/review_polarity.tar.gz) (review_polarity.tar.gz, 3MB)
 
-After unzipping the file, you will have a directory called “*txt_sentoken*” with two sub-directories containing the text “*neg*” and “*pos*” for negative and positive reviews. Reviews are stored one per file with a naming convention *cv000* to *cv999* for each of neg and pos.
+解压缩文件后，您将拥有一个名为“ *txt_sentoken*”的目录，该目录包含两个子目录，分别包含否定和肯定评论的文本“ *neg*”和“ *pos*”。 评论每个文件存储一个，命名规则为*cv000*至*cv999*，分别用于neg和pos。
 
-Next, let’s look at loading the text data.
+接下来，让我们看一下加载文本数据。
 
-## 2. Load Text Data
+## 2. 载入文本数据
 
-In this section, we will look at loading individual text files, then processing the directories of files.
+在本节中，我们将研究加载单个文本文件，然后处理文件目录。
 
-We will assume that the review data is downloaded and available in the current working directory in the folder “*txt_sentoken*“.
+我们将假定已下载审阅数据并在当前工作目录的“ *txt_sentoken*”文件夹中提供该审阅数据。
 
-We can load an individual text file by opening it, reading in the ASCII text, and closing the file. This is standard file handling stuff. For example, we can load the first negative review file “*cv000_29416.txt*” as follows:
+我们可以通过打开单个文本文件，读取ASCII文本并关闭文件来加载它。 这是标准的文件处理内容。 例如，我们可以按如下方式加载第一个负面评论文件“ *cv000_29416.txt*”：
+
+```python
+# load one file
+filename = 'txt_sentoken/neg/cv000_29416.txt'
+# open the file as read only
+file = open(filename, 'r')
+# read all text
+text = file.read()
+# close the file
+file.close()
+```
+
+这样会将文档加载为ASCII并保留所有空白，例如换行。
+
+我们可以将其转换为一个名为load_doc()的函数，该函数将文档的文件名加载并返回文本。
+
+```python
+# load doc into memory
+def load_doc(filename):	
+    # open the file as read only
+    file = open(filename, 'r')
+    # read all text	
+    text = file.read()
+    # close the file
+    file.close()
+    return text
+```
+
+我们有两个目录，每个目录包含1000个文档。 我们可以依次使用以下命令依次处理每个目录： [listdir() function](https://docs.python.org/3/library/os.html#os.listdir), 然后依次加载每个文件。
+
+例如，我们可以使用* load_doc()*函数在负目录中加载每个文档，以进行实际加载。
+
+```python
+from os import listdir 
+# load doc into memory
+def load_doc(filename):	
+    # open the file as read only	
+    file = open(filename, 'r')	
+    # read all text	text = file.read()	
+    # close the file	
+    file.close()	
+    return text 
+# specify directory to load
+directory = 'txt_sentoken/neg'
+# walk through all files in the folder
+for filename in listdir(directory):	
+    # skip files that do not have the right extension	
+    if not filename.endswith(".txt"):		
+        continue	
+    # create the full path of the file to open	
+    path = directory + '/' + filename	
+    # load document	
+    doc = load_doc(path)	
+    print('Loaded %s' % filename) 
+```
+
+运行此示例将在加载每个评论后打印其文件名。
 
 
 
-| 12345678 | # load one filefilename = 'txt_sentoken/neg/cv000_29416.txt'# open the file as read onlyfile = open(filename, 'r')# read all texttext = file.read()# close the filefile.close() |
-| -------- | ------------------------------------------------------------ |
-|          |                                                              |
+```python
+...Loaded cv995_23113.txt
+Loaded cv996_12447.txt
+Loaded cv997_5152.txt
+Loaded cv998_15691.txt
+Loaded cv999_14636.txt
+```
 
-This loads the document as ASCII and preserves any white space, like new lines.
-
-We can turn this into a function called load_doc() that takes a filename of the document to load and returns the text.
-
-
-
-| 123456789 | # load doc into memorydef load_doc(filename):	# open the file as read only	file = open(filename, 'r')	# read all text	text = file.read()	# close the file	file.close()	return text |
-| --------- | ------------------------------------------------------------ |
-|           |                                                              |
-
-We have two directories each with 1,000 documents each. We can process each directory in turn by first getting a list of files in the directory using the [listdir() function](https://docs.python.org/3/library/os.html#os.listdir), then loading each file in turn.
-
-For example, we can load each document in the negative directory using the *load_doc()*function to do the actual loading.
+我们也可以将文档的处理转换为一个函数，稍后将其用作模板以开发用于清理文件夹中所有文档的函数。 例如，下面我们定义一个* process_docs()*函数来执行相同的操作。
 
 
+```python
+from os import listdir 
+# load doc into memory
+def load_doc(filename):	
+    # open the file as read only	
+    file = open(filename, 'r')	
+    # read all text	
+    text = file.read()	
+    # close the file	
+    file.close()	
+    return text 
+# load all docs in a directory
+def process_docs(directory):	
+# walk through all files in the folder	
+for filename in listdir(directory):		
+# skip files that do not have the right extension		
+if not filename.endswith(".txt"):			
+    continue		
+    # create the full path of the file to open		
+    path = directory + '/' + filename		
+    # load document		
+    doc = load_doc(path)		
+    print('Loaded %s' % filename) 
+    # specify directory to load
+    directory = 'txt_sentoken/neg'process_docs(directory)
+```
 
-| 123456789101112131415161718192021222324 | from os import listdir # load doc into memorydef load_doc(filename):	# open the file as read only	file = open(filename, 'r')	# read all text	text = file.read()	# close the file	file.close()	return text # specify directory to loaddirectory = 'txt_sentoken/neg'# walk through all files in the folderfor filename in listdir(directory):	# skip files that do not have the right extension	if not filename.endswith(".txt"):		continue	# create the full path of the file to open	path = directory + '/' + filename	# load document	doc = load_doc(path)	print('Loaded %s' % filename) |
-| --------------------------------------- | ------------------------------------------------------------ |
-|                                         |                                                              |
+现在，我们知道了如何加载电影评论文本数据，让我们来看看如何清理它。
 
-Running this example prints the filename of each review after it is loaded.
-
-
-
-| 123456 | ...Loaded cv995_23113.txtLoaded cv996_12447.txtLoaded cv997_5152.txtLoaded cv998_15691.txtLoaded cv999_14636.txt |
-| ------ | ------------------------------------------------------------ |
-|        |                                                              |
-
-We can turn the processing of the documents into a function as well and use it as a template later for developing a function to clean all documents in a folder. For example, below we define a *process_docs()* function to do the same thing.
-
-
-
-| 12345678910111213141516171819202122232425262728 | from os import listdir # load doc into memorydef load_doc(filename):	# open the file as read only	file = open(filename, 'r')	# read all text	text = file.read()	# close the file	file.close()	return text # load all docs in a directorydef process_docs(directory):	# walk through all files in the folder	for filename in listdir(directory):		# skip files that do not have the right extension		if not filename.endswith(".txt"):			continue		# create the full path of the file to open		path = directory + '/' + filename		# load document		doc = load_doc(path)		print('Loaded %s' % filename) # specify directory to loaddirectory = 'txt_sentoken/neg'process_docs(directory) |
-| ----------------------------------------------- | ------------------------------------------------------------ |
-|                                                 |                                                              |
-
-Now that we know how to load the movie review text data, let’s look at cleaning it.
-
-## 3. Clean Text Data
+## 3. 清洗文本数据
 
 In this section, we will look at what data cleaning we might want to do to the movie review data.
 
@@ -294,9 +350,9 @@ The complete example for defining and saving the vocabulary is listed below.
 
 
 
-| 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374 | from string import punctuationfrom os import listdirfrom collections import Counterfrom nltk.corpus import stopwords # load doc into memorydef load_doc(filename):	# open the file as read only	file = open(filename, 'r')	# read all text	text = file.read()	# close the file	file.close()	return text # turn a doc into clean tokensdef clean_doc(doc):	# split into tokens by white space	tokens = doc.split()	# remove punctuation from each token	table = str.maketrans('', '', punctuation)	tokens = [w.translate(table) for w in tokens]	# remove remaining tokens that are not alphabetic	tokens = [word for word in tokens if word.isalpha()]	# filter out stop words	stop_words = set(stopwords.words('english'))	tokens = [w for w in tokens if not w in stop_words]	# filter out short tokens	tokens = [word for word in tokens if len(word) > 1]	return tokens # load doc and add to vocabdef add_doc_to_vocab(filename, vocab):	# load doc	doc = load_doc(filename)	# clean doc	tokens = clean_doc(doc)	# update counts	vocab.update(tokens) # load all docs in a directorydef process_docs(directory, vocab):	# walk through all files in the folder	for filename in listdir(directory):		# skip files that do not have the right extension		if not filename.endswith(".txt"):			continue		# create the full path of the file to open		path = directory + '/' + filename		# add doc to vocab		add_doc_to_vocab(path, vocab) # save list to filedef save_list(lines, filename):	data = '\n'.join(lines)	file = open(filename, 'w')	file.write(data)	file.close() # define vocabvocab = Counter()# add all docs to vocabprocess_docs('txt_sentoken/neg', vocab)process_docs('txt_sentoken/pos', vocab)# print the size of the vocabprint(len(vocab))# print the top words in the vocabprint(vocab.most_common(50))# keep tokens with > 5 occurrencemin_occurane = 5tokens = [k for k,c in vocab.items() if c >= min_occurane]print(len(tokens))# save tokens to a vocabulary filesave_list(tokens, 'vocab.txt') |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-|                                                              |                                                              |
+```python
+from string import punctuationfrom os import listdirfrom collections import Counterfrom nltk.corpus import stopwords # load doc into memorydef load_doc(filename):	# open the file as read only	file = open(filename, 'r')	# read all text	text = file.read()	# close the file	file.close()	return text # turn a doc into clean tokensdef clean_doc(doc):	# split into tokens by white space	tokens = doc.split()	# remove punctuation from each token	table = str.maketrans('', '', punctuation)	tokens = [w.translate(table) for w in tokens]	# remove remaining tokens that are not alphabetic	tokens = [word for word in tokens if word.isalpha()]	# filter out stop words	stop_words = set(stopwords.words('english'))	tokens = [w for w in tokens if not w in stop_words]	# filter out short tokens	tokens = [word for word in tokens if len(word) > 1]	return tokens # load doc and add to vocabdef add_doc_to_vocab(filename, vocab):	# load doc	doc = load_doc(filename)	# clean doc	tokens = clean_doc(doc)	# update counts	vocab.update(tokens) # load all docs in a directorydef process_docs(directory, vocab):	# walk through all files in the folder	for filename in listdir(directory):		# skip files that do not have the right extension		if not filename.endswith(".txt"):			continue		# create the full path of the file to open		path = directory + '/' + filename		# add doc to vocab		add_doc_to_vocab(path, vocab) # save list to filedef save_list(lines, filename):	data = '\n'.join(lines)	file = open(filename, 'w')	file.write(data)	file.close() # define vocabvocab = Counter()# add all docs to vocabprocess_docs('txt_sentoken/neg', vocab)process_docs('txt_sentoken/pos', vocab)# print the size of the vocabprint(len(vocab))# print the top words in the vocabprint(vocab.most_common(50))# keep tokens with > 5 occurrencemin_occurane = 5tokens = [k for k,c in vocab.items() if c >= min_occurane]print(len(tokens))# save tokens to a vocabulary filesave_list(tokens, 'vocab.txt')
+```
 
 Running this final snippet after creating the vocabulary will save the chosen words to file.
 
@@ -304,9 +360,8 @@ It is a good idea to take a look at, and even study, your chosen vocabulary in o
 
 
 
-| 1234567891011 | hasntupdatingfigurativelysymphonyciviliansmightfishermanhokumwitchbuffoons... |
-| ------------- | ------------------------------------------------------------ |
-|               |                                                              |
+```python hasntupdatingfigurativelysymphonyciviliansmightfishermanhokumwitchbuffoons...
+```
 
 Next, we can look at using the vocabulary to create a prepared version of the movie review dataset.
 
@@ -320,9 +375,20 @@ We can start off by loading the vocabulary from ‘*vocab.txt*‘.
 
 
 
-| 123456789101112131415 | # load doc into memorydef load_doc(filename):	# open the file as read only	file = open(filename, 'r')	# read all text	text = file.read()	# close the file	file.close()	return text # load vocabularyvocab_filename = 'review_polarity/vocab.txt'vocab = load_doc(vocab_filename)vocab = vocab.split()vocab = set(vocab) |
-| --------------------- | ------------------------------------------------------------ |
-|                       |                                                              |
+```python
+# load doc into memory
+def load_doc(filename):	
+    # open the file as read only	
+    file = open(filename, 'r')	
+    # read all text	
+    text = file.read()	
+    # close the file	file.close()	
+    return text # load vocabulary
+vocab_filename = 'review_polarity/vocab.txt'
+vocab = load_doc(vocab_filename)
+vocab = vocab.split()
+vocab = set(vocab)
+```
 
 Next, we can clean the reviews, use the loaded vocab to filter out unwanted tokens, and save the clean reviews in a new file.
 
@@ -333,18 +399,39 @@ First, we can define a function to process a document, clean it, filter it, and 
 It calls the previously defined *load_doc()* function to load the document and *clean_doc()* to tokenize the document.
 
 
-
-| 123456789 | # load doc, clean and return line of tokensdef doc_to_line(filename, vocab):	# load the doc	doc = load_doc(filename)	# clean doc	tokens = clean_doc(doc)	# filter by vocab	tokens = [w for w in tokens if w in vocab]	return ' '.join(tokens) |
-| --------- | ------------------------------------------------------------ |
-|           |                                                              |
+```python
+# load doc, clean and return line of tokens
+def doc_to_line(filename, vocab):	
+    # load the doc	
+    doc = load_doc(filename)	
+    # clean doc	
+    tokens = clean_doc(doc)	
+    # filter by vocab	
+    tokens = [w for w in tokens if w in vocab]
+    return ' '.join(tokens)
+```
 
 Next, we can define a new version of *process_docs()* to step through all reviews in a folder and convert them to lines by calling *doc_to_line()* for each document. A list of lines is then returned.
 
 
 
-| 123456789101112131415 | # load all docs in a directorydef process_docs(directory, vocab):	lines = list()	# walk through all files in the folder	for filename in listdir(directory):		# skip files that do not have the right extension		if not filename.endswith(".txt"):			continue		# create the full path of the file to open		path = directory + '/' + filename		# load and clean the doc		line = doc_to_line(path, vocab)		# add to list		lines.append(line)	return lines |
-| --------------------- | ------------------------------------------------------------ |
-|                       |                                                              |
+```python
+# load all docs in a directory
+def process_docs(directory, vocab):	
+    lines = list()	
+    # walk through all files in the folder	
+    for filename in listdir(directory):		
+        # skip files that do not have the right extension		
+        if not filename.endswith(".txt"):			
+        	continue		
+        # create the full path of the file to open		
+        path = directory + '/' + filename		
+        # load and clean the doc		
+        line = doc_to_line(path, vocab)		
+        # add to list		
+        lines.append(line)	
+    return lines
+```
 
 We can then call *process_docs()* for both the directories of positive and negative reviews, then call *save_list()* from the previous section to save each list of processed reviews to a file.
 
@@ -352,9 +439,75 @@ The complete code listing is provided below.
 
 
 
-| 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475 | from string import punctuationfrom os import listdirfrom collections import Counterfrom nltk.corpus import stopwords # load doc into memorydef load_doc(filename):	# open the file as read only	file = open(filename, 'r')	# read all text	text = file.read()	# close the file	file.close()	return text # turn a doc into clean tokensdef clean_doc(doc):	# split into tokens by white space	tokens = doc.split()	# remove punctuation from each token	table = str.maketrans('', '', punctuation)	tokens = [w.translate(table) for w in tokens]	# remove remaining tokens that are not alphabetic	tokens = [word for word in tokens if word.isalpha()]	# filter out stop words	stop_words = set(stopwords.words('english'))	tokens = [w for w in tokens if not w in stop_words]	# filter out short tokens	tokens = [word for word in tokens if len(word) > 1]	return tokens # save list to filedef save_list(lines, filename):	data = '\n'.join(lines)	file = open(filename, 'w')	file.write(data)	file.close() # load doc, clean and return line of tokensdef doc_to_line(filename, vocab):	# load the doc	doc = load_doc(filename)	# clean doc	tokens = clean_doc(doc)	# filter by vocab	tokens = [w for w in tokens if w in vocab]	return ' '.join(tokens) # load all docs in a directorydef process_docs(directory, vocab):	lines = list()	# walk through all files in the folder	for filename in listdir(directory):		# skip files that do not have the right extension		if not filename.endswith(".txt"):			continue		# create the full path of the file to open		path = directory + '/' + filename		# load and clean the doc		line = doc_to_line(path, vocab)		# add to list		lines.append(line)	return lines # load vocabularyvocab_filename = 'vocab.txt'vocab = load_doc(vocab_filename)vocab = vocab.split()vocab = set(vocab)# prepare negative reviewsnegative_lines = process_docs('txt_sentoken/neg', vocab)save_list(negative_lines, 'negative.txt')# prepare positive reviewspositive_lines = process_docs('txt_sentoken/pos', vocab)save_list(positive_lines, 'positive.txt') |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-|                                                              |                                                              |
+```python
+from string import punctuation
+from os import listdir
+from collections import Counter
+from nltk.corpus import stopwords 
+# load doc into memory
+def load_doc(filename):	
+    # open the file as read only	
+    file = open(filename, 'r')	
+    # read all text	text = file.read()	
+    # close the file	
+    file.close()	
+    return text 
+# turn a doc into clean tokens
+def clean_doc(doc):	
+    # split into tokens by white space	
+    tokens = doc.split()	
+    # remove punctuation from each token	
+    table = str.maketrans('', '', punctuation)	
+    tokens = [w.translate(table) for w in tokens]	
+    # remove remaining tokens that are not alphabetic	
+    tokens = [word for word in tokens if word.isalpha()]	
+    # filter out stop words	
+    stop_words = set(stopwords.words('english'))	
+    tokens = [w for w in tokens if not w in stop_words]	
+    # filter out short tokens	
+    tokens = [word for word in tokens if len(word) > 1]	
+    return tokens 
+# save list to file
+def save_list(lines, filename):	
+    data = '\n'.join(lines)	
+    file = open(filename, 'w')	
+    file.write(data)	
+    file.close() 
+# load doc, clean and return line of tokens
+def doc_to_line(filename, vocab):	
+    # load the doc	
+    doc = load_doc(filename)	
+    # clean doc	
+    tokens = clean_doc(doc)	
+    # filter by vocab	
+    tokens = [w for w in tokens if w in vocab]	
+    return ' '.join(tokens) 
+# load all docs in a directory
+def process_docs(directory, vocab):	
+    lines = list()	
+    # walk through all files in the folder	
+    for filename in listdir(directory):		
+        # skip files that do not have the right extension		
+        if not filename.endswith(".txt"):			
+            continue		
+        # create the full path of the file to open		path = directory + '/' + filename		
+        # load and clean the doc		
+        line = doc_to_line(path, vocab)		
+        # add to list		
+        lines.append(line)	
+    return lines 
+# load vocabulary
+vocab_filename = 'vocab.txt'
+vocab = load_doc(vocab_filename)
+vocab = vocab.split()
+vocab = set(vocab)
+# prepare negative reviews
+negative_lines = process_docs('txt_sentoken/neg', vocab)
+save_list(negative_lines, 'negative.txt')
+# prepare positive reviews
+positive_lines = process_docs('txt_sentoken/pos', vocab)
+save_list(positive_lines, 'positive.txt')
+```
 
 Running the example saves two new files, ‘*negative.txt*‘ and ‘*positive.txt*‘, that contain the prepared negative and positive reviews respectively.
 

@@ -1,117 +1,128 @@
-# Hey Siri: An On-device DNN-powered Voice Trigger for Apple’s Personal Assistant
+# Hey Siri：一种用于苹果个人助理的，基于设备DNN的语音触发器
 
 原文链接：[Hey Siri: An On-device DNN-powered Voice Trigger for Apple’s Personal Assistant](https://machinelearning.apple.com/2017/10/01/hey-siri.html?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
 ------
 
-The “Hey Siri” feature allows users to invoke Siri hands-free. A very small speech recognizer runs all the time and listens for just those two words. When it detects “Hey Siri”, the rest of Siri parses the following speech as a command or query. The “Hey Siri” detector uses a Deep Neural Network (DNN) to convert the acoustic pattern of your voice at each instant into a probability distribution over speech sounds. It then uses a temporal integration process to compute a confidence score that the phrase you uttered was “Hey Siri”. If the score is high enough, Siri wakes up. This article takes a look at the underlying technology. It is aimed primarily at readers who know something of machine learning but less about speech recognition.
+“嘿Siri”功能使用户可以免提调用Siri。 一个很小的语音识别器一直在运行，只听这两个词。 当检测到“嘿Siri”时，其余Siri会将以下语音解析为命令或查询。 “ Hey Siri”检测器使用深度神经网络（DNN）将每个时刻的声音声学模式转换为语音的概率分布。 然后，它使用时间积分过程来计算您说出的短语为“ Hey Siri”的置信度得分。 如果分数足够高，Siri就会醒来。 本文介绍了基础技术。 它主要面向了解机器学习但很少了解语音识别的读者。
 
-# Hands-Free Access to Siri
+# 免提访问Siri
 
-To get Siri’s help, say “Hey Siri”. No need to press a button as “Hey Siri” makes Siri hands-free. It seems simple, but quite a lot goes on behind the scenes to wake up Siri quickly and efficiently. Hardware, software, and Internet services work seamlessly together to provide a great experience.
+要获得Siri的帮助，请说“嘿Siri”。 无需按下按钮，因为“嘿Siri”使Siri免提。 看起来很简单，但是在幕后进行了大量工作以快速有效地唤醒Siri。 硬件，软件和Internet服务可以无缝协作，以提供出色的体验。
 
-Figure 1. The Hey Siri flow on iPhone[![A diagram that shows how the acoustical signal from the user is processed. The signal is first processed by Core Audio then sent to a detector that works with the Voice Trigger. The Voice Trigger can be updated by the server. The Voice Trigger Framework controls the detection threshold and sends wake up events to Siri Assistant. Finally, the Siri Server checks the first words to make sure they are the Hey Siri trigger.](https://machinelearning.apple.com/images/journals/hey-siri/HeySiriFlow-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/HeySiriFlow-1.png)
+图1. iPhone上的Hey Siri流
 
-Being able to use Siri without pressing buttons is particularly useful when hands are busy, such as when cooking or driving, or when using the Apple Watch. As Figure 1 shows, the whole system has several parts. Most of the implementation of Siri is “in the Cloud”, including the main automatic speech recognition, the natural language interpretation and the various information services. There are also servers that can provide updates to the acoustic models used by the detector. This article concentrates on the part that runs on your local device, such as an iPhone or Apple Watch. In particular, it focusses on the detector: a specialized speech recognizer which is always listening just for its wake-up phrase (on a recent iPhone with the “Hey Siri” feature enabled).
+[![A diagram that shows how the acoustical signal from the user is processed. The signal is first processed by Core Audio then sent to a detector that works with the Voice Trigger. The Voice Trigger can be updated by the server. The Voice Trigger Framework controls the detection threshold and sends wake up events to Siri Assistant. Finally, the Siri Server checks the first words to make sure they are the Hey Siri trigger.](https://machinelearning.apple.com/images/journals/hey-siri/HeySiriFlow-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/HeySiriFlow-1.png)
 
-# The Detector: Listening for “Hey Siri”
+在忙碌的时候（例如做饭或开车时）或使用Apple Watch时，无需按下按钮就可以使用Siri尤其有用。 如图1所示，整个系统包含几个部分。 Siri的大多数实现是“在云端”，包括主要的自动语音识别，自然语言解释和各种信息服务。 还有一些服务器可以为检测器使用的声学模型提供更新。 本文重点介绍在本地设备（如iPhone或Apple Watch）上运行的部分。 特别是，它专注于检测器：一种专用的语音识别器，始终仅侦听其唤醒短语（在启用了“ Hey Siri”功能的最新iPhone上）。
 
-The microphone in an iPhone or Apple Watch turns your voice into a stream of instantaneous waveform samples, at a rate of 16000 per second. A spectrum analysis stage converts the waveform sample stream to a sequence of frames, each describing the sound spectrum of approximately 0.01 sec. About twenty of these frames at a time (0.2 sec of audio) are fed to the acoustic model, a Deep Neural Network (DNN) which converts each of these acoustic patterns into a probability distribution over a set of speech sound classes: those used in the “Hey Siri” phrase, plus silence and other speech, for a total of about 20 sound classes. See Figure 2.
+# 侦探：聆听“嘿Siri”
 
-The DNN consists mostly of matrix multiplications and logistic nonlinearities. Each “hidden” layer is an intermediate representation discovered by the DNN during its training to convert the filter bank inputs to sound classes. The final nonlinearity is essentially a Softmax function (a.k.a. a general logistic or normalized exponential), but since we want log probabilities the actual math is somewhat simpler.
+iPhone或Apple Watch中的麦克风将您的声音转换成瞬时波形样本流，速率为每秒16000。频谱分析阶段将波形样本流转换为一系列帧，每个帧描述大约0.01秒的声谱。一次约有20个这些帧（0.2秒的音频）被馈送到声学模型，即深度神经网络（DNN），该网络将每个声学模式转换为一组语音类别的概率分布： “嘿Siri”一词，再加上静音和其他语音，总共约有20种声音类别。参见图2。
 
-Figure 2. The Deep Neural Network used to detect "Hey Siri." The hidden layers are actually fully connected. The top layer performs temporal integration. The actual DNN is indicated by the dashed box.[![A diagram that depicts a deep neural network. The bottom layer in a stream of feature vectors. There are four sigmoidal layers, each of which has a bias unit. These layers feed into Softmax function values which in turn feed into units that output a trigger score. The last layer for the tigger score maintains recurrent state.](https://machinelearning.apple.com/images/journals/hey-siri/TrainingDNN-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/TrainingDNN-1.png)
+DNN主要由矩阵乘法和逻辑非线性组成。每个“隐藏”层都是DNN在对其进行训练以将滤波器组输入转换为声音类的训练过程中发现的中间表示。最终的非线性本质上是一个Softmax函数（也就是一般的对数或归一化指数），但是由于我们需要对数概率，因此实际的数学运算较为简单。
 
-We choose the number of units in each hidden layer of the DNN to fit the computational resources available when the “Hey Siri” detector runs. Networks we use typically have five hidden layers, all the same size: 32, 128, or 192 units depending on the memory and power constraints. On iPhone we use two networks—one for initial detection and another as a secondary checker. The initial detector uses fewer units than the secondary checker.
+图2.用于检测“嘿Siri”的深度神经网络。隐藏层实际上是完全连接的。顶层执行时间整合。实际的DNN由虚线框指示。
 
-The output of the acoustic model provides a distribution of scores over phonetic classes for every frame. A phonetic class is typically something like “the first part of an /s/ preceded by a high front vowel and followed by a front vowel.”
+[![A diagram that depicts a deep neural network. The bottom layer in a stream of feature vectors. There are four sigmoidal layers, each of which has a bias unit. These layers feed into Softmax function values which in turn feed into units that output a trigger score. The last layer for the tigger score maintains recurrent state.](https://machinelearning.apple.com/images/journals/hey-siri/TrainingDNN-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/TrainingDNN-1.png)
 
-We want to detect “Hey Siri” if the outputs of the acoustic model are high in the right sequence for the target phrase. To produce a single score for each frame we accumulate those local values in a valid sequence over time. This is indicated in the final (top) layer of Figure 2 as a recurrent network with connections to the same unit and the next in sequence. Inside each unit there is a maximum operation and an add:
+我们选择DNN每个隐藏层中的单位数，以适合“ Hey Siri”检测器运行时可用的计算资源。我们使用的网络通常具有五个隐藏层，大小均相同：32、128或192个单元，具体取决于内存和电源限制。在iPhone上，我们使用两个网络-一个用于初始检测，另一个作为辅助检查器。初始检测器使用的单元少于辅助检测器。
+
+声学模型的输出为每个帧的语音分类提供了分数分布。语音课通常类似于“ / s /的第一部分，后跟高前元音，然后是前元音”。
+
+如果声学模型的输出在目标短语的正确序列中较高，我们想检测“ Hey Siri”。为了对每个帧产生单个分数，我们会随着时间的推移按有效顺序累积这些局部值。这在图2的最后（顶层）中表示为循环网络，该循环网络具有到同一单元的连接以及依次连接到下一个的单元。每个单元内都有一个最大操作和一个附加操作：
 
 Fi,t=max{si+Fi,t−1,mi−1+Fi−1,t−1}+qi,tFi,t=max{si+Fi,t-1,mi-1+Fi-1,t-1}+qi,t
 
 where
 
-- *Fi,t* is the accumulated score for state *i* of the model
-- *qi,t* is the output of the acoustic model—the log score for the phonetic class associated with the *ith* state given the acoustic pattern around time *t*
-- *si* is a cost associated with staying in state *i*
-- *mi* is a cost for moving on from state *i*
+- *Fi,t* 是模型状态*i*的累计得分
+- *qi,t* 是声学模型的输出-在给定时间*t*周围的声学模式的情况下，与*ith*状态相关的语音类的对数得分
+- *si* 是与保持状态相关的成本*i*
+- *mi* 是从状态移动的代价 *i*
 
-Both *si* and *mi* are based on analysis of durations of segments with the relevant labels in the training data. (This procedure is an application of dynamic programming, and can be derived based on ideas about Hidden Markov Models—HMMs.)
+* *si*和 *mi*均基于对训练数据中带有相关标签的分段持续时间的分析。 （此过程是动态编程的应用程序，可以基于关于隐马尔可夫模型（HMM）的思想派生。）
 
-Figure 3. Visual depiction of the equation[![A diagram that attempts to show a visual depiction of the mathematical equation.](https://machinelearning.apple.com/images/journals/hey-siri/equation-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/equation-1.png)
+图3.方程的直观描述
 
-Each accumulated score *Fi,t* is associated with a labelling of previous frames with states, as given by the sequence of decisions by the maximum operation. The final score at each frame is *Fi,t*, where the last state of the phrase is state I and there are N frames in the sequence of frames leading to that score. (N could be found by tracing back through the sequence of max decisions, but is actually done by propagating forwards the number of frames since the path entered the first state of the phrase.)
+[![A diagram that attempts to show a visual depiction of the mathematical equation.](https://machinelearning.apple.com/images/journals/hey-siri/equation-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/equation-1.png)
 
-Almost all the computation in the “Hey Siri” detector is in the acoustic model. The temporal integration computation is relatively cheap, so we disregard it when assessing size or computational resources.
+每个累积得分*Fi，t*与状态的先前帧的标记相关联，如最大操作的决策序列所给定的。每帧的最终分数是*Fi，t*，其中词组的最后状态是状态I，并且在导致该分数的帧序列中有N帧。 （N可以通过追溯最大决策序列来找到，但实际上是通过向前传播自路径进入短语的第一状态以来的帧数来完成的。）
 
-You may get a better idea of how the detector works by looking at Figure 4, which shows the acoustic signal at various stages, assuming that we are using the smallest DNN. At the very bottom is a spectrogram of the waveform from the microphone. In this case, someone is saying “Hey Siri what …” The brighter parts are the loudest parts of the phrase. The Hey Siri pattern is between the vertical blue lines.
+“ Hey Siri”探测器中的几乎所有计算都在声学模型中进行。时间积分计算相对便宜，因此在评估大小或计算资源时我们将其忽略。
 
-Figure 4. The acoustic pattern as it moves through the detector[![The acoustic pattern as it moves through the detector.](https://machinelearning.apple.com/images/journals/hey-siri/hswr-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/hswr-1.png)
+通过查看图4，您可以更好地了解检测器的工作原理，该图显示了假设使用最小DNN的各个阶段的声信号。最底部是麦克风波形的频谱图。在这种情况下，有人说“嘿Siri，什么……”。较亮的部分是该短语中最响亮的部分。 Hey Siri模式位于垂直蓝线之间。
 
-The second horizontal strip up from the bottom shows the result of analyzing the same waveform with a mel filter bank, which gives weight to frequencies based on perceptual measurements. This conversion also smooths out the detail that is visible in the spectrogram and due to the fine-structure of the excitation of the vocal tract: either random, as in the /s/, or periodic, seen here as vertical striations.
+图4.穿过探测器的声学模式
 
-The alternating green and blue horizontal strips labelled H1 to H5 show the numerical values (activations) of the units in each of the five hidden layers. The 32 hidden units in each layer have been arranged for this figure so as to put units with similar outputs together.
+[![The acoustic pattern as it moves through the detector.](https://machinelearning.apple.com/images/journals/hey-siri/hswr-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/hswr-1.png)
 
-The next strip up (with the yellow diagonal) shows the output of the acoustic model. At each frame there is one output for each position in the phrase, plus others for silence and other speech sounds. The final score, shown at the top, is obtained by adding up the local scores along the bright diagonal according to Equation 1. Note that the score rises to a peak just after the whole phrase enters the system.
+从底部向上的第二个水平条显示了使用梅尔滤波器组分析相同波形的结果，该滤波器组基于感知测量值赋予了频率权重。这种转换也使声谱图中可见的细节变得平滑，这归因于声道激励的精细结构：是随机的（如/ s /），还是周期性的（在此处视为垂直条纹）。
 
-We compare the score with a threshold to decide whether to activate Siri. In fact the threshold is not a fixed value. We built in some flexibility to make it easier to activate Siri in difficult conditions while not significantly increasing the number of false activations. There is a primary, or normal threshold, and a lower threshold that does not normally trigger Siri. If the score exceeds the lower threshold but not the upper threshold, then it may be that we missed a genuine “Hey Siri” event. When the score is in this range, the system enters a more sensitive state for a few seconds, so that if the user repeats the phrase, even without making more effort, then Siri triggers. This second-chance mechanism improves the usability of the system significantly, without increasing the false alarm rate too much because it is only in this extra-sensitive state for a short time. (We discuss testing and tuning for accuracy later.)
+标记为H1到H5的绿色和蓝色交替水平条显示了五个隐藏层中每个层的单位的数值（激活）。为该图安排了每层中的32个隐藏单元，以便将具有相似输出的单元放在一起。
 
-# Responsiveness and Power: Two Pass Detection
+下一个条带（带有黄色对角线）显示了声学模型的输出。在每一帧中，短语中每个位置都有一个输出，另外还有一个输出用于静音和其他语音。根据等式1，将沿明亮的对角线的局部分数相加即可得到最终分数，显示在顶部。请注意，在整个短语进入系统后，分数便上升到一个峰值。
 
-The “Hey Siri” detector not only has to be accurate, but it needs to be fast and not have a significant effect on battery life. We also need to minimize memory use and processor demand—particularly peak processor demand.
+我们将分数与阈值进行比较，以决定是否激活Siri。实际上，阈值不是固定值。我们提供了一些灵活性，可以使在困难条件下更轻松地激活Siri，而不会显着增加错误激活的次数。有一个主要阈值或正常阈值，以及一个通常不会触发Siri的较低阈值。如果分数超过了下限阈值，但没有超过上限阈值，则可能是我们错过了真正的“ Hey Siri”事件。当分数在此范围内时，系统会进入更敏感的状态几秒钟，因此，即使用户不花力气就重复该短语，Siri也会触发。该第二次机会机制显着提高了系统的可用性，而又不会过多地提高误报率，因为它只是在短时间内处于这种超敏感状态。 （我们稍后讨论测试和调整的准确性。）
 
-To avoid running the main processor all day just to listen for the trigger phrase, the iPhone’s Always On Processor (AOP) (a small, low-power auxiliary processor, that is, the embedded Motion Coprocessor) has access to the microphone signal (on 6S and later). We use a small proportion of the AOP’s limited processing power to run a detector with a small version of the acoustic model (DNN). When the score exceeds a threshold the motion coprocessor wakes up the main processor, which analyzes the signal using a larger DNN. In the first versions with AOP support, the first detector used a DNN with 5 layers of 32 hidden units and the second detector had 5 layers of 192 hidden units.
+# 响应能力和功率：两次通过检测
 
-Figure 5. Two-pass detection[![A diagram of the two-pass detection process. The first pass is fast and does not use a lot of computation power because is uses a small DNN. The second pass is more accurate and uses a lager DNN.](https://machinelearning.apple.com/images/journals/hey-siri/TwoPassDetector-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/TwoPassDetector-1.png)
+“ Hey Siri”检测器不仅必须准确，而且还必须快速且不会对电池寿命产生重大影响。 我们还需要最小化内存使用和处理器需求，尤其是高峰处理器需求。
 
-Apple Watch presents some special challenges because of the much smaller battery. Apple Watch uses a single-pass “Hey Siri” detector with an acoustic model intermediate in size between those used for the first and second passes on other iOS devices. The “Hey Siri” detector runs only when the watch motion coprocessor detects a wrist raise gesture, which turns the screen on. At that point there is a lot for WatchOS to do—power up, prepare the screen, etc.—so the system allocates “Hey Siri” only a small proportion (~5%) of the rather limited compute budget. It is a challenge to start audio capture in time to catch the start of the trigger phrase, so we make allowances for possible truncation in the way that we initialize the detector.
+为避免整日运行主处理器只是为了听触发语，iPhone的Always On处理器（AOP）（小型，低功耗辅助处理器，即嵌入式运动协处理器）可以访问麦克风信号（在 6S及更高版本）。 我们使用AOP有限的有限处理能力中的一小部分来运行具有较小声学模型（DNN）的探测器。 当分数超过阈值时，运动协处理器唤醒主处理器，该主处理器使用较大的DNN分析信号。 在具有AOP支持的第一个版本中，第一个检测器使用具有5层32个隐藏单元的DNN，第二个检测器使用5层192个隐藏单元。
 
-# “Hey Siri” Personalized
+图5.两遍检测
 
-We designed the always-on “Hey Siri” detector to respond whenever anyone in the vicinity says the trigger phrase. To reduce the annoyance of false triggers, we invite the user to go through a short enrollment session. During enrollment, the user says five phrases that each begin with “Hey Siri.” We save these examples on the device.
+[![A diagram of the two-pass detection process. The first pass is fast and does not use a lot of computation power because is uses a small DNN. The second pass is more accurate and uses a lager DNN.](https://machinelearning.apple.com/images/journals/hey-siri/TwoPassDetector-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/TwoPassDetector-1.png)
 
-We compare any possible new “Hey Siri” utterance with the stored examples as follows. The (second-pass) detector produces timing information that is used to convert the acoustic pattern into a fixed-length vector, by taking the average over the frames aligned to each state. A separate, specially trained DNN transforms this vector into a “speaker space” where, by design, patterns from the same speaker tend to be close, whereas patterns from different speakers tend to be further apart. We compare the distances to the reference patterns created during enrollment with another threshold to decide whether the sound that triggered the detector is likely to be “Hey Siri” spoken by the enrolled user.
+由于电池要小得多，Apple Watch面临一些特殊的挑战。 Apple Watch使用单次通过的“ Hey Siri”检测器，其声学模型的大小介于其他iOS设备的第一次和第二次通过之间。 “ Hey Siri”检测器仅在手表运动协处理器检测到手腕抬起手势（这会打开屏幕）时运行。 那时，WatchOS有很多工作要做-开机，准备屏幕等。因此，系统仅在相当有限的计算预算中分配一小部分（〜5％）给“ Hey Siri”。 及时开始音频捕获以捕获触发短语的开始是一个挑战，因此我们在初始化检测器的方式中考虑了可能的截断。
 
-This process not only reduces the probability that “Hey Siri” spoken by another person will trigger the iPhone, but also reduces the rate at which other, similar-sounding phrases trigger Siri.
+# “嘿Siri”个性化
 
-# Further Checks
+我们设计了永远在线的“ Hey Siri”探测器，以使附近的任何人说出触发短语时都能做出响应。为了减少错误触发的烦恼，我们邀请用户参加简短的注册会议。在注册过程中，用户说出五个短语，每个短语都以“ Hey Siri”开头。我们将这些示例保存在设备上。
 
-If the various stages on the iPhone pass it on, the waveform arrives at the Siri server. If the main speech recognizer hears it as something other than “Hey Siri” (for example “Hey Seriously”) then the server sends a cancellation signal to the phone to put it back to sleep, as indicated in Fig 1. On some systems we run a cut-down version of the main recognizer on the device to provide an extra check earlier.
+我们将任何可能的新“嘿Siri”语音与存储的示例进行比较，如下所示。 （第二遍）检测器通过获取与每种状态对齐的帧的平均值，生成用于将声学模式转换为固定长度矢量的时序信息。单独的，经过特殊训练的DNN将此向量转换为“扬声器空间”，根据设计，该空间中来自同一扬声器的模式趋于接近，而来自不同扬声器的模式趋于彼此分离。我们将距离与在注册期间创建的参考图案的距离与另一个阈值进行比较，以确定触发检测器的声音是否很可能是注册用户说的“ Hey Siri”。
 
-# The Acoustic Model: Training
+此过程不仅降低了另一个人说“嘿Siri”将触发iPhone的可能性，而且还降低了其他类似发音的短语触发Siri的速度。
 
-The DNN acoustic model is at the heart of the “Hey Siri” detector. So let’s take a look at how we trained it. Well before there was a Hey Siri feature, a small proportion of users would say “Hey Siri” at the start of a request, having started by pressing the button. We used such “Hey Siri” utterances for the initial training set for the US English detector model. We also included general speech examples, as used for training the main speech recognizer. In both cases, we used automatic transcription on the training phrases. Siri team members checked a subset of the transcriptions for accuracy.
+# 进一步检查
 
-We created a language-specific phonetic specification of the “Hey Siri” phrase. In US English, we had two variants, with different first vowels in “Siri”—one as in “serious” and the other as in “Syria.” We also tried to cope with a short break between the two words, especially as the phrase is often written with a comma: “Hey, Siri.” Each phonetic symbol results in three speech sound classes (beginning, middle and end) each of which has its own output from the acoustic model.
+如果iPhone上的各个阶段通过，波形将到达Siri服务器。 如果主语音识别器听到的声音不是“ Hey Siri”（例如“ Hey严重”），则服务器将取消信号发送到电话以使其重新进入睡眠状态，如图1所示。 在设备上运行主识别器的精简版，以提早进行额外检查。
 
-We used a corpus of speech to train the DNN for which the main Siri recognizer provided a sound class label for each frame. There are thousands of sound classes used by the main recognizer, but only about twenty are needed to account for the target phrase (including an initial silence), and one large class class for everything else. The training process attempts to produce DNN outputs approaching 1 for frames that are labelled with the relevant states and phones, based only on the local sound pattern. The training process adjusts the weights using standard back-propagation and stochastic gradient descent. We have used a variety of neural network training software toolkits, including Theano, Tensorflow, and Kaldi.
+# 声学模型：训练
 
-This training process produces estimates of the probabilities of the phones and states given the local acoustic observations, but those estimates include the frequencies of the phones in the training set (the priors), which may be very uneven, and have little to do with the circumstances in which the detector will be used, so we compensate for the priors before the acoustic model outputs are used.
+DNN声学模型是“ Hey Siri”探测器的核心。因此，让我们看一下我们如何训练它。在提供Hey Siri功能之前，一小部分用户会在请求开始时说“ Hey Siri”，方法是先按下按钮。我们在美国英语探测器模型的初始训练中使用了此类“嘿Siri”语音。我们还包括用于训练主要语音识别器的一般语音示例。在这两种情况下，我们都在训练短语上使用了自动转录。 Siri团队成员检查了转录的子集的准确性。
 
-Training one model takes about a day, and there are usually a few models in training at any one time. We generally train three versions: a small model for the first pass on the motion coprocessor, a larger-size model for the second pass, and a medium-size model for Apple Watch.
+我们为“ Hey Siri”短语创建了特定于语言的语音规范。在美式英语中，我们有两种变体，“ Siri”中的第一个元音不同-一个在“ Serious”中，另一个在“ Syria”中。我们还试图应对两个词之间的短暂中断，尤其是这个短语通常用逗号写：“嘿，Siri。”每个注音符号会产生三个语音类别（开始，中间和结尾），每个类别都有自己的声学模型输出。
 
-“Hey Siri” works in all languages that Siri supports, but “Hey Siri” isn’t necessarily the phrase that starts Siri listening. For instance, French-speaking users need to say “Dis Siri” while Korean-speaking users say “Siri 야” (Sounds like “Siri Ya.”) In Russian it is “привет Siri “ (Sounds like “Privet Siri”), and in Thai “หวัดดี Siri”. (Sounds like “Wadi Siri”.)
+我们使用了语料库来训练DNN，主要Siri识别器为此提供了每帧声音类别的标签。主识别器使用了数千种声音类别，但是只需要大约20个声音类别就可以解释目标短语（包括初始静音），而一个大的类别则需要处理其他所有类别。训练过程仅根据本地声音模式，尝试为标有相关状态和电话的帧生成接近1的DNN输出。训练过程使用标准的反向传播和随机梯度下降来调整权重。我们已经使用了各种神经网络培训软件工具包，包括Theano，Tensorflow和Kaldi。
 
-## Testing and Tuning
+该训练过程会给出电话的概率估计值，并根据给定的本地声学观测值进行状态估计，但是这些估计值包括训练集中的电话频率（先验先验），这可能很不均匀，并且与频率无关。在使用检测器的情况下，因此我们在使用声学模型输出之前先验先验。
 
-An ideal detector would fire whenever the user says “Hey Siri,” and not fire at other times. We describe the accuracy of the detector in terms of two kinds of error: firing at the wrong time, and failing to fire at the right time. The false-accept rate (FAR or false-alarm rate), is the number of false activations per hour (or mean hours between activations) and the false-reject rate (FRR) is the proportion of attempted activations that fail. (Note that the units we use to measure FAR are not the same as those we use for FRR. Even the dimensions are different. So there is no notion of an equal error rate.)
+训练一个模型大约需要一天的时间，并且通常在任何一次训练中都有几个模型。我们通常会训练三个版本：用于运动协处理器的第一遍的小模型，用于第二遍的大尺寸的模型和用于Apple Watch的中型模型。
 
-For a given model we can change the balance between the two kinds of error by changing the activation threshold. Figure 6 shows examples of this trade-off, for two sizes of early-development models. Changing the threshold moves along the curve.
+“ Hey Siri”可以使用Siri支持的所有语言，但是“ Hey Siri”不一定是开始监听Siri的短语。例如，说法语的用户需要说“ Dis Siri”，而说韩语的用户要说“ Siri야”（听起来像“ Siri Ya”。）在俄语中是“приветSiri”（听起来像“ Privet Siri”），以及泰文中的“หวัดดีSiri”。 （类似“ Wadi Siri”的声音。）
 
-During development we try to estimate the accuracy of the system by using a large test set, which is quite expensive to collect and prepare, but essential. There is “positive” data and “negative” data. The “positive” data does contain the target phrase. You might think that we could use utterances picked up by the “Hey Siri” system, but the system doesn’t capture the attempts that failed to trigger, and we want to improve the system to include as many of such failed attempts as possible.
+## 测试与微调
 
-At first we used the utterances of “Hey Siri” that some users said as they pressed the Home button, but these users are not attempting to catch Siri’s attention, (the button does that) and the microphone is bound to be within arm’s reach, whereas we also want “Hey Siri” to work across a room. We made recordings specially in various conditions, such as in the kitchen (both close and far), car, bedroom, and restaurant, by native speakers of each language.
+理想的检测器会在用户说“嘿Siri”时触发，而在其他时间不触发。我们用两种误差来描述探测器的精度：在错误的时间触发和在正确的时间触发失败。错误接受率（FAR或错误警报率）是每小时错误激活的次数（或两次激活之间的平均小时数），错误拒绝率（FRR）是失败的尝试激活的比例。 （请注意，我们用于测量FAR的单位与用于FRR的单位不同。甚至尺寸也不同。因此，没有错误率相等的概念。）
 
-We use the “negative” data to test for false activations (and false wakes). The data represent thousands of hours of recordings, from various sources, including podcasts and non-“Hey Siri” inputs to Siri in many languages, to represent both background sounds (especially speech) and the kinds of phrases that a user might say to another person. We need such a lot of data because we are trying to estimate false-alarm rates as low as one per week. (If there are any occurrences of the target phrase in the negative data we label them as such, so that we do not count responses to them as errors.)
+对于给定的模型，我们可以通过更改激活阈值来更改两种错误之间的平衡。图6显示了两种尺寸的早期开发模型的折衷示例。更改阈值将沿着曲线移动。
 
-Figure 6. Detector accuracy. Trade-offs against detection threshold for small and larger DNNs[![A graph that shows the trade-offs against detection threshold for large and small DNNs. The larger DNN is more accurate.](https://machinelearning.apple.com/images/journals/hey-siri/GraphFRR-FAR-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/GraphFRR-FAR-1.png)
+在开发过程中，我们尝试通过使用大型测试集来估计系统的准确性，该测试集的收集和准备工作相当昂贵，但必不可少。有“正”数据和“负”数据。 “阳性”数据确实包含目标短语。您可能会认为我们可以使用“ Hey Siri”系统收集到的语音，但是该系统无法捕获失败触发的尝试，因此我们希望改进该系统以尽可能多地包含此类失败尝试。
 
-Tuning is largely a matter of deciding what thresholds to use. In Figure 6, the two dots on the lower trade-off curve for the larger model show possible normal and second-chance thresholds. The operating point for the smaller (first-pass) model would be is at the right-hand side. These curves are just for the two stages of the detector, and do not include the personalized stage or subsequent checks.
+最初，我们使用了某些用户在按下“主页”按钮时所说的“嘿Siri”的发音，但这些用户并不是想引起Siri的注意（该按钮可以这样做），并且麦克风一定会伸手可及，而我们也希望“嘿Siri”在整个房间中工作。我们专门以各种语言在各种条件下（例如，在厨房（近处和远处），汽车，卧室和餐厅中）用每种语言的母语进行录音。
 
-While we are confident that models that appear to perform better on the test set probably are really better, it is quite difficult to convert offline test results into useful predictions of the experience of users. So in addition to the offline measurements described previously, we estimate false-alarm rates (when Siri turns on without the user saying “Hey Siri”) and imposter-accept rates (when Siri turns on when someone other than the user who trained the detector says “Hey Siri”) weekly by sampling from production data, on the latest iOS devices and Apple Watch. This does not give us rejection rates (when the system fails to respond to a valid “Hey Siri”) but we can estimate rejection rates from the proportion of activations just above the threshold that are valid, and a sampling of just-below threshold events on devices carried by development staff.
+我们使用“负”数据测试错误激活（和错误唤醒）。数据代表来自各种来源的数千小时的录音，包括播客和多种语言对Siri的非“ Hey Siri”输入，既可以表示背景声音（尤其是语音），也可以表示用户可能对另一个人说的短语人。我们需要大量数据，因为我们正试图估计低至每周一次的误报率。 （如果在否定数据中出现了目标短语，则将其标记为这样，这样我们就不会将对它们的响应计为错误。）
 
-We continually evaluate and improve “Hey Siri,” and the model that powers it, by training and testing using variations of the approach described here. We train in many different languages and test under a wide range of conditions.
+图6.检测器精度。小型和大型DNN的检测阈值之间的权衡
 
-Next time you say “Hey Siri” you may think of all that goes on to make responding to that phrase happen, but we hope that it “just works!”
+[![A graph that shows the trade-offs against detection threshold for large and small DNNs. The larger DNN is more accurate.](https://machinelearning.apple.com/images/journals/hey-siri/GraphFRR-FAR-1.png)](https://machinelearning.apple.com/images/journals/hey-siri/GraphFRR-FAR-1.png)
 
+调优很大程度上取决于决定使用什么阈值。在图6中，较大模型的较低权衡曲线上的两个点显示了可能的正常和第二次机会阈值。较小（首遍）模型的工作点将在右侧。这些曲线仅适用于检测器的两个阶段，不包括个性化阶段或后续检查。
+
+尽管我们相信看起来在测试集上表现更好的模型可能确实更好，但是将离线测试结果转换为对用户体验的有用预测是非常困难的。因此，除了前面描述的离线测量结果之外，我们还估计了误报警率（当Siri打开而用户未说“嘿Siri”时）和冒名顶替者接受率（当Siri打开时，除训练探测器的用户以外的其他人时）通过在最新的iOS设备和Apple Watch上从生产数据中抽样，每周说“嘿Siri”。这不会给我们拒绝率（当系统无法响应有效的“ Hey Siri”时），但是我们可以根据仅在有效阈值之上的激活比例以及仅次于阈值事件的采样来估计拒绝率由开发人员携带的设备上。
+
+我们通过使用此处介绍的方法的变体进行培训和测试，不断评估和改进“ Hey Siri”及其支持的模型。我们以多种不同的语言进行培训，并在各种条件下进行测试。
+
+下次您说“嘿Siri”时，您可能会想到使对该短语做出响应的所有操作，但我们希望它“有效”！

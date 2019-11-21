@@ -1,69 +1,70 @@
-# 8 Essential Tips for People starting a Career in Data Science
+# 开始从事数据科学的8个基本技巧
 
 原文链接：[8 Essential Tips for People starting a Career in Data Science](https://www.analyticsvidhya.com/blog/2017/10/tips-people-starting-career-data-science/?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-## Introduction
+## 介绍
 
-Learning data science can be intimidating. Specially so, when you are just starting your journey. Which tool to learn – R or Python? What techniques to focus on? How much statistics to learn? Do I need to learn coding? These are some of the many questions you need to answer as part of your journey.
+学习数据科学可能令人生畏。 特别地，当您刚刚开始旅程时。 要学习哪个工具，R或Python？ 需要关注哪些技术？ 要学习多少统计数据？ 我需要学习编码吗？ 这些是您在旅途中需要回答的许多问题中的一部分。
 
-That is why I thought that I would create this guide, which could help people starting in Analytics or Data Science. The idea was to create a simple, not very long guide which can set your path to learn data science. This guide would set a framework which can help you learn data science through this difficult and intimidating period.
-
- 
-
-Just follow through these tips and you will get a good head start in your career.
-
-So let’s get started!
+这就是为什么我认为我会创建本指南的原因，该指南可以帮助开始使用Analytics（分析）或Data Science（数据科学）的人员。 这个想法是创建一个简单的，不是很长的指南，它可以为您学习数据科学奠定基础。 本指南将设置一个框架，可以帮助您度过这个艰难而令人生畏的时期。
 
  
 
-### 1. Choose the right role
+只需遵循这些提示，您就可以在职业生涯中获得良好的开端。
 
-There are a lot of varied roles in data science industry. A data visualization expert, a machine learning expert, a data scientist, data engineer etc are a few of the many roles that you could go into. Depending on your background and your work experience, getting into one role would be easier than another role. For example, if you a software developer, it would not be difficult for you to shift into data engineering. So, until and unless you are clear about what you want to become, you will stay confused about the path to take and skills to hone.
-
-What to do, if you are not clear about the differences or you are not sure what should you become? I few things which I would suggest are:
-
-- Talk to people in industry to figure out what each of the roles entail
-- Take mentorship from people – request them for a small amount of time and ask relevant questions. I’m sure no one would refuse to help a person in need!
-- Figure out what you want and what you are good at and choose the role that suits your field of study.
-
-Here is a descriptive comparison done by Analytics Vidhya a few months back on what is it like being a [Data Scientist vs Data Engineer vs Statistician](https://www.analyticsvidhya.com/blog/2015/10/job-comparison-data-scientist-data-engineer-statistician/). I’m sure it will help you reach your decision.
-
-A point to keep in mind when choosing a role: don’t just hastily jump on to a role. You should first understand clearly what the field requires and prepare for it.
+因此，让我们开始吧！
 
  
 
-### 2. Take up a Course and Complete it
+### 1. 选择合适的角色
 
-Now that you have decided on a role, the next logical thing for you is to put in dedicated effort to understand the role. This means not just going through the requirements of the role. The demand for data scientists is big so thousands of courses and studies are out there to hold your hand, you can learn whatever you want to. Finding material to learn from isn’t a hard call but learning it may become if you don’t put efforts.
+在数据科学行业中，有许多不同的角色。数据可视化专家，机器学习专家，数据科学家，数据工程师等是您可能会遇到的许多角色中的几个。根据您的背景和工作经验，成为一个角色比另一个角色容易。例如，如果您是软件开发人员，那么进入数据工程并不难。因此，除非您对自己想要成为的人一清二楚，否则您将对走的路和磨练技巧感到困惑。
 
-What you can do is take up a MOOC which is freely available, or join an accreditation program which should take you through all the twists and turns the role entails. The choice of free vs paid is not the issue, the main objective should be whether the course clears your basics and brings you to a suitable level, from which you can push on further.
+如果您不清楚这些差异或不确定该怎么做，该怎么办？我建议的几件事是：
 
-When you take up a course, go through it actively. Follow the coursework, assignments and all the discussions happening around the course. For example, if you want to be a machine learning engineer, you can take up Machine learning by Andrew Ng. Now you have to diligently follow all the course material provided in the course. This also means the assignments in the course, which are as important as going through the videos. Only doing a course end to end will give you a clearer picture of the field.
+- 与行业人士交谈，找出每个角色需要承担的责任
 
-Some good MOOCs to look for include:
+- 从人们那里获得指导–要求他们少量时间并提出相关问题。我敢肯定，没有人会拒绝帮助有需要的人！
+- 弄清楚自己想要什么，擅长什么，然后选择适合您的研究领域的角色。
 
-1. Analytics Edge on edX
-2. Machine Learning from Andrew Ng
+这是 Analytics Vidhya 几个月前对[数据科学家与数据工程师与统计师的比较](https://www.analyticsvidhya.com/blog/2015/10/job-comparison-data-scientist-data-engineer-statistician/)数据科学家，数据工程师，统计学家/）。 我相信它将帮助您做出决定。
 
- 
-
-### 3. Choose a Tool / Language and stick to it
-
-As I mentioned before, it is important for you to get an end-to-end experience of whichever topic you pursue. A difficult question which one faces in getting hands-on is which language/tool should you choose?
-
-This would probably be the most asked question by beginners. The most straight-forward answer would be to choose any of the mainstream tool/languages there is and start your data science journey. After all, tools are just means for implementation; but understanding the concept is more important.
-
-Still the question remains, which would be a better option to start with? There are [various guides](https://www.analyticsvidhya.com/blog/2017/09/sas-vs-vs-python-tool-learn/) / discussions on the internet which address this particular query. The gist is that start with the simplest of language or the one with which you are most familiar with. if you are not as well versed with coding, you should prefer GUI based tools for now. Then as you get a grasp on the concepts, you can get your hands on with the coding part.
+选择角色时要牢记的一点：不要匆忙跳上角色。 您首先应该清楚地了解该领域的要求并为此做好准备。
 
  
 
-### 4. Join a peer group
+### 2. 开始课程并完成
 
-Now that you know that which role you want to opt for and are getting prepared for it, the next important thing for you to do would be to join a peer group. Why is this important? This is because a peer group keeps you motivated. Taking up a new field may seem a bit daunting when you do it alone, but when you have friends who are alongside you, the task seems a bit easier.
+现在您已经确定了角色，接下来对您而言合乎逻辑的事情是要全力以赴以理解该角色。这意味着不仅要经历角色的要求。数据科学家的需求很大，因此有成千上万的课程和研究可助您一臂之力，您可以学习任何想要的东西。寻找要学习的材料并非难事，但如果您不付出努力，学习它可能会变得很困难。
 
-The most preferable way to be in a peer group is to have a group of people you can physically interact with.  Otherwise you can either have a bunch of people over the internet who share similar goals, such as joining a Massive online course and interacting with the batch mates.
+您可以做的是免费获取MOOC，或者加入资格认证计划，该计划将带您经历所有曲折的角色。选择免费还是付费不是问题，主要目标应该是该课程是否使您的基本知识变得清晰，并使您达到合适的水平，并从中继续前进。
 
-Even if you don’t have this kind of peer group, you can still have a meaningful technical discussion over the internet. There are online forums which give you this kind of environment. I will list a few of them
+当您修读一门课程时，请积极地学习。遵循课程作业，作业和围绕课程进行的所有讨论。例如，如果您想成为机器学习工程师，可以参加Andrew Ng的机器学习。现在，您必须认真学习课程中提供的所有课程材料。这也意味着课程中的作业，与观看视频一样重要。只有端到端地完成课程，才能使您对该领域有更清晰的了解。
+
+寻找一些好的MOOC包括：
+
+1. edX上的Analytics Edge
+2. 来自吴国达的机器学习
+
+ 
+
+### 3. 选择一种工具/语言并坚持使用
+
+正如我之前提到的，对于您追求的任何主题，获得端到端的体验对于您而言都非常重要。在动手操作时面临的一个难题是您应该选择哪种语言/工具？
+
+这可能是初学者最常问的问题。最直接的答案是选择存在的任何主流工具/语言，然后开始您的数据科学之旅。毕竟，工具只是实现的手段。但是了解这个概念更为重要。
+
+仍然存在问题，首先哪个更好的选择？互联网上有[各种指南](https://www.analyticsvidhya.com/blog/2017/09/sas-vs-vs-python-tool-learn/) /讨论来解决此特定查询。要点是从最简单的语言或您最熟悉的语言开始。如果您不熟悉编码，那么现在应该首选基于GUI的工具。然后，当您掌握了这些概念之后，就可以开始使用编码部分了。
+
+
+
+### 4. 加入同伴群
+
+既然您知道要选择哪个角色并正在为此做好准备，那么接下来要做的重要一件事就是加入一个对等组。 为什么这很重要？ 这是因为同伴组使您保持动力。 独自一人从事新领域似乎有些艰巨，但是当您身边有朋友时，这项任务似乎会容易一些。
+
+在同伴小组中，最可取的方式是让一群人与您进行身体上的互动。 否则，您可能会在互联网上有一群志趣相投的人，例如加入大规模在线课程并与批处理对象互动。
+
+即使您没有这种同龄人小组，您仍然可以通过Internet进行有意义的技术讨论。 有在线论坛可为您提供这种环境。 我会列出其中一些
 
 1. [Analytics Vidhya](https://discuss.analyticsvidhya.com/)
 2. [StackExchange](https://stackexchange.com/)
@@ -71,25 +72,25 @@ Even if you don’t have this kind of peer group, you can still have a meaningfu
 
  
 
-### 5. Focus on practical applications and not just theory
+### 5. 专注于实际应用，而不仅仅是理论
 
-While undergoing courses and training, you should focus on the practical applications of things you are learning. This would help you not only understand the concept but also give you a deeper sense on how it would be applied in reality.
+在接受课程和培训时，您应该专注于所学事物的实际应用。 这不仅可以帮助您理解概念，还可以使您更深刻地了解如何将其实际应用。
 
-A few tips you should do when following a course:
+学习课程时应做的一些提示：
 
-- Make sure you do all the exercises and assignments to understand the applications.
-- Work on a few open data sets and apply your learning. Even if you don’t understand the math behind a technique initially, understand the assumptions, what it does and how to interpret the results. You can always develop a deeper understanding at a later stage.
-- Take a look at the solutions by people who have worked in the field. They would be able to pinpoint you with the right approach faster.
+- 确保完成所有练习和作业以了解应用程序。
+- 处理一些开放数据集并应用您的学习。 即使您一开始不了解某项技术背后的数学原理，也应了解其假设，其作用以及如何解释结果。 您总是可以在以后的阶段加深了解。
+- 看看在该领域工作的人所提供的解决方案。 他们将能够以正确的方法更快地找到您。
 
- 
 
-### 6. Follow the right resources
 
-To never stop learning, you have to engulf each and every source of knowledge you can find. The most useful source of this information is blogs run by most influential Data Scientists. These Data Scientists are really active and update the followers on their findings and frequently post about the recent advancement in this field.
+### 6. 使用正确的资源
 
-Read about data science every day and make it a habit to be updated with the recent happenings. But there may be many resources, influential data scientists to follow, and you have to be sure that you don’t follow the incorrect practices. So it is very important to follow the right resources.
+为了永不停止学习，您必须吞并可以找到的每一个知识来源。 此信息最有用的来源是由最具影响力的数据科学家经营的博客。 这些数据科学家非常活跃，并会向关注者更新他们的发现，并经常发布有关该领域的最新进展。
 
-Here is a [list of Data Scientists](https://www.analyticsvidhya.com/blog/2015/09/ultimate-data-scientists-world-today/) that you can follow. These are few newsletters to keep you on the go.
+每天阅读有关数据科学的知识，并养成一种习惯，以了解最近发生的事情。 但是可能有很多资源，有影响力的数据科学家可以遵循，并且您必须确保您没有遵循错误的做法。 因此，遵循正确的资源非常重要。
+
+这是您可以遵循的[数据科学家列表](https://www.analyticsvidhya.com/blog/2015/09/ultimate-data-scientists-world-today/)。 这些简讯让您随时随地。
 
 1. [WildML](http://www.wildml.com/)
 2. [NYU](https://cds.nyu.edu/newsletter/)
@@ -97,39 +98,39 @@ Here is a [list of Data Scientists](https://www.analyticsvidhya.com/blog/2015/09
 
  
 
-### 7. Work on your Communication skills
+### 7. 加强沟通技巧
 
-People don’t usually associate communication skills with rejection in data science roles. They expect that if they are technically profound, they will ace the interview. This is actually a myth. Ever been rejected within an interview, where the interviewer said thank you after listening to your introduction?
+人们通常不会将沟通技能与数据科学角色的拒绝联系在一起。 他们期望，如果他们在技术上很深厚，他们将赢得面试机会。 这实际上是一个神话。 曾经在面试中被拒绝过，面试官在听完您的介绍后说谢谢您吗？
 
-Try this activity once; make your friend with good communication skills hear your intro and ask for honest feedback. He will definitely show you the mirror!
+尝试一次此活动； 让具有良好沟通技巧的朋友听到您的介绍，并要求诚实的反馈。 他一定会给你看镜子！
 
-Communication skills are even more important when you are working in the field. To share your ideas to a colleague or to prove your point in a meeting, you should know how to communicate efficiently.
+在其他地方工作时，沟通技巧甚至更加重要。 要与同事分享您的想法或在会议中证明您的观点，您应该知道如何进行有效的沟通。
 
- 
 
-### 8. Network, but don’t waste too much time on it!
 
-Initially, your entire focus should be on learning. Doing too many things at initial stage will eventually bring you up to a point where you’ll give up.
+### 8. 网络，但不要浪费太多时间！
 
-Gradually, once you have got a hang of the field, you can go on to attend industry events and conferences, popular meetups in your area, participate in hackathons in your area – even if you know only a little. You never know who, when and where will help you out!
+最初，您的整个重点应该放在学习上。在初始阶段做太多的事情最终会使您步入放弃的境地。
 
-Actually, a meetup is very advantageous when it comes down to making your mark in the data science community. You get to meet people in your area who work actively in the field, which provides you networking opportunities along with establishing a relationship with them will in turn help you advance your career heavily. A networking contact might:
+渐渐地，一旦掌握了领域，就可以继续参加行业活动和会议，您所在地区的热门聚会，参加您所在地区的黑客马拉松-即使您只知道一点点。您永远不知道谁，何时何地会帮助您！
 
-- Give you inside information of what’s happening in your field of interest
-- help you to have mentorship support
-- Help you search for a Job, this would either be tips on job hunting through leads or possible employment opportunities directly.
+实际上，聚会对于在数据科学界留下自己的印记很有帮助。您会遇到您所在地区积极从事该领域工作的人，这为您提供了交流机会以及与他们建立关系的机会，这反过来又可以帮助您大力发展事业。网络联系人可能：
 
- 
+- 向您提供您感兴趣的领域的内幕信息
+- 帮助您获得指导支持
+- 帮助您寻找工作，这可能是通过潜在客户寻找工作的技巧，也可能是直接的就业机会。
 
-## End Notes
 
-The demand of data science is huge and employers are investing significant time and money in Data Scientists. So taking the right steps will lead to an exponential growth. This guide provides tips that can get you started and help you to avoid some costly mistakes.
 
-If you went through a similar experience in the past and want to share this with the community, do comments below!
+## 尾注
+
+结束语数据科学的需求巨大，雇主正在向数据科学家投入大量时间和金钱。 因此，采取正确的步骤将导致指数增长。 本指南提供了一些技巧，可以帮助您入门并帮助您避免一些代价高昂的错误。
+
+如果您过去经历过类似的经历，并想与社区分享，请在下面发表评论！
 
 ### [Learn](https://www.analyticsvidhya.com/blog), [engage,](https://discuss.analyticsvidhya.com/) [compete,](https://datahack.analyticsvidhya.com/) and [get hired](https://www.analyticsvidhya.com/jobs/#/user/)!
 
-You can also read this article on Analytics Vidhya's Android APP
+您还可以在Google Analytics（分析）Vidhya的Android APP上阅读本文
 
  
 

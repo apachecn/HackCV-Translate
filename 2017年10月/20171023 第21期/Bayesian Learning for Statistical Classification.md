@@ -1,68 +1,56 @@
-# Bayesian Learning for Statistical Classification
+# 用于统计分类的贝叶斯学习
 
 原文链接：[Bayesian Learning for Statistical Classification](https://blog.statsbot.co/bayesian-learning-for-statistical-classification-f2362d620428?from=hackcv&hmsr=hackcv.com&utm_medium=hackcv.com&utm_source=hackcv.com)
 
-## A Bayesian introduction to statistical classification problems
+## 贝叶斯统计分类问题的介绍
 
-*Probability theory is one of the most fundamental tools we have for describing the universe. It is especially relevant to statistical classification and can be used to derive a multitude of important results and to inform our understanding.*
+*概率论是我们描述宇宙最基本的工具之一。它与统计分类特别相关，可用于推导出大量重要结果并为我们的理解提供信息。*
 
-*The* [*Statsbot*](http://statsbot.co/?utm_source=blog&utm_medium=article&utm_campaign=bayesian_learning) *team asked Peter Mills to help you understand probability theory and Bayes’ theorem and how they apply to statistical classification. It will allow you to derive non-obvious results that can vastly improve and simplify your classification models.*
-
-
+*[Statsbot](http://statsbot.co/?utm_source=blog&utm_medium=article&utm_campaign=bayesian_learning) 团队要求Peter Mills帮助您理解概率论和贝叶斯定理以及它们如何应用于统计分类。它将允许您导出非显而易见的结果，这些结果可以极大地改善和简化您的分类模型。*
 
 ![img](https://cdn-images-1.medium.com/max/2000/0*-fuTiaivZo-YDfu2.)
 
-This introduction to Bayesian learning for statistical classification will provide several examples of the use of Bayes’ theorem and probability in statistical classification. It will also go beyond basic probability to cover other important areas of the field, including calibration and validation.
+这种对贝叶斯学习进行统计分类的介绍将提供贝叶斯定理和概率在统计分类中的应用的几个例子。它还将超出一般概率知识，涵盖该领域的其他重要领域，包括校准和验证。
 
-> *Note that this article, while intended for beginners, nonetheless assumes knowledge of first- and some second-year university-level mathematics, especially linear algebra, but also some single and multi-variate calculus. If the equations seem confusing at times, try to focus instead on solving real problems.*
+> *请注意，本文虽然是针对初学者的，但仍假设了大学一二年级水平数学知识，特别是线性代数，还有一些单变量和多变量微积分。如果方程式较难理解，请尝试着重于解决实际问题。*
 
-You will learn a whole lot more about probability and statistical classification by working through some examples than just by reading about it or browsing equations. For this reason, we have prepared a set of problems at the end of the article.
+通过一些例子，您将学习更多关于概率和统计分类的知识，而不仅仅是阅读它或阅读方程式。出于这个原因，我们在文章的最后准备了一系列问题。
 
-### Review of basic probability
+### 回顾基本概率知识
 
-Suppose we roll a die. There will be six possibilities, each of which (in a fairly loaded die) will have a probability of 1/6. We can write this:
-
-
+假设我们掷骰子。将有六种可能性，每种可能性（在一样重的骰子中）有1/6的概率。我们可以写成这样
 
 ![img](https://cdn-images-1.medium.com/max/750/0*V56SwYrOQqjCLGXK.)
 
-where *i* is the number on the top side of the die. Since at least one side will have to come up, we can also write:
-
-
+其中*i*是骰子顶部的数字。由于至少有一面一定在顶部，我们也可以写：
 
 ![img](https://cdn-images-1.medium.com/max/750/0*BCCAd_9goIZjXPsI.)
 
 (1)
 
-where *n*=6 is the total number of possibilities.
+其中*n* = 6是可能性的总数。
 
-Now suppose we roll two dice. The joint probability of getting one of 36 pairs of numbers is given:
-
-
+现在假设我们掷两个骰子。获得36对数字之一的联合概率：
 
 ![img](https://cdn-images-1.medium.com/max/750/0*RSmw76M3Fkkrkr1I.)
 
-where *i* is the number on the first die and *j* that on the second.
+其中*i*是第一个骰子上的数字，*j*是第二个骰子上的数字。
 
-If we ignore the number on the second die, the probability of getting a certain number (a 6, say) on the first die is given:
-
-
+如果我们忽略第二个骰子上的数字，则给出在第一个骰子上获得一定数量（比如6）的概率：
 
 ![img](https://cdn-images-1.medium.com/max/1000/0*UJnfvNjFTjPWJwJD.)
 
 (2)
 
-This is known as the *prior probability*.
+这被称为*先验概率*。
 
-Here’s where things start getting more complicated. What is the probability of getting a certain number on one die given that a certain number on the other die has come up? In this case, the two events are uncorrelated, thus the value, at 1/6, will always be the same, but this need not be the case.
+事情变得越来越复杂。鉴于另一个骰子上的某个数字已经出现，在一个骰子上获得一定数量的概率是多少？在这种情况下，这两个事件是不相关的，因此1/6的值将始终相同，但这种情况确是不一定的。
 
-Consider a game of Blackjack. What is the probability that the next card drawn is worth ten points (is a ten or a face card) given that the previous card was also worth ten points?
+考虑二十一点游戏。考虑到前一张牌十点，下一张牌的概率是多少（十点或一张面牌）的概率是多少？
 
-Suppose there were 7 ten-point cards out of a deck of 34 remaining before the last draw. Now the probabilities are different depending upon the outcome of the previous event. If the previous card was worth ten, there is a 6/33=2/11 chance of getting a card worth ten, otherwise the probability is 7/33.
+假设在最后一次抽签之前剩下34个牌组中有7张十点牌。现在，概率根据前一事件的结果而不同。如果之前的卡十点，则有一个6/33 = 2/11的机会获得一张十点的卡，否则概率为7/33。
 
-Since the probability that the previous card was worth ten is 7/34, the joint probability, or the probability of both events occurring is:
-
-
+由于前一张卡值十的概率是7/34，因此联合概率或两种事件发生的概率是：
 
 ![img](https://cdn-images-1.medium.com/max/1000/1*cwQtStIQuK2g8uW71N7ZPw.gif)
 
